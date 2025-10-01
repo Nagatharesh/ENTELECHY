@@ -1,12 +1,18 @@
 
 
-
 export const dummyAadhaarPatients = [
-    { aadhaar_full: '1234-5678-9012', name: 'Rahul Sharma', dob: '1990-05-15', gender: 'Male', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
-    { aadhaar_full: '2345-6789-0123', name: 'Anjali Mehta', dob: '1994-08-22', gender: 'Female', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
-    { aadhaar_full: '3456-7890-1234', name: 'Vikram Patel', dob: '1977-11-30', gender: 'Male', contact: '+91 9012345678', address: '5 Lakeview, Bangalore', is_test: true },
-    { aadhaar_full: '4567-8901-2345', name: 'Priya Reddy', dob: '1984-02-18', gender: 'Female', contact: '+91 9988776655', address: '22 Sunrise Ave, Hyderabad', is_test: true },
-    { aadhaar_full: '5678-9012-3456', name: 'Sameer Khan', dob: '1972-07-01', gender: 'Male', contact: '+91 9222334455', address: '11 Central Rd, Chennai', is_test: true },
+    { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
+    { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
+    { aadhaar_full: '345634563456', name: 'Vikram Patel', dob: '1979-11-30', gender: 'M', contact: '+91 9012345678', address: '5 Lakeview, Bangalore', is_test: true },
+    { aadhaar_full: '456745674567', name: 'Priya Reddy', dob: '1987-02-18', gender: 'F', contact: '+91 9988776655', address: '22 Sunrise Ave, Hyderabad', is_test: true },
+    { aadhaar_full: '567856785678', name: 'Sameer Khan', dob: '1975-07-01', gender: 'M', contact: '+91 9222334455', address: '11 Central Rd, Chennai', is_test: true },
+    { aadhaar_full: '678967896789', name: 'Meera Iyer', dob: '1999-03-12', gender: 'F', contact: '+91 9112233445', address: '9 Lotus Lane, Pune', is_test: true },
+    { aadhaar_full: '789078907890', name: 'Rohit Gupta', dob: '1984-06-25', gender: 'M', contact: '+91 9001122334', address: '77 Ocean Drive, Goa', is_test: true },
+    { aadhaar_full: '890189018901', name: 'Saira Bedi', dob: '1990-09-02', gender: 'F', contact: '+91 8899001122', address: '3 Palm St, Ahmedabad', is_test: true },
+    { aadhaar_full: '901290129012', name: 'Aditya Joshi', dob: '1996-04-18', gender: 'M', contact: '+91 7889900112', address: '101 Maple Ave, Noida', is_test: true },
+    { aadhaar_full: '012301230123', name: 'Kavita Sharma', dob: '1978-12-08', gender: 'F', contact: '+91 7778899001', address: '8 Garden View, Lucknow', is_test: true },
+    { aadhaar_full: '111122223333', name: 'Neel Verma', dob: '1965-10-10', gender: 'M', contact: '+91 6667788990', address: '14 Hilltop, Kolkata', is_test: true },
+    { aadhaar_full: '222233334444', name: 'Rina Das', dob: '1992-01-20', gender: 'F', contact: '+91 5556677889', address: '2 Riverbank, Surat', is_test: true }
 ];
 
 
@@ -582,6 +588,56 @@ export const dummyPatients = [
   }
 ];
 
+export const dummyPrescriptions = dummyAadhaarPatients.flatMap((patient, pIndex) => {
+    return Array.from({ length: 10 }, (_, i) => {
+        const docIndex = (pIndex + i) % dummyDoctors.length;
+        const hospitalIndex = (pIndex + i) % dummyHospitals.length;
+        const medIndex1 = (pIndex * 2 + i) % dummyMedicines.length;
+        const medIndex2 = (pIndex * 2 + i + 1) % dummyMedicines.length;
+        const statusCycle = ['signed', 'pending', 'unsigned', 'rejected'];
+
+        return {
+            "prescription_id": `PR-${patient.aadhaar_full.slice(0, 4)}-${i + 1}`,
+            "patient_aadhaar_masked": patient.aadhaar_full.slice(-4),
+            "date": `2025-10-${String(20 - i).padStart(2, '0')}T10:15:00+05:30`,
+            "doctor": dummyDoctors[docIndex],
+            "clinic": dummyHospitals[hospitalIndex],
+            "medicines": [
+                {
+                    "name": dummyMedicines[medIndex1].name,
+                    "strength": "500 mg",
+                    "form": "Tablet",
+                    "dose": "1 tab",
+                    "frequency": "TDS",
+                    "duration_days": 5,
+                    "instructions": "After food"
+                },
+                {
+                    "name": dummyMedicines[medIndex2].name,
+                    "strength": "10 mg",
+                    "form": "Tablet",
+                    "dose": "1 tab",
+                    "frequency": "OD",
+                    "duration_days": 5,
+                    "instructions": "At night"
+                }
+            ],
+            "total_cost_inr": Math.floor(Math.random() * 500) + 100,
+            "suggested_pharmacy": {
+                "name": "City Pharmacy",
+                "address": "Near " + dummyHospitals[hospitalIndex].name,
+                "phone": "+91 11 55556666"
+            },
+            "e_sign_status": statusCycle[i % 4],
+            "e_sign_url": `https://storage.example.com/prescriptions/PR-${patient.aadhaar_full.slice(0, 4)}-${i + 1}-signed.pdf`,
+            "token_number": Math.random() > 0.5 ? Math.floor(Math.random() * 20) + 1 : null,
+            "notes": "Follow up after 7 days if symptoms persist.",
+            "download_pdf_url": `https://storage.example.com/prescriptions/PR-${patient.aadhaar_full.slice(0, 4)}-${i + 1}-signed.pdf`,
+            "is_test": true
+        }
+    })
+});
+
 export type Patient = typeof dummyPatients[0];
 export type AadhaarPatient = typeof dummyAadhaarPatients[0];
 export type Doctor = typeof dummyDoctors[0];
@@ -591,3 +647,4 @@ export type Ambulance = typeof dummyAmbulances[0];
 export type InsurancePlan = typeof dummyInsurancePlans[0];
 export type MedicalEncounter = Patient["medicalEncounters"][0];
 export type Investigation = Patient["investigations"][0];
+export type Prescription = typeof dummyPrescriptions[0];
