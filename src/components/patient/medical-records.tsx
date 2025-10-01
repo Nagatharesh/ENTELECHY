@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FileText, TestTube, Pill, Microscope, Stethoscope, HeartPulse, Shield, Beaker, ChevronDown } from "lucide-react";
+import { FileText, TestTube, Pill, Microscope, Stethoscope, HeartPulse, Shield, Beaker, ChevronDown, Ambulance } from "lucide-react";
 import { Patient, MedicalEncounter, Investigation, dummyDoctors, dummyMedicines } from "@/lib/dummy-data";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
