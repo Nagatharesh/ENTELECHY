@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/header";
 import { Hero } from "@/components/landing/hero";
 import { RoleSelection } from "@/components/landing/role-selection";
+import { Footer } from "@/components/layout/footer";
 
 export default function Home() {
   return (
@@ -10,9 +11,7 @@ export default function Home() {
         <Hero />
         <RoleSelection />
       </main>
-      <footer className="container mx-auto py-8 text-center text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} SupremeHealth. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

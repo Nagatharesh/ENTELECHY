@@ -62,6 +62,13 @@ const ambulanceSchema = z.object({
 
 type Role = "patient" | "doctor" | "hospital" | "ambulance";
 
+const InputWithIcon = ({ icon: Icon, ...props }: { icon: React.ElementType } & React.ComponentProps<typeof Input>) => (
+  <div className="relative">
+    <Icon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+    <Input className="pl-10" {...props} />
+  </div>
+);
+
 export function LoginForm() {
   const searchParams = useSearchParams();
   const defaultTab = (searchParams.get("role") as Role) || "patient";
@@ -99,13 +106,6 @@ export function LoginForm() {
     console.log("Ambulance Signup:", values);
     // TODO: Implement Firebase email/password auth
   }
-  
-  const InputWithIcon = ({ icon: Icon, ...props }: { icon: React.ElementType } & React.ComponentProps<typeof Input>) => (
-    <div className="relative">
-      <Icon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-      <Input className="pl-10" {...props} />
-    </div>
-  );
 
   return (
     <div className="w-full max-w-md animate-fade-in-up z-10">
