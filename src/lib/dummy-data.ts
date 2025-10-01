@@ -50,7 +50,7 @@ export const dummyHospitals = [
         "name": "Apollo Hospital",
         "location": "New Delhi, DL",
         "contact": "+911145678901",
-        "patientLoad": "High",
+        "patientLoad": "12",
         "coordinates": {"lat": 28.7041, "lng": 77.1025}
     },
     {
@@ -58,7 +58,7 @@ export const dummyHospitals = [
         "name": "Fortis Hospital",
         "location": "Mumbai, MH",
         "contact": "+912226206666",
-        "patientLoad": "High",
+        "patientLoad": "8",
         "coordinates": {"lat": 19.0760, "lng": 72.8777}
     },
     {
@@ -66,7 +66,7 @@ export const dummyHospitals = [
         "name": "AIIMS",
         "location": "Bangalore, KA",
         "contact": "+918022221111",
-        "patientLoad": "Medium",
+        "patientLoad": "20",
         "coordinates": {"lat": 12.9716, "lng": 77.5946}
     },
     {
@@ -74,7 +74,7 @@ export const dummyHospitals = [
         "name": "Medanta",
         "location": "Hyderabad, TS",
         "contact": "+914023607777",
-        "patientLoad": "High",
+        "patientLoad": "15",
         "coordinates": {"lat": 17.3850, "lng": 78.4867}
     },
     {
@@ -82,7 +82,7 @@ export const dummyHospitals = [
         "name": "Max Healthcare",
         "location": "Chennai, TN",
         "contact": "+914428282828",
-        "patientLoad": "Medium",
+        "patientLoad": "10",
         "coordinates": {"lat": 13.0827, "lng": 80.2707}
     }
 ]

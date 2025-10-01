@@ -13,6 +13,7 @@ import { PatientProfile } from '@/components/patient/patient-profile';
 import { MedicalRecords } from '@/components/patient/medical-records';
 import { Appointments } from '@/components/patient/appointments';
 import { VitalsAndPredictions } from '@/components/patient/vitals-and-predictions';
+import { DoctorsHub } from '@/components/patient/doctors-hub';
 import {
   Sheet,
   SheetContent,
@@ -74,6 +75,8 @@ function DashboardContent() {
         return <VitalsAndPredictions patient={patient} />;
       case 'ambulance':
         return <AmbulanceBooking patient={patient} />;
+      case 'doctors':
+        return <DoctorsHub patient={patient} />;
       default:
         return <PatientProfile patient={patient} />;
     }
@@ -92,37 +95,39 @@ function DashboardContent() {
   ];
 
   const NavMenu = ({isSheet = false}: {isSheet?: boolean}) => (
-    <Sidebar>
-      <SidebarHeader className="flex items-center justify-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=expanded]:justify-between">
-          <Logo className="group-data-[collapsible=icon]:hidden"/>
-          <SidebarTriggerButton />
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarMenu>
-          {navItems.map(item => (
-            <SidebarMenuItem key={item.id}>
-              <SidebarMenuButton onClick={() => setActiveView(item.id)} isActive={activeView === item.id} tooltip={item.label}>
-                <item.icon />
-                <span>{item.label}</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
-        </SidebarMenu>
-      </SidebarContent>
-      <SidebarFooter>
-        <div className="flex items-center justify-center p-2 group-data-[collapsible=icon]:w-auto group-data-[collapsible=expanded]:w-full">
-            <Image src={`https://i.pravatar.cc/150?u=${patient.patientId}`} alt={patient.name} width={40} height={40} className="rounded-full border-2 border-primary/50"/>
-            <div className="ml-3 group-data-[collapsible=icon]:hidden whitespace-nowrap overflow-hidden">
-              <span className="font-semibold text-gradient-glow text-lg">{patient.name}</span>
-              <p className="text-xs text-muted-foreground">{patient.patientId}</p>
+    <SidebarProvider>
+        <Sidebar>
+        <SidebarHeader className="flex items-center justify-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=expanded]:justify-between">
+            <Logo className="group-data-[collapsible=icon]:hidden"/>
+            <SidebarTriggerButton />
+        </SidebarHeader>
+        <SidebarContent>
+            <SidebarMenu>
+            {navItems.map(item => (
+                <SidebarMenuItem key={item.id}>
+                <SidebarMenuButton onClick={() => setActiveView(item.id)} isActive={activeView === item.id} tooltip={item.label}>
+                    <item.icon />
+                    <span>{item.label}</span>
+                </SidebarMenuButton>
+                </SidebarMenuItem>
+            ))}
+            </SidebarMenu>
+        </SidebarContent>
+        <SidebarFooter>
+            <div className="flex items-center justify-center p-2 group-data-[collapsible=icon]:w-auto group-data-[collapsible=expanded]:w-full">
+                <Image src={`https://i.pravatar.cc/150?u=${patient.patientId}`} alt={patient.name} width={40} height={40} className="rounded-full border-2 border-primary/50"/>
+                <div className="ml-3 group-data-[collapsible=icon]:hidden whitespace-nowrap overflow-hidden">
+                <span className="font-semibold text-gradient-glow text-lg">{patient.name}</span>
+                <p className="text-xs text-muted-foreground">{patient.patientId}</p>
+                </div>
             </div>
-          </div>
-      </SidebarFooter>
-    </Sidebar>
+        </SidebarFooter>
+        </Sidebar>
+    </SidebarProvider>
   )
 
   return (
-    <SidebarProvider>
+    
       <div className="flex flex-col md:flex-row min-h-screen bg-background">
         <div className="hidden md:flex flex-col glassmorphism !border-r-border/50">
             <NavMenu />
@@ -157,14 +162,16 @@ function DashboardContent() {
           </div>
         </main>
       </div>
-    </SidebarProvider>
+    
   );
 }
 
 export default function PatientDashboardPage() {
   return (
     <Suspense fallback={<div className="w-full h-screen flex items-center justify-center"><p className="text-lg text-gradient-glow animate-pulse">Loading SupremeHealth Dashboard...</p></div>}>
-      <DashboardContent />
+       <SidebarProvider>
+        <DashboardContent />
+      </SidebarProvider>
     </Suspense>
   );
 }

@@ -1,0 +1,182 @@
+
+"use client";
+
+import { useState, useEffect } from 'react';
+import { dummyHospitals, dummyDoctors, Patient } from '@/lib/dummy-data';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import Image from 'next/image';
+import { MapPin, Phone, Users, UserCheck, Clock, Star, MessageSquare, Video, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Appointments } from './appointments'; // Re-use for past appointments view if needed
+
+const center = { lat: 12.9141, lng: 74.8560 }; // St. Joseph Engineering College
+
+const calculateDistance = (coords1, coords2) => {
+    const latDiff = coords1.lat - coords2.lat;
+    const lonDiff = coords1.lng - coords2.lng;
+    return Math.sqrt(latDiff * latDiff + lonDiff * lonDiff) * 111; // Approx km
+};
+
+export function DoctorsHub({ patient }: { patient: Patient }) {
+    const [showRadar, setShowRadar] = useState(true);
+    const [selectedHospital, setSelectedHospital] = useState(null);
+    const [nearbyHospitals, setNearbyHospitals] = useState([]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setShowRadar(false), 2200);
+
+        const hospitalsWithDistance = dummyHospitals.map(h => ({
+            ...h,
+            distance: calculateDistance(center, h.coordinates)
+        })).sort((a, b) => a.distance - b.distance);
+        setNearbyHospitals(hospitalsWithDistance);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    const handleMarkerClick = (hospital) => {
+        setSelectedHospital(hospital);
+    };
+
+    const handleClosePanel = () => {
+        setSelectedHospital(null);
+    };
+
+    return (
+        <div className="space-y-6">
+            <Card className="glassmorphism glowing-shadow relative h-[60vh] overflow-hidden">
+                <CardHeader>
+                    <CardTitle className="text-gradient-glow">Find a Doctor</CardTitle>
+                    <CardDescription>Nearby hospitals and doctors at your fingertips.</CardDescription>
+                </CardHeader>
+                <CardContent className="relative flex items-center justify-center h-full">
+                    {/* Map Background */}
+                    <div className="absolute inset-0 bg-grid-primary/10 [mask-image:radial-gradient(ellipse_at_center,transparent_30%,black)]"></div>
+
+                    {/* Radar Animation */}
+                    {showRadar && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="radar-container">
+                                <div className="radar-sweep"></div>
+                                <div className="radar-marker-center"></div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {/* Hospital Markers */}
+                    <div className="w-full h-full">
+                        {nearbyHospitals.map((hospital, index) => {
+                             const angle = (index / nearbyHospitals.length) * 360 + 45;
+                             const radius = (index + 1) * 30 + 30; // simple distribution
+                             const x = 50 + (radius / 300) * 50 * Math.cos(angle * Math.PI / 180);
+                             const y = 50 + (radius / 300) * 50 * Math.sin(angle * Math.PI / 180);
+
+                            return (
+                                <div
+                                    key={hospital.hospitalId}
+                                    className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hospital-marker"
+                                    style={{ 
+                                        left: `${x}%`, 
+                                        top: `${y}%`,
+                                        animationDelay: `${index * 100}ms`
+                                    }}
+                                    onClick={() => handleMarkerClick(hospital)}
+                                >
+                                    <div className="relative">
+                                        <div className="marker-pulse"></div>
+                                        <div className="marker-dot"></div>
+                                        <div className="marker-label">{hospital.name} ({hospital.distance.toFixed(1)} km)</div>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </CardContent>
+            </Card>
+
+            <HospitalDetailPanel hospital={selectedHospital} onClose={handleClosePanel} patient={patient} />
+            
+            {/* Past Appointments - Can be a separate component or integrated here */}
+             <div className="mt-8">
+                <h2 className="text-2xl font-bold text-gradient-glow mb-4">Appointment History</h2>
+                <Appointments patient={patient} />
+            </div>
+
+        </div>
+    );
+}
+
+const HospitalDetailPanel = ({ hospital, onClose, patient }) => {
+    if (!hospital) return null;
+    
+    const hospitalDoctors = dummyDoctors.filter(d => d.hospitalId === hospital.hospitalId);
+
+    const yourToken = 5; // Dummy data
+    const eta = 15; // Dummy data
+
+    return (
+        <Dialog open={!!hospital} onOpenChange={(isOpen) => !isOpen && onClose()}>
+            <DialogContent className="glassmorphism max-w-2xl h-[80vh] flex flex-col">
+                <DialogHeader>
+                    <DialogTitle className="text-gradient-glow text-2xl">{hospital.name}</DialogTitle>
+                    <DialogDescription className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4"/>{hospital.location}
+                        <span className="mx-2">|</span>
+                        <Phone className="w-4 h-4"/><a href={`tel:${hospital.contact}`}>{hospital.contact}</a>
+                    </DialogDescription>
+                     <Button variant="ghost" size="icon" className="absolute top-4 right-4" onClick={onClose}><X/></Button>
+                </DialogHeader>
+                <div className="flex-grow overflow-y-auto pr-4 -mr-4 space-y-6">
+                    {/* Vitals-like summary */}
+                    <div className="grid grid-cols-3 gap-4 text-center">
+                        <InfoCard icon={Users} label="Patients Waiting" value={hospital.patientLoad} />
+                        <InfoCard icon={UserCheck} label="Your Token" value={`#${yourToken}`} />
+                        <InfoCard icon={Clock} label="Estimated Wait" value={`~${eta} mins`} />
+                    </div>
+                    
+                    {/* Doctor List */}
+                    <div>
+                        <h3 className="text-lg font-semibold text-white mb-2">Doctors Available</h3>
+                        <div className="space-y-3">
+                            {hospitalDoctors.map(doctor => (
+                                <DoctorCard key={doctor.doctorId} doctor={doctor} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+}
+
+const InfoCard = ({ icon: Icon, label, value }) => (
+    <div className="glassmorphism p-4 rounded-lg">
+        <Icon className="w-8 h-8 text-primary mx-auto mb-2" />
+        <p className="text-lg font-bold text-white">{value}</p>
+        <p className="text-sm text-muted-foreground">{label}</p>
+    </div>
+);
+
+const DoctorCard = ({ doctor }) => {
+    return (
+        <Card className="glassmorphism p-3 flex items-center gap-4 transition-all duration-300 hover:border-primary/50">
+            <Image src={`https://i.pravatar.cc/150?u=${doctor.doctorId}`} alt={doctor.name} width={50} height={50} className="rounded-full border-2 border-primary/30" />
+            <div className="flex-grow">
+                <p className="font-bold text-white">{doctor.name}</p>
+                <p className="text-sm text-muted-foreground">{doctor.specialty}</p>
+                <div className="flex items-center gap-1 text-yellow-400 text-sm">
+                    <Star className="w-4 h-4 fill-current"/>
+                    <span>{doctor.rating}</span>
+                </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2">
+                <Button size="sm" variant="outline"><MessageSquare className="w-4 h-4 sm:mr-2"/> <span className="hidden sm:inline">Chat</span></Button>
+                <Button size="sm" variant="outline"><Video className="w-4 h-4 sm:mr-2"/> <span className="hidden sm:inline">Video Call</span></Button>
+                <Button size="sm" className="glowing-shadow-interactive">Book</Button>
+            </div>
+        </Card>
+    );
+}
