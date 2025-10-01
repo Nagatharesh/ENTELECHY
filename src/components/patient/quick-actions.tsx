@@ -49,5 +49,3 @@ export function QuickActions({ patient, onAmbulanceClick }: { patient: Patient, 
     </Card>
   );
 }
-
-    

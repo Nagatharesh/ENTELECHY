@@ -408,10 +408,3 @@ const SuggestedDoctor = ({ doctor, onBook }) => {
         </Card>
     );
 };
-
-    
-
-    
-
-
-

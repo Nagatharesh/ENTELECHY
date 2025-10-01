@@ -256,4 +256,3 @@ function BookingDialog({ plan, patient, open, onClose, onBookingConfirmed }: { p
         </Dialog>
     );
 }
-
