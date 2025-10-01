@@ -2,19 +2,19 @@
 "use client";
 
 import { useState, useEffect, useMemo } from 'react';
-import { dummyAmbulances, Patient } from '@/lib/dummy-data';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { dummyAmbulances, Patient, dummyHospitals } from '@/lib/dummy-data';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Ambulance, Phone, Car, Clock, MapPin, CheckCircle, XCircle, Bot } from 'lucide-react';
+import { Ambulance, Phone, Car, Clock, MapPin, XCircle, Bot, ShieldPlus, HeartPulse, Brain, ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const AmbulanceCard = ({ ambulance, onSelect, patientCoords }) => {
     const distance = useMemo(() => {
         if (!patientCoords) return Infinity;
         const latDiff = patientCoords.lat - ambulance.current_coords.lat;
         const lonDiff = patientCoords.lng - ambulance.current_coords.lng;
-        // Simple approximation for demo
         return Math.sqrt(latDiff * latDiff + lonDiff * lonDiff) * 111;
     }, [patientCoords, ambulance.current_coords]);
 
@@ -32,7 +32,7 @@ const AmbulanceCard = ({ ambulance, onSelect, patientCoords }) => {
                     </div>
                     <div>
                         <p className="font-bold text-white">{ambulance.vehicle_no}</p>
-                        <p className="text-sm text-muted-foreground">{ambulance.driver_name}</p>
+                        <p className="text-sm text-muted-foreground">{ambulance.driver_name} - <Badge variant="secondary" className="text-xs">{ambulance.type}</Badge></p>
                         <div className="flex items-center gap-4 text-xs mt-1">
                             <span className="flex items-center gap-1"><MapPin className="w-3 h-3"/>~{distance.toFixed(1)} km</span>
                             <span className="flex items-center gap-1"><Clock className="w-3 h-3"/>~{eta} mins</span>
@@ -40,7 +40,7 @@ const AmbulanceCard = ({ ambulance, onSelect, patientCoords }) => {
                     </div>
                 </div>
                 <div className="flex flex-col items-end gap-2">
-                    <Badge variant={ambulance.status === 'available' ? 'default' : 'secondary'} className="capitalize">{ambulance.status}</Badge>
+                    <Badge variant={ambulance.status === 'available' ? 'default' : 'destructive'} className="capitalize">{ambulance.status}</Badge>
                     <Button size="sm" className="glowing-shadow-interactive" onClick={() => onSelect(ambulance, distance, eta)} disabled={ambulance.status !== 'available'}>
                         Select
                     </Button>
@@ -65,13 +65,14 @@ const BookingConfirmation = ({ ambulance, distance, eta, onConfirm, onCancel }) 
                 <div className="space-y-4 my-4">
                     <InfoRow icon={Car} label="Vehicle No" value={ambulance.vehicle_no} />
                     <InfoRow icon={Phone} label="Driver" value={`${ambulance.driver_name} (${ambulance.driver_phone})`} />
+                    <InfoRow icon={ShieldPlus} label="Type" value={ambulance.type} />
                     <InfoRow icon={MapPin} label="Distance" value={`~${distance.toFixed(1)} km`} />
                     <InfoRow icon={Clock} label="Estimated Arrival" value={`~${eta} minutes`} />
                 </div>
-                <div className="flex justify-end gap-4">
+                <DialogFooter className="flex justify-end gap-4">
                     <Button variant="outline" onClick={onCancel}>Cancel</Button>
                     <Button className="glowing-shadow-interactive" onClick={onConfirm}>Request Now</Button>
-                </div>
+                </DialogFooter>
             </DialogContent>
         </Dialog>
     );
@@ -95,14 +96,25 @@ const TrackingView = ({ booking, onCancel }) => {
                 <p className="text-sm text-muted-foreground italic">“Help is on the way — stay calm, we’ll get you there.”</p>
             </CardHeader>
             <CardContent>
-                <div className="relative h-64 bg-background/50 rounded-lg overflow-hidden border border-primary/20">
+                 <div className="relative h-80 bg-background/50 rounded-lg overflow-hidden border border-primary/20">
                     <div className="absolute inset-0 bg-grid-primary/10 [mask-image:radial-gradient(ellipse_at_center,transparent_30%,black)] animate-pulse"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center animate-ping-slow">
-                            <Ambulance className="w-12 h-12 text-primary" />
+                    <div className="absolute inset-0 flex items-center justify-center p-4">
+                       <div className="w-full h-full border-2 border-dashed border-primary/30 rounded-lg flex items-center justify-center">
+                            <p className="text-primary/50 text-lg font-bold">3D Map View Mock</p>
+                       </div>
+                    </div>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                         <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center animate-ping-slow">
+                            <Ambulance className="w-8 h-8 text-primary" />
                         </div>
                     </div>
-                     <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-primary font-bold">Live Tracking Mock</p>
+                    <div className="absolute top-4 left-4 glassmorphism p-2 rounded-lg">
+                        <p className="text-sm text-muted-foreground">ETA</p>
+                        <p className="text-xl font-bold text-white">{eta} min</p>
+                    </div>
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-primary font-bold bg-background/50 px-4 py-1 rounded-full">
+                        Live Tracking Simulation
+                    </div>
                 </div>
                 <div className="mt-6 space-y-4">
                      <InfoRow icon={Car} label="Vehicle No" value={booking.ambulance.vehicle_no} />
@@ -136,19 +148,28 @@ const InfoRow = ({icon: Icon, label, value, isPhone = false, phone}) => (
 
 
 export function AmbulanceBooking({ patient }: { patient: Patient }) {
+    const [step, setStep] = useState(1);
     const [patientCoords, setPatientCoords] = useState(null);
+    const [selectedAmbulanceType, setSelectedAmbulanceType] = useState<string | null>(null);
+    const [selectedHospital, setSelectedHospital] = useState<string | null>(null);
     const [selectedAmbulance, setSelectedAmbulance] = useState(null);
     const [selectionDetails, setSelectionDetails] = useState({ distance: 0, eta: 0 });
     const [activeBooking, setActiveBooking] = useState(null);
+    
 
     useEffect(() => {
         // Mocking patient location for demo
         setPatientCoords({ lat: 19.0760, lng: 72.8777 }); 
     }, []);
 
-    const sortedAmbulances = useMemo(() => {
-        if (!patientCoords) return dummyAmbulances;
-        return [...dummyAmbulances].sort((a, b) => {
+    const filteredAmbulances = useMemo(() => {
+        if (!dummyAmbulances) return [];
+        let ambulances = dummyAmbulances;
+        if (selectedAmbulanceType) {
+            ambulances = ambulances.filter(a => a.type === selectedAmbulanceType);
+        }
+        return [...ambulances].sort((a, b) => {
+            if (!patientCoords) return 0;
             const distA = Math.sqrt(Math.pow(patientCoords.lat - a.current_coords.lat, 2) + Math.pow(patientCoords.lng - a.current_coords.lng, 2));
             const distB = Math.sqrt(Math.pow(patientCoords.lat - b.current_coords.lat, 2) + Math.pow(patientCoords.lng - b.current_coords.lng, 2));
             const etaA = a.speed_kmph > 0 ? (distA * 111) / a.speed_kmph : Infinity;
@@ -159,9 +180,17 @@ export function AmbulanceBooking({ patient }: { patient: Patient }) {
             
             return etaA - etaB;
         });
-    }, [patientCoords]);
+    }, [patientCoords, selectedAmbulanceType]);
 
-    const handleSelect = (ambulance, distance, eta) => {
+    const resetFlow = () => {
+        setStep(1);
+        setSelectedAmbulanceType(null);
+        setSelectedHospital(null);
+        setSelectedAmbulance(null);
+        setActiveBooking(null);
+    }
+
+    const handleSelectAmbulance = (ambulance, distance, eta) => {
         setSelectedAmbulance(ambulance);
         setSelectionDetails({ distance, eta });
     };
@@ -177,6 +206,7 @@ export function AmbulanceBooking({ patient }: { patient: Patient }) {
             eta: selectionDetails.eta,
         });
         setSelectedAmbulance(null);
+        setStep(3); // Move to tracking view
     };
 
     const handleCancelSelection = () => {
@@ -185,49 +215,82 @@ export function AmbulanceBooking({ patient }: { patient: Patient }) {
     
     const handleCancelBooking = () => {
         // Mock cancellation
-        console.log("Booking cancelled", activeBooking.id);
-        setActiveBooking(null);
+        console.log("Booking cancelled", activeBooking?.id);
+        resetFlow();
     }
     
     const autoAssign = () => {
-        const firstAvailable = sortedAmbulances.find(a => a.status === 'available');
+        const firstAvailable = filteredAmbulances.find(a => a.status === 'available');
         if (firstAvailable) {
             const distance = Math.sqrt(Math.pow(patientCoords.lat - firstAvailable.current_coords.lat, 2) + Math.pow(patientCoords.lng - firstAvailable.current_coords.lng, 2)) * 111;
             const eta = Math.round((distance / firstAvailable.speed_kmph) * 60);
-            handleSelect(firstAvailable, distance, eta);
+            handleSelectAmbulance(firstAvailable, distance, eta);
         } else {
-            // In a real app, you'd want to use a toast here
-            alert("No ambulances available at the moment.");
+            alert("No ambulances available matching your criteria.");
         }
     }
 
-
-    if (activeBooking) {
+    if (step === 3 && activeBooking) {
         return <TrackingView booking={activeBooking} onCancel={handleCancelBooking}/>;
     }
 
     return (
         <div className="space-y-6">
             <Card className="glassmorphism glowing-shadow">
-                <CardHeader>
-                    <CardTitle className="text-gradient-glow">Request an Ambulance</CardTitle>
-                    <p className="text-muted-foreground">Select a nearby ambulance or auto-assign the fastest one.</p>
-                </CardHeader>
-                <CardContent>
-                    <div className="flex justify-end mb-4">
-                        <Button onClick={autoAssign} className="glowing-shadow-interactive"><Bot className="mr-2" /> Auto-assign nearest</Button>
-                    </div>
-                    <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
-                        {sortedAmbulances.map(amb => (
-                            <AmbulanceCard 
-                                key={amb.id} 
-                                ambulance={amb} 
-                                onSelect={handleSelect}
-                                patientCoords={patientCoords}
-                            />
-                        ))}
-                    </div>
-                </CardContent>
+                {step === 1 && (
+                    <>
+                        <CardHeader>
+                            <CardTitle className="text-gradient-glow">Request an Ambulance</CardTitle>
+                            <CardDescription>Select the type of ambulance and destination hospital.</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            <div>
+                                <h3 className="text-lg font-semibold text-white mb-2">Ambulance Type</h3>
+                                <div className="grid grid-cols-3 gap-4">
+                                    <AmbulanceTypeCard icon={ShieldPlus} type="Basic" selected={selectedAmbulanceType} onSelect={setSelectedAmbulanceType} />
+                                    <AmbulanceTypeCard icon={HeartPulse} type="ICU" selected={selectedAmbulanceType} onSelect={setSelectedAmbulanceType} />
+                                    <AmbulanceTypeCard icon={Brain} type="Advanced Life Support" selected={selectedAmbulanceType} onSelect={setSelectedAmbulanceType} />
+                                </div>
+                            </div>
+                             <div>
+                                <h3 className="text-lg font-semibold text-white mb-2">Destination</h3>
+                                <Select value={selectedHospital || ''} onValueChange={setSelectedHospital}>
+                                    <SelectTrigger className="w-full">
+                                        <SelectValue placeholder="Select a hospital..." />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {dummyHospitals.map(h => <SelectItem key={h.hospitalId} value={h.hospitalId}>{h.name}, {h.location}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <Button onClick={() => setStep(2)} disabled={!selectedAmbulanceType || !selectedHospital} className="w-full glowing-shadow-interactive">Next <ArrowRight /></Button>
+                        </CardContent>
+                    </>
+                )}
+                {step === 2 && (
+                     <>
+                        <CardHeader>
+                            <Button variant="ghost" onClick={() => setStep(1)} className="absolute top-4 left-4">Back</Button>
+                            <CardTitle className="text-gradient-glow text-center">Select an Ambulance</CardTitle>
+                            <CardDescription className="text-center">Choose from the available ambulances or let us pick the fastest one for you.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="flex justify-end mb-4">
+                                <Button onClick={autoAssign} className="glowing-shadow-interactive"><Bot className="mr-2" /> Auto-assign nearest</Button>
+                            </div>
+                            <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-2">
+                                {filteredAmbulances.map(amb => (
+                                    <AmbulanceCard 
+                                        key={amb.id} 
+                                        ambulance={amb} 
+                                        onSelect={handleSelectAmbulance}
+                                        patientCoords={patientCoords}
+                                    />
+                                ))}
+                            </div>
+                        </CardContent>
+                    </>
+                )}
             </Card>
             <BookingConfirmation
                 ambulance={selectedAmbulance}
@@ -240,3 +303,15 @@ export function AmbulanceBooking({ patient }: { patient: Patient }) {
     );
 }
 
+const AmbulanceTypeCard = ({ icon: Icon, type, selected, onSelect }) => {
+    const isSelected = selected === type;
+    return (
+        <Card 
+            className={`glassmorphism text-center p-4 cursor-pointer transition-all duration-300 ${isSelected ? 'border-primary shadow-primary/30 shadow-lg' : 'hover:border-primary/50'}`}
+            onClick={() => onSelect(type)}
+        >
+            <Icon className={`w-10 h-10 mx-auto mb-2 ${isSelected ? 'text-primary' : 'text-muted-foreground'}`} />
+            <p className={`font-semibold ${isSelected ? 'text-white' : 'text-muted-foreground'}`}>{type}</p>
+        </Card>
+    )
+}
