@@ -14,6 +14,7 @@ import { MedicalRecords } from '@/components/patient/medical-records';
 import { Appointments } from '@/components/patient/appointments';
 import { VitalsAndPredictions } from '@/components/patient/vitals-and-predictions';
 import { DoctorsHub } from '@/components/patient/doctors-hub';
+import { Diagnostics } from '@/components/patient/diagnostics';
 import {
   Sheet,
   SheetContent,
@@ -55,7 +56,7 @@ function DashboardContent() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen text-center">
         <h2 className="text-2xl font-bold text-destructive mb-4">Patient Not Found</h2>
-        <p className="text-muted-foreground mb-8">The patient ID "{patientId}" does not exist in our records.</p>
+        <p className="text-muted-foreground mb-8">The patient ID "{patientId}" does not exist in our records. Use a dummy ID like 'P-102345' for testing.</p>
         <Button asChild>
           <Link href="/login?role=patient">Return to Login</Link>
         </Button>
@@ -77,6 +78,8 @@ function DashboardContent() {
         return <AmbulanceBooking patient={patient} />;
       case 'doctors':
         return <DoctorsHub patient={patient} />;
+      case 'diagnostics':
+        return <Diagnostics patient={patient} />;
       default:
         return <PatientProfile patient={patient} />;
     }
