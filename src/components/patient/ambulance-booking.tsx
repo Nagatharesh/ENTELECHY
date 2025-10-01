@@ -32,7 +32,7 @@ const AmbulanceCard = ({ ambulance, onSelect, patientCoords }) => {
                     </div>
                     <div>
                         <p className="font-bold text-white">{ambulance.vehicle_no}</p>
-                        <p className="text-sm text-muted-foreground">{ambulance.driver_name} - <Badge variant="secondary" className="text-xs">{ambulance.type}</Badge></p>
+                        <div className="text-sm text-muted-foreground">{ambulance.driver_name} - <Badge variant="secondary" className="text-xs">{ambulance.type}</Badge></div>
                         <div className="flex items-center gap-4 text-xs mt-1">
                             <span className="flex items-center gap-1"><MapPin className="w-3 h-3"/>~{distance.toFixed(1)} km</span>
                             <span className="flex items-center gap-1"><Clock className="w-3 h-3"/>~{eta} mins</span>
@@ -315,3 +315,5 @@ const AmbulanceTypeCard = ({ icon: Icon, type, selected, onSelect }) => {
         </Card>
     )
 }
+
+    
