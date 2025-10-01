@@ -40,9 +40,9 @@ export const dummyDoctors = [
       "contact": "+919876543214",
       "waitTime": "25 mins"
     },
-    { "doctorId": "DOC-006", "name": "Dr. Neha Kapoor", "specialty": "Pulmonologist", "hospitalId": "HOS-002", "contact": "+919876543215", "waitTime": "20 mins" },
-    { "doctorId": "DOC-007", "name": "Dr. Amit Verma", "specialty": "General Physician", "hospitalId": "HOS-001", "contact": "+919876543216", "waitTime": "10 mins" },
-    { "doctorId": "DOC-008", "name": "Dr. Ritu Malhotra", "specialty": "Emergency Medicine", "hospitalId": "HOS-003", "contact": "+919876543217", "waitTime": "5 mins" }
+    { "doctorId": "DOC-006", "name": "Dr. Neha Kapoor", "specialty": "Pulmonologist", "hospitalId": "HOS-002", "contact": "+911122223333", "waitTime": "20 mins" },
+    { "doctorId": "DOC-007", "name": "Dr. Amit Verma", "specialty": "General Physician", "hospitalId": "HOS-001", "contact": "+911133334444", "waitTime": "10 mins" },
+    { "doctorId": "DOC-008", "name": "Dr. Ritu Malhotra", "specialty": "Emergency Medicine", "hospitalId": "HOS-003", "contact": "+911144445555", "waitTime": "5 mins" }
 ]
 
 export const dummyHospitals = [
@@ -118,7 +118,7 @@ export const dummyAmbulances = [
   {"id": "AMB-006", "vehicle_no": "MH-12-KL-2468", "driver_name": "Deepak Sharma", "driver_phone": "+919876500006", "status": "available", "current_coords": {"lat": 19.0660, "lng": 72.8677}, "speed_kmph": 45, "hospital_id": "HOS-001"},
   {"id": "AMB-007", "vehicle_no": "DL-3C-MN-1357", "driver_name": "Manoj Tiwari", "driver_phone": "+919876500007", "status": "on-trip", "current_coords": {"lat": 28.6941, "lng": 77.0925}, "speed_kmph": 65, "hospital_id": "HOS-002"},
   {"id": "AMB-008", "vehicle_no": "TS-09-OP-8642", "driver_name": "Rajesh Gupta", "driver_phone": "+919876500008", "status": "available", "current_coords": {"lat": 17.3750, "lng": 78.4767}, "speed_kmph": 58, "hospital_id": "HOS-003"},
-  {"id": "AMB-009", "vehicle_no": "KA-01-QR-9753", "driver_name": "Naveen Gowda", "driver_phone": "+919876500009", "status": "offline", "current_coords": {"lat": 12.9616, "lng": 77.5846}, "speed_kmph": 0, "hospital_id": "HOS-004"},
+  {"id": "AMB-009", "vehicle_no": "KA-01-QR-9753", "driver_name": "Naveen Gowda", "driver_phone": "+919876500009", "status": "offline", "current_coords": {"lat": 12.9616, "lng": 77.5846}, "speed_kmph": 0, "hospital_id": "HOS-04"},
   {"id": "AMB-010", "vehicle_no": "MH-14-ST-1928", "driver_name": "Prakash Joshi", "driver_phone": "+919876500010", "status": "available", "current_coords": {"lat": 18.5104, "lng": 73.8467}, "speed_kmph": 52, "hospital_id": "HOS-005"}
 ];
 
@@ -173,37 +173,37 @@ export const dummyPatients = [
     },
     "medicalEncounters": [
       {
-        "encounterId": "ENC-003",
-        "date": "2025-09-12",
-        "department": "Emergency",
-        "doctor": "Dr. Ritu Malhotra",
-        "reason": "Acute shortness of breath after running",
-        "findings": "Transient tachycardia 110 bpm, SpO₂ 95%",
-        "investigations": "ECG, Peak flow, Chest auscultation",
-        "treatment": "Nebulized bronchodilator, Observation 4 hours",
-        "dischargeNotes": "Symptoms improved; continue inhaler"
+        "encounterId": "ENC-001",
+        "date": "2024-03-01",
+        "department": "Pulmonology",
+        "doctor": "Dr. Neha Kapoor",
+        "reason": "Seasonal Asthma flare, shortness of breath, wheezing",
+        "findings": "Wheezing, RR 18/min, SpO₂ 96%",
+        "investigations": "Spirometry, Chest X-ray",
+        "treatment": "Salbutamol inhaler 2 puffs PRN, Prednisolone 20 mg daily x5 days",
+        "dischargeNotes": "Follow-up in 1 month. Outcome: Symptoms improved."
       },
       {
         "encounterId": "ENC-002",
         "date": "2025-01-15",
         "department": "General Medicine",
         "doctor": "Dr. Amit Verma",
-        "reason": "Routine annual checkup",
-        "findings": "BP 130/84, HR 80 bpm, BMI 24.1",
+        "reason": "Routine Annual Checkup",
+        "findings": "BP 130/84, HR 80, BMI 24.1",
         "investigations": "Fasting glucose 92 mg/dL, Lipid profile, ECG",
         "treatment": "Lifestyle counseling (diet & exercise)",
-        "dischargeNotes": "Low diabetes risk; monitor BP monthly"
+        "dischargeNotes": "Monthly BP monitoring. Outcome: Stable."
       },
       {
-        "encounterId": "ENC-001",
-        "date": "2024-03-01",
-        "department": "Pulmonology",
-        "doctor": "Dr. Neha Kapoor",
-        "reason": "Asthma follow-up - seasonal flare",
-        "findings": "Wheezing; respiratory rate 18/min",
-        "investigations": "Spirometry, Chest X-ray",
-        "treatment": "Salbutamol inhaler (2 puffs PRN), Prednisolone 20mg x5 days",
-        "dischargeNotes": "Avoid triggers; spacer recommended"
+        "encounterId": "ENC-003",
+        "date": "2025-09-12",
+        "department": "Emergency",
+        "doctor": "Dr. Ritu Malhotra",
+        "reason": "Acute shortness of breath after running",
+        "findings": "Tachycardia 110 bpm, SpO₂ 95%",
+        "investigations": "ECG, Peak flow, Chest auscultation",
+        "treatment": "Nebulized bronchodilator, Observation 4 hours",
+        "dischargeNotes": "Follow-up with Pulmonology if recurs. Outcome: Symptoms improved."
       }
     ],
     "medications": {
@@ -212,9 +212,10 @@ export const dummyPatients = [
         {"medicineId": "MED-018", "name": "Multivitamin", "dosage": "Once daily", "reason": "Supplement"}
       ],
       "past": [
-        {"medicineId": "MED-016", "name": "Prednisolone", "dosage": "20 mg, 5 days", "reason": "Asthma exacerbation"},
-        {"medicineId": "MED-017", "name": "Azithromycin", "dosage": "500 mg, 3 days", "reason": "Respiratory infection"}
-      ]
+        {"medicineId": "MED-016", "name": "Prednisolone", "dosage": "20 mg, 5 days, oral", "reason": "Asthma exacerbation"},
+        {"medicineId": "MED-017", "name": "Azithromycin", "dosage": "500 mg, 3 days, oral", "reason": "Respiratory infection"}
+      ],
+      "otc": ["Paracetamol PRN", "Cough lozenges PRN"]
     },
     "investigations": [
       {"investigationId": "INV-004", "date": "2025-09-12", "type": "ECG", "summary": "Transient sinus tachycardia; no ischemia.", "doctor": "Dr. Ritu Malhotra"},
@@ -286,7 +287,8 @@ export const dummyPatients = [
     ],
     "medications": {
         "current": [{"medicineId": "MED-011", "name": "D-Rise", "dosage": "1 tablet weekly", "reason": "Vitamin D deficiency"}],
-        "past": []
+        "past": [],
+        "otc": []
     },
     "investigations": [
         {"investigationId": "INV-005", "date": "2025-09-15", "type": "Blood Test", "summary": "Vitamin D levels at 25 ng/mL (previously 10 ng/mL).", "doctor": "Dr. Amit Verma"}
@@ -311,4 +313,6 @@ export type Medicine = typeof dummyMedicines[0];
 export type Ambulance = typeof dummyAmbulances[0];
 export type MedicalEncounter = Patient["medicalEncounters"][0];
 export type Investigation = Patient["investigations"][0];
+    
+
     
