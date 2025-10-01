@@ -42,7 +42,8 @@ export const dummyDoctors = [
     },
     { "doctorId": "DOC-006", "name": "Dr. Neha Kapoor", "specialty": "Pulmonologist", "hospitalId": "HOS-002", "contact": "+911122223333", "waitTime": "20 mins" },
     { "doctorId": "DOC-007", "name": "Dr. Amit Verma", "specialty": "General Physician", "hospitalId": "HOS-001", "contact": "+911133334444", "waitTime": "10 mins" },
-    { "doctorId": "DOC-008", "name": "Dr. Ritu Malhotra", "specialty": "Emergency Medicine", "hospitalId": "HOS-003", "contact": "+911144445555", "waitTime": "5 mins" }
+    { "doctorId": "DOC-008", "name": "Dr. Ritu Malhotra", "specialty": "Emergency Medicine", "hospitalId": "HOS-003", "contact": "+911144445555", "waitTime": "5 mins" },
+    { "doctorId": "DOC-009", "name": "Dr. Sunil Kumar", "specialty": "Dermatologist", "hospitalId": "HOS-005", "contact": "+911166667777", "waitTime": "15 mins" }
 ]
 
 export const dummyHospitals = [
@@ -204,24 +205,51 @@ export const dummyPatients = [
         "investigations": "ECG, Peak flow, Chest auscultation",
         "treatment": "Nebulized bronchodilator, Observation 4 hours",
         "dischargeNotes": "Follow-up with Pulmonology if recurs. Outcome: Symptoms improved."
+      },
+      {
+        "encounterId": "ENC-004",
+        "date": "2025-09-28",
+        "department": "Cardiology",
+        "doctor": "Dr. Rahul Mehra",
+        "reason": "Follow-up for borderline high BP",
+        "findings": "BP 128/84. No other significant findings.",
+        "investigations": "2D Echocardiogram, Stress Test",
+        "treatment": "Advised DASH diet, increase cardio exercise to 5x/week.",
+        "dischargeNotes": "Re-check BP in 3 months. No medication needed at this time. Outcome: Monitoring."
+      },
+      {
+        "encounterId": "ENC-005",
+        "date": "2025-10-05",
+        "department": "Dermatology",
+        "doctor": "Dr. Sunil Kumar",
+        "reason": "Minor skin rash on arm",
+        "findings": "Mild contact dermatitis, likely from a new detergent.",
+        "investigations": "None",
+        "treatment": "Topical hydrocortisone cream 1% for 1 week.",
+        "dischargeNotes": "Avoid new detergent. Follow-up if rash persists. Outcome: Improving."
       }
     ],
     "medications": {
       "current": [
-        {"medicineId": "MED-009", "name": "Salbutamol Inhaler", "dosage": "100 mcg/puff, 2 puffs PRN", "reason": "Asthma (rescue)"},
-        {"medicineId": "MED-018", "name": "Multivitamin", "dosage": "Once daily", "reason": "Supplement"}
+        {"medicineId": "MED-009", "name": "Salbutamol Inhaler", "dosage": "100 mcg/puff, 2 puffs PRN", "reason": "Asthma (rescue)", "type": "current"},
+        {"medicineId": "MED-018", "name": "Multivitamin", "dosage": "Once daily", "reason": "Supplement", "type": "current"}
       ],
       "past": [
-        {"medicineId": "MED-016", "name": "Prednisolone", "dosage": "20 mg, 5 days, oral", "reason": "Asthma exacerbation"},
-        {"medicineId": "MED-017", "name": "Azithromycin", "dosage": "500 mg, 3 days, oral", "reason": "Respiratory infection"}
+        {"medicineId": "MED-016", "name": "Prednisolone", "dosage": "20 mg, 5 days, oral", "reason": "Asthma exacerbation", "type": "past"},
+        {"medicineId": "MED-017", "name": "Azithromycin", "dosage": "500 mg, 3 days, oral", "reason": "Respiratory infection", "type": "past"}
       ],
-      "otc": ["Paracetamol PRN", "Cough lozenges PRN"]
+      "otc": [
+        {"name": "Paracetamol", "dosage": "500mg PRN", "reason": "Headache/Fever", "type": "otc"},
+        {"name": "Cough lozenges", "dosage": "PRN", "reason": "Sore throat", "type": "otc"}
+      ]
     },
     "investigations": [
-      {"investigationId": "INV-004", "date": "2025-09-12", "type": "ECG", "summary": "Transient sinus tachycardia; no ischemia.", "doctor": "Dr. Ritu Malhotra"},
-      {"investigationId": "INV-003", "date": "2025-01-16", "type": "Blood Test", "summary": "FBG 92 mg/dL; Lipid profile borderline.", "doctor": "Dr. Amit Verma"},
+      {"investigationId": "INV-001", "date": "2024-03-02", "type": "Spirometry", "summary": "Mild reversible obstructive pattern.", "doctor": "Dr. Neha Kapoor"},
       {"investigationId": "INV-002", "date": "2024-03-02", "type": "Chest X-ray", "summary": "Clear lung fields, no acute abnormalities.", "doctor": "Dr. Neha Kapoor", "imageUrl": "https://picsum.photos/seed/rad1/600/400"},
-      {"investigationId": "INV-001", "date": "2024-03-02", "type": "Spirometry", "summary": "Mild reversible obstructive pattern.", "doctor": "Dr. Neha Kapoor"}
+      {"investigationId": "INV-003", "date": "2025-01-16", "type": "Blood Test", "summary": "FBG 92 mg/dL; Lipid profile borderline.", "doctor": "Dr. Amit Verma"},
+      {"investigationId": "INV-004", "date": "2025-09-12", "type": "ECG", "summary": "Transient sinus tachycardia; no ischemia.", "doctor": "Dr. Ritu Malhotra"},
+      {"investigationId": "INV-005", "date": "2025-09-30", "type": "Ultrasound", "summary": "2D Echo: Structurally normal heart, EF 60%.", "doctor": "Dr. Rahul Mehra", "imageUrl": "https://picsum.photos/seed/rad2/600/400"},
+      {"investigationId": "INV-006", "date": "2025-09-30", "type": "MRI", "summary": "Stress Test: Negative for inducible ischemia.", "doctor": "Dr. Rahul Mehra"}
     ],
     "vaccinations": ["COVID-19 (2 doses + booster)", "Tetanus (Up to date)", "Annual flu vaccine"],
     "carePlan": {
@@ -269,7 +297,7 @@ export const dummyPatients = [
       "diet": "Non-vegetarian, balanced diet",
     },
     "appointments": [
-      {"appointmentId": "APP-003", "date": "2025-10-07", "doctorId": "DOC-002", "hospitalId": "HOS-002", "status": "booked"}
+      {"appointmentId": "APP-003", "date": "2025-10-07", "doctorId": "DOC-002", "hospitalId": "HOS-002", "status": "booked", "urgent": false }
     ],
     "predictions": {
       "vitalsNext7Days": {"heartRate": [79,78,80,81,79,78,80], "bloodPressure": ["119/77","120/78","118/76","119/77","120/78","119/77","118/76"]},
@@ -283,15 +311,15 @@ export const dummyPatients = [
        "preventiveMeasures": "Continue Vitamin D supplements, regular sun exposure."
     },
     "medicalEncounters": [
-        {"encounterId": "ENC-004", "date": "2025-09-15", "department": "General Medicine", "doctor": "Dr. Amit Verma", "reason": "Follow-up for Vitamin D deficiency.", "findings": "Levels improving.", "investigations": "Vitamin D test", "treatment": "Continue supplements", "dischargeNotes": "Re-check in 3 months."}
+        {"encounterId": "ENC-006", "date": "2025-09-15", "department": "General Medicine", "doctor": "Dr. Amit Verma", "reason": "Follow-up for Vitamin D deficiency.", "findings": "Levels improving.", "investigations": "Vitamin D test", "treatment": "Continue supplements", "dischargeNotes": "Re-check in 3 months."}
     ],
     "medications": {
-        "current": [{"medicineId": "MED-011", "name": "D-Rise", "dosage": "1 tablet weekly", "reason": "Vitamin D deficiency"}],
+        "current": [{"medicineId": "MED-011", "name": "D-Rise", "dosage": "1 tablet weekly", "reason": "Vitamin D deficiency", "type": "current"}],
         "past": [],
         "otc": []
     },
     "investigations": [
-        {"investigationId": "INV-005", "date": "2025-09-15", "type": "Blood Test", "summary": "Vitamin D levels at 25 ng/mL (previously 10 ng/mL).", "doctor": "Dr. Amit Verma"}
+        {"investigationId": "INV-007", "date": "2025-09-15", "type": "Blood Test", "summary": "Vitamin D levels at 25 ng/mL (previously 10 ng/mL).", "doctor": "Dr. Amit Verma"}
     ],
     "vaccinations": ["COVID-19 (2 doses + booster)", "Tetanus (Up to date)"],
     "carePlan": {
@@ -313,6 +341,4 @@ export type Medicine = typeof dummyMedicines[0];
 export type Ambulance = typeof dummyAmbulances[0];
 export type MedicalEncounter = Patient["medicalEncounters"][0];
 export type Investigation = Patient["investigations"][0];
-    
-
     
