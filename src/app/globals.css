@@ -5,75 +5,75 @@
 
 @layer base {
   :root {
-    --background: 226 23% 11%; /* #161a25 */
+    --background: 220 20% 5%; /* Deep Space Black #0A0A0F */
     --foreground: 220 20% 90%;
 
-    --card: 226 23% 15%; /* #1e233b - ish */
+    --card: 259 69% 60% / 0.1; /* Cosmic Violet #9D4EDD at 10% opacity */
     --card-foreground: 220 20% 90%;
 
-    --popover: 226 23% 11%;
+    --popover: 220 20% 5%;
     --popover-foreground: 220 20% 90%;
 
-    --primary: 333 100% 62%; /* Electric Pink #FF3C96 */
-    --primary-foreground: 226 23% 11%;
+    --primary: 25 100% 50%; /* Cyber Orange #FF6B00 */
+    --primary-foreground: 220 20% 5%;
 
-    --secondary: 22 100% 63%; /* Neon Orange #FF8C42 */
-    --secondary-foreground: 226 23% 11%;
+    --secondary: 181 100% 50%; /* Neon Cyan #00F5FF */
+    --secondary-foreground: 220 20% 5%;
 
-    --tertiary: 110 100% 52%; /* Lime Green #39FF14 */
+    --tertiary: 104 100% 54%; /* Neon Lime #39FF14 */
 
-    --muted: 226 23% 20%;
+    --muted: 220 20% 10%;
     --muted-foreground: 220 20% 60%;
 
-    --accent: 180 100% 50%; /* Cyan #00FFFF */
-    --accent-foreground: 226 23% 11%;
+    --accent: 331 100% 59%; /* Hot Pink #FF2E92 */
+    --accent-foreground: 220 20% 5%;
 
-    --destructive: 333 100% 62%; /* Electric Pink */
+    --destructive: 331 100% 59%; /* Hot Pink for destructive states */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 333 100% 62% / 0.1;
-    --input: 226 23% 20% / 0.7;
-    --ring: 333 100% 72%;
+    --border: 259 69% 60% / 0.2; /* Cosmic Violet at 20% opacity */
+    --input: 220 20% 10% / 0.7;
+    --ring: 25 100% 60%; /* Lighter Cyber Orange */
 
     --radius: 0.75rem;
 
-    --chart-1: 333 100% 62%;
-    --chart-2: 22 100% 63%;
-    --chart-3: 110 100% 52%;
-    --chart-4: 180 100% 50%;
-    --chart-5: 256 100% 74%; /* Soft Violet */
+    --chart-1: 331 100% 59%; /* Hot Pink */
+    --chart-2: 25 100% 50%;  /* Cyber Orange */
+    --chart-3: 104 100% 54%; /* Neon Lime */
+    --chart-4: 181 100% 50%; /* Neon Cyan */
+    --chart-5: 259 69% 60%; /* Cosmic Violet */
   }
 
   .dark {
-    --background: 226 23% 11%;
+    --background: 220 20% 5%; /* Deep Space Black */
     --foreground: 220 20% 90%;
 
-    --card: 226 23% 15%;
+    --card: 259 69% 60% / 0.1;
     --card-foreground: 220 20% 90%;
 
-    --popover: 226 23% 11%;
+    --popover: 220 20% 5%;
     --popover-foreground: 220 20% 90%;
 
-    --primary: 333 100% 62%; /* Electric Pink */
-    --primary-foreground: 226 23% 11%;
+    --primary: 25 100% 50%; /* Cyber Orange */
+    --primary-foreground: 220 20% 5%;
 
-    --secondary: 22 100% 63%; /* Neon Orange */
-    --secondary-foreground: 226 23% 11%;
+    --secondary: 181 100% 50%; /* Neon Cyan */
+    --secondary-foreground: 220 20% 5%;
     
-    --tertiary: 110 100% 52%; /* Lime Green */
+    --tertiary: 104 100% 54%; /* Neon Lime */
 
-    --muted: 226 23% 20%;
+    --muted: 220 20% 10%;
     --muted-foreground: 220 20% 60%;
 
-    --accent: 180 100% 50%; /* Cyan */
-    --accent-foreground: 226 23% 11%;
+    --accent: 331 100% 59%; /* Hot Pink */
+    --accent-foreground: 220 20% 5%;
 
-    --destructive: 333 100% 62%;
+    --destructive: 331 100% 59%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 333 100% 62% / 0.1;
-    --input: 226 23% 20% / 0.7;
-    --ring: 333 100% 72%;
+    --border: 259 69% 60% / 0.2;
+    --input: 220 20% 10% / 0.7;
+    --ring: 25 100% 60%;
   }
 }
 
@@ -84,10 +84,10 @@
   body {
     @apply bg-background text-foreground;
     background-image: 
-      radial-gradient(circle at 15% 50%, hsl(var(--primary) / 0.15), transparent 35%),
-      radial-gradient(circle at 85% 50%, hsl(var(--secondary) / 0.15), transparent 35%),
-      radial-gradient(circle at 50% 90%, hsl(var(--accent) / 0.1), transparent 40%),
-      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="hsl(333 100% 62% / 0.05)"><path d="M0 .5H31.5V32"/></svg>');
+      radial-gradient(circle at 15% 50%, hsl(var(--primary) / 0.1), transparent 35%),
+      radial-gradient(circle at 85% 50%, hsl(var(--secondary) / 0.1), transparent 35%),
+      radial-gradient(circle at 50% 90%, hsl(var(--accent) / 0.08), transparent 40%),
+      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="hsl(331 100% 59% / 0.05)"><path d="M0 .5H31.5V32"/></svg>');
   }
 
   .glassmorphism {
@@ -120,7 +120,7 @@
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='white' stroke-opacity='0.05'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
   }
   .bg-grid-primary\/\[0\.1\] {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='hsl(333 100% 62% / 0.1)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='hsl(25 100% 50% / 0.1)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
   }
 
   .animate-glow-pulse {
@@ -222,5 +222,3 @@
       100% { transform: scale(4); opacity: 0; }
     }
 }
-
-    
