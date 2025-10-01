@@ -9,6 +9,7 @@ import { Ambulance, Phone, Car, Clock, MapPin, XCircle, Bot, ShieldPlus, HeartPu
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from '@/lib/utils';
 
 const AmbulanceCard = ({ ambulance, onSelect, patientCoords }) => {
     const distance = useMemo(() => {
@@ -80,14 +81,33 @@ const BookingConfirmation = ({ ambulance, distance, eta, onConfirm, onCancel }) 
 
 const TrackingView = ({ booking, onCancel }) => {
     const [eta, setEta] = useState(booking.eta);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         if (booking.status !== 'enroute') return;
+        const totalDuration = booking.eta * 60; // in seconds
+        let elapsedTime = 0;
+
         const interval = setInterval(() => {
-            setEta(prev => Math.max(0, prev - 1));
-        }, 60 * 1000);
+            setEta(prev => Math.max(0, prev - (1/60)));
+            
+            elapsedTime++;
+            const newProgress = Math.min((elapsedTime / totalDuration) * 100, 100);
+            setProgress(newProgress);
+
+            if(newProgress >= 100){
+                clearInterval(interval);
+            }
+        }, 1000);
+
         return () => clearInterval(interval);
-    }, [booking.status]);
+    }, [booking.status, booking.eta]);
+
+    const formatTime = (minutes: number) => {
+        const mins = Math.floor(minutes);
+        const secs = Math.round((minutes - mins) * 60);
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    };
 
     return (
         <Card className="glassmorphism glowing-shadow">
@@ -98,28 +118,51 @@ const TrackingView = ({ booking, onCancel }) => {
             <CardContent>
                  <div className="relative h-80 bg-background/50 rounded-lg overflow-hidden border border-primary/20">
                     <div className="absolute inset-0 bg-grid-primary/10 [mask-image:radial-gradient(ellipse_at_center,transparent_30%,black)] animate-pulse"></div>
-                    <div className="absolute inset-0 flex items-center justify-center p-4">
-                       <div className="w-full h-full border-2 border-dashed border-primary/30 rounded-lg flex items-center justify-center">
-                            <p className="text-primary/50 text-lg font-bold">3D Map View Mock</p>
-                       </div>
-                    </div>
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                         <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center animate-ping-slow">
-                            <Ambulance className="w-8 h-8 text-primary" />
+                     <div className="absolute inset-0 flex items-center justify-center p-4">
+                        <div className="w-full h-full border-2 border-dashed border-primary/30 rounded-lg flex items-center justify-center p-4">
+                            {/* Path and markers */}
+                            <div className="relative w-full h-1/2">
+                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-primary/20 rounded-full"/>
+                                <div 
+                                    className="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-primary rounded-full animate-pulse"
+                                    style={{ width: `${progress}%`, transition: 'width 1s linear' }}
+                                />
+
+                                <div className="absolute left-0 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                                    <div className="w-4 h-4 rounded-full bg-secondary animate-ping"/>
+                                    <div className="absolute w-3 h-3 rounded-full bg-secondary"/>
+                                </div>
+
+                                <div 
+                                    className="absolute top-1/2 -translate-y-1/2"
+                                    style={{ left: `${progress}%`, transition: 'left 1s linear' }}
+                                >
+                                    <div className="relative -translate-x-1/2">
+                                        <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center animate-ping-slow">
+                                            <Ambulance className="w-5 h-5 text-primary" />
+                                        </div>
+                                         <Ambulance className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-primary" />
+                                    </div>
+                                </div>
+                                
+                                <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                                    <div className="w-3 h-3 rounded-full bg-destructive"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="absolute top-4 left-4 glassmorphism p-2 rounded-lg">
                         <p className="text-sm text-muted-foreground">ETA</p>
-                        <p className="text-xl font-bold text-white">{eta} min</p>
+                        <p className="text-2xl font-bold text-white">{formatTime(eta)}</p>
                     </div>
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-primary font-bold bg-background/50 px-4 py-1 rounded-full">
-                        Live Tracking Simulation
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-primary font-bold bg-background/50 px-4 py-1 rounded-full text-sm">
+                        Live 3D Tracking Simulation
                     </div>
                 </div>
                 <div className="mt-6 space-y-4">
                      <InfoRow icon={Car} label="Vehicle No" value={booking.ambulance.vehicle_no} />
                      <InfoRow icon={Phone} label="Driver Contact" value={booking.ambulance.driver_name} isPhone={true} phone={booking.ambulance.driver_phone}/>
-                     <InfoRow icon={Clock} label="Arriving In" value={`${eta} minutes`} />
+                     <InfoRow icon={Clock} label="Arriving In" value={`~${Math.ceil(eta)} minutes`} />
                 </div>
                 <div className="mt-6 flex justify-center">
                     <Button variant="destructive" onClick={onCancel} className="w-full max-w-xs">
@@ -246,7 +289,7 @@ export function AmbulanceBooking({ patient }: { patient: Patient }) {
                         <CardContent className="space-y-6">
                             <div>
                                 <h3 className="text-lg font-semibold text-white mb-2">Ambulance Type</h3>
-                                <div className="grid grid-cols-3 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <AmbulanceTypeCard icon={ShieldPlus} type="Basic" selected={selectedAmbulanceType} onSelect={setSelectedAmbulanceType} />
                                     <AmbulanceTypeCard icon={HeartPulse} type="ICU" selected={selectedAmbulanceType} onSelect={setSelectedAmbulanceType} />
                                     <AmbulanceTypeCard icon={Brain} type="Advanced Life Support" selected={selectedAmbulanceType} onSelect={setSelectedAmbulanceType} />
@@ -307,13 +350,15 @@ const AmbulanceTypeCard = ({ icon: Icon, type, selected, onSelect }) => {
     const isSelected = selected === type;
     return (
         <Card 
-            className={`glassmorphism text-center p-4 cursor-pointer transition-all duration-300 ${isSelected ? 'border-primary shadow-primary/30 shadow-lg' : 'hover:border-primary/50'}`}
+            className={cn('glassmorphism text-center p-4 cursor-pointer transition-all duration-300', isSelected ? 'border-primary shadow-primary/30 shadow-lg' : 'hover:border-primary/50')}
             onClick={() => onSelect(type)}
         >
-            <Icon className={`w-10 h-10 mx-auto mb-2 ${isSelected ? 'text-primary' : 'text-muted-foreground'}`} />
-            <p className={`font-semibold ${isSelected ? 'text-white' : 'text-muted-foreground'}`}>{type}</p>
+            <Icon className={cn('w-10 h-10 mx-auto mb-2', isSelected ? 'text-primary' : 'text-muted-foreground')} />
+            <p className={cn('font-semibold', isSelected ? 'text-white' : 'text-muted-foreground')}>{type}</p>
         </Card>
     )
 }
+
+    
 
     
