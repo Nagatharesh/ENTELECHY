@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
-import { Home, User, Bell, PanelLeft, AmbulanceIcon, HeartPulse, FileText } from 'lucide-react';
+import { Home, User, Bell, PanelLeft, AmbulanceIcon, HeartPulse, FileText, Calendar } from 'lucide-react';
 import { dummyPatients, Patient, Doctor, Hospital, Ambulance } from '@/lib/dummy-data';
 import { PatientProfile } from '@/components/patient/patient-profile';
 import { MedicalRecords } from '@/components/patient/medical-records';
