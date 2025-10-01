@@ -15,6 +15,7 @@ import { Appointments } from '@/components/patient/appointments';
 import { VitalsAndPredictions } from '@/components/patient/vitals-and-predictions';
 import { DoctorsHub } from '@/components/patient/doctors-hub';
 import { Diagnostics } from '@/components/patient/diagnostics';
+import { Medicines } from '@/components/patient/medicines';
 import {
   Sheet,
   SheetContent,
@@ -80,6 +81,8 @@ function DashboardContent() {
         return <DoctorsHub patient={patient} />;
       case 'diagnostics':
         return <Diagnostics patient={patient} />;
+      case 'meds':
+        return <Medicines patient={patient} />;
       default:
         return <PatientProfile patient={patient} />;
     }

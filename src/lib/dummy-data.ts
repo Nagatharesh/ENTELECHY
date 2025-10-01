@@ -1,5 +1,6 @@
 
 
+
 export const dummyDoctors = [
     {
       "doctorId": "DOC-001",
@@ -88,24 +89,56 @@ export const dummyHospitals = [
 ]
 
 export const dummyMedicines = [
-    {"medicineId": "MED-001", "name": "Amlodipine", "composition": "Amlodipine Besylate 5mg", "costGovt": 5, "costPrivate": 25},
-    {"medicineId": "MED-002", "name": "Metformin", "composition": "Metformin Hydrochloride 500mg", "costGovt": 3, "costPrivate": 15},
-    {"medicineId": "MED-003", "name": "Aspirin", "composition": "Aspirin 75mg", "costGovt": 1, "costPrivate": 10},
-    {"medicineId": "MED-004", "name": "Atorvastatin", "composition": "Atorvastatin Calcium 10mg", "costGovt": 8, "costPrivate": 50},
-    {"medicineId": "MED-005", "name": "Levothyroxine", "composition": "Levothyroxine Sodium 50mcg", "costGovt": 10, "costPrivate": 60},
-    {"medicineId": "MED-006", "name": "Paracetamol", "composition": "Paracetamol 500mg", "costGovt": 2, "costPrivate": 12},
-    {"medicineId": "MED-007", "name": "Cetirizine", "composition": "Cetirizine Hydrochloride 10mg", "costGovt": 4, "costPrivate": 20},
-    {"medicineId": "MED-008", "name": "Omeprazole", "composition": "Omeprazole 20mg", "costGovt": 6, "costPrivate": 35},
-    {"medicineId": "MED-009", "name": "Salbutamol Inhaler", "composition": "Salbutamol Sulphate 100mcg/puff", "costGovt": 50, "costPrivate": 250},
-    {"medicineId": "MED-010", "name": "Ibuprofen", "composition": "Ibuprofen 400mg", "costGovt": 5, "costPrivate": 30},
-    {"medicineId": "MED-011", "name": "D-Rise", "composition": "Cholecalciferol 60000IU", "costGovt": 20, "costPrivate": 100},
-    {"medicineId": "MED-012", "name": "Sumatriptan", "composition": "Sumatriptan Succinate 50mg", "costGovt": 15, "costPrivate": 80},
-    {"medicineId": "MED-013", "name": "Clopidogrel", "composition": "Clopidogrel Bisulfate 75mg", "costGovt": 12, "costPrivate": 70},
-    {"medicineId": "MED-014", "name": "Myo-Inositol", "composition": "Myo-Inositol 1000mg", "costGovt": 30, "costPrivate": 150},
-    {"medicineId": "MED-015", "name": "Iron Folic Acid", "composition": "Ferrous Ascorbate 100mg, Folic Acid 1.5mg", "costGovt": 7, "costPrivate": 40},
-    { "medicineId": "MED-016", "name": "Prednisolone", "composition": "Prednisolone 20mg", "costGovt": 10, "costPrivate": 45 },
-    { "medicineId": "MED-017", "name": "Azithromycin", "composition": "Azithromycin 500mg", "costGovt": 25, "costPrivate": 120 },
-    { "medicineId": "MED-018", "name": "Multivitamin", "composition": "Standard Multivitamin Complex", "costGovt": 15, "costPrivate": 90 }
+    { "medicineId": "MED-001", "name": "Paracetamol", "chemical": "C8H9NO2", "usage": "Fever, Pain", "dosageForm": "Tablet", "prescribedBy": "DOC-007", "govtPrice": 2, "privatePrice": 12, "frequentlyUsed": true },
+    { "medicineId": "MED-002", "name": "Cetirizine", "chemical": "C21H25ClN2O3", "usage": "Cold, Allergy", "dosageForm": "Tablet", "prescribedBy": "DOC-006", "govtPrice": 4, "privatePrice": 20, "frequentlyUsed": true },
+    { "medicineId": "MED-003", "name": "Ibuprofen", "chemical": "C13H18O2", "usage": "Pain, Inflammation", "dosageForm": "Tablet", "prescribedBy": "DOC-004", "govtPrice": 5, "privatePrice": 30, "frequentlyUsed": true },
+    { "medicineId": "MED-004", "name": "Amoxicillin", "chemical": "C16H19N3O5S", "usage": "Infection", "dosageForm": "Capsule", "prescribedBy": "DOC-008", "govtPrice": 15, "privatePrice": 75, "frequentlyUsed": false },
+    { "medicineId": "MED-005", "name": "Azithromycin", "chemical": "C38H72N2O12", "usage": "Infection", "dosageForm": "Tablet", "prescribedBy": "DOC-009", "govtPrice": 25, "privatePrice": 120, "frequentlyUsed": false },
+    { "medicineId": "MED-006", "name": "Metformin", "chemical": "C4H11N5", "usage": "Diabetes", "dosageForm": "Tablet", "prescribedBy": "DOC-003", "govtPrice": 3, "privatePrice": 15, "frequentlyUsed": true },
+    { "medicineId": "MED-007", "name": "Amlodipine", "chemical": "C20H25ClN2O5", "usage": "Hypertension", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 5, "privatePrice": 25, "frequentlyUsed": true },
+    { "medicineId": "MED-008", "name": "Atorvastatin", "chemical": "C33H35FN2O5", "usage": "High Cholesterol", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 8, "privatePrice": 50, "frequentlyUsed": false },
+    { "medicineId": "MED-009", "name": "Omeprazole", "chemical": "C17H19N3O3S", "usage": "Acidity, GERD", "dosageForm": "Capsule", "prescribedBy": "DOC-007", "govtPrice": 6, "privatePrice": 35, "frequentlyUsed": true },
+    { "medicineId": "MED-010", "name": "Salbutamol Inhaler", "chemical": "C13H21NO3", "usage": "Asthma, COPD", "dosageForm": "Inhaler", "prescribedBy": "DOC-006", "govtPrice": 50, "privatePrice": 250, "frequentlyUsed": true },
+    { "medicineId": "MED-011", "name": "Levothyroxine", "chemical": "C15H11I4NO4", "usage": "Hypothyroidism", "dosageForm": "Tablet", "prescribedBy": "DOC-003", "govtPrice": 10, "privatePrice": 60, "frequentlyUsed": false },
+    { "medicineId": "MED-012", "name": "D-Rise (Vitamin D)", "chemical": "C27H44O", "usage": "Vitamin D Deficiency", "dosageForm": "Capsule", "prescribedBy": "DOC-007", "govtPrice": 20, "privatePrice": 100, "frequentlyUsed": true },
+    { "medicineId": "MED-013", "name": "Clopidogrel", "chemical": "C16H16ClNO2S", "usage": "Blood Thinner", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 12, "privatePrice": 70, "frequentlyUsed": false },
+    { "medicineId": "MED-014", "name": "Prednisolone", "chemical": "C21H28O5", "usage": "Inflammation, Allergy", "dosageForm": "Tablet", "prescribedBy": "DOC-006", "govtPrice": 10, "privatePrice": 45, "frequentlyUsed": false },
+    { "medicineId": "MED-015", "name": "Multivitamin", "chemical": "Varies", "usage": "Supplement", "dosageForm": "Tablet", "prescribedBy": "DOC-007", "govtPrice": 15, "privatePrice": 90, "frequentlyUsed": true },
+    { "medicineId": "MED-016", "name": "Iron Folic Acid", "chemical": "Varies", "usage": "Anemia", "dosageForm": "Tablet", "prescribedBy": "DOC-002", "govtPrice": 7, "privatePrice": 40, "frequentlyUsed": false },
+    { "medicineId": "MED-017", "name": "Ondansetron", "chemical": "C18H19N3O", "usage": "Nausea, Vomiting", "dosageForm": "Tablet", "prescribedBy": "DOC-008", "govtPrice": 8, "privatePrice": 40, "frequentlyUsed": false },
+    { "medicineId": "MED-018", "name": "Loratadine", "chemical": "C22H23ClN2O2", "usage": "Allergy", "dosageForm": "Tablet", "prescribedBy": "DOC-009", "govtPrice": 5, "privatePrice": 25, "frequentlyUsed": false },
+    { "medicineId": "MED-019", "name": "Diclofenac Gel", "chemical": "C14H11Cl2NO2", "usage": "Pain Relief (Topical)", "dosageForm": "Gel", "prescribedBy": "DOC-004", "govtPrice": 20, "privatePrice": 80, "frequentlyUsed": true },
+    { "medicineId": "MED-020", "name": "Pantoprazole", "chemical": "C16H15F2N3O4S", "usage": "Acidity, GERD", "dosageForm": "Tablet", "prescribedBy": "DOC-007", "govtPrice": 7, "privatePrice": 45, "frequentlyUsed": false },
+    { "medicineId": "MED-021", "name": "Telmisartan", "chemical": "C33H30N4O2", "usage": "Hypertension", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 9, "privatePrice": 60, "frequentlyUsed": false },
+    { "medicineId": "MED-022", "name": "Rosuvastatin", "chemical": "C22H28FN3O6S", "usage": "High Cholesterol", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 10, "privatePrice": 70, "frequentlyUsed": false },
+    { "medicineId": "MED-023", "name": "Glimpiride", "chemical": "C24H34N4O5S", "usage": "Diabetes", "dosageForm": "Tablet", "prescribedBy": "DOC-003", "govtPrice": 6, "privatePrice": 30, "frequentlyUsed": false },
+    { "medicineId": "MED-024", "name": "Hydrochlorothiazide", "chemical": "C7H8ClN3O4S2", "usage": "Hypertension, Diuretic", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 4, "privatePrice": 20, "frequentlyUsed": false },
+    { "medicineId": "MED-025", "name": "Montelukast", "chemical": "C35H36ClNO3S", "usage": "Asthma, Allergy", "dosageForm": "Tablet", "prescribedBy": "DOC-006", "govtPrice": 15, "privatePrice": 80, "frequentlyUsed": true },
+    { "medicineId": "MED-026", "name": "Ciprofloxacin", "chemical": "C17H18FN3O3", "usage": "Infection", "dosageForm": "Tablet", "prescribedBy": "DOC-007", "govtPrice": 12, "privatePrice": 65, "frequentlyUsed": false },
+    { "medicineId": "MED-027", "name": "Domperidone", "chemical": "C22H24ClN5O2", "usage": "Nausea, Vomiting", "dosageForm": "Tablet", "prescribedBy": "DOC-007", "govtPrice": 5, "privatePrice": 25, "frequentlyUsed": false },
+    { "medicineId": "MED-028", "name": "Folic Acid", "chemical": "C19H19N7O6", "usage": "Supplement, Anemia", "dosageForm": "Tablet", "prescribedBy": "DOC-002", "govtPrice": 2, "privatePrice": 10, "frequentlyUsed": false },
+    { "medicineId": "MED-029", "name": "Calcium Carbonate", "chemical": "CaCO3", "usage": "Supplement", "dosageForm": "Tablet", "prescribedBy": "DOC-004", "govtPrice": 3, "privatePrice": 15, "frequentlyUsed": false },
+    { "medicineId": "MED-030", "name": "Tramadol", "chemical": "C16H25NO2", "usage": "Severe Pain", "dosageForm": "Injection", "prescribedBy": "DOC-008", "govtPrice": 20, "privatePrice": 100, "frequentlyUsed": false },
+    { "medicineId": "MED-031", "name": "Miconazole Cream", "chemical": "C18H14Cl4N2O", "usage": "Fungal Infection", "dosageForm": "Cream", "prescribedBy": "DOC-009", "govtPrice": 25, "privatePrice": 90, "frequentlyUsed": false },
+    { "medicineId": "MED-032", "name": "Losartan", "chemical": "C22H23ClN6O", "usage": "Hypertension", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 8, "privatePrice": 55, "frequentlyUsed": false },
+    { "medicineId": "MED-033", "name": "Fluconazole", "chemical": "C13H12F2N6O", "usage": "Fungal Infection", "dosageForm": "Capsule", "prescribedBy": "DOC-009", "govtPrice": 10, "privatePrice": 50, "frequentlyUsed": false },
+    { "medicineId": "MED-034", "name": "Bisoprolol", "chemical": "C18H31NO4", "usage": "Heart Conditions", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 7, "privatePrice": 40, "frequentlyUsed": false },
+    { "medicineId": "MED-035", "name": "Doxycycline", "chemical": "C22H24N2O8", "usage": "Infection", "dosageForm": "Capsule", "prescribedBy": "DOC-007", "govtPrice": 9, "privatePrice": 60, "frequentlyUsed": false },
+    { "medicineId": "MED-036", "name": "Esomeprazole", "chemical": "C17H19N3O3S", "usage": "Acidity, GERD", "dosageForm": "Capsule", "prescribedBy": "DOC-007", "govtPrice": 8, "privatePrice": 50, "frequentlyUsed": false },
+    { "medicineId": "MED-037", "name": "Vildagliptin", "chemical": "C17H25N3O2", "usage": "Diabetes", "dosageForm": "Tablet", "prescribedBy": "DOC-003", "govtPrice": 10, "privatePrice": 75, "frequentlyUsed": false },
+    { "medicineId": "MED-038", "name": "Tamsulosin", "chemical": "C20H28N2O5S", "usage": "Prostate", "dosageForm": "Capsule", "prescribedBy": "DOC-001", "govtPrice": 15, "privatePrice": 90, "frequentlyUsed": false },
+    { "medicineId": "MED-039", "name": "Warfarin", "chemical": "C19H16O4", "usage": "Blood Thinner", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 5, "privatePrice": 30, "frequentlyUsed": false },
+    { "medicineId": "MED-040", "name": "Digoxin", "chemical": "C41H64O14", "usage": "Heart Failure", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 6, "privatePrice": 40, "frequentlyUsed": false },
+    { "medicineId": "MED-041", "name": "Spironolactone", "chemical": "C24H32O4S", "usage": "Diuretic, Heart Failure", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 7, "privatePrice": 45, "frequentlyUsed": false },
+    { "medicineId": "MED-042", "name": "Allopurinol", "chemical": "C5H4N4O", "usage": "Gout", "dosageForm": "Tablet", "prescribedBy": "DOC-001", "govtPrice": 4, "privatePrice": 25, "frequentlyUsed": false },
+    { "medicineId": "MED-043", "name": "Finasteride", "chemical": "C23H36N2O2", "usage": "Prostate, Hair Loss", "dosageForm": "Tablet", "prescribedBy": "DOC-009", "govtPrice": 20, "privatePrice": 120, "frequentlyUsed": false },
+    { "medicineId": "MED-044", "name": "Sertraline", "chemical": "C17H17Cl2N", "usage": "Depression, Anxiety", "dosageForm": "Tablet", "prescribedBy": "DOC-001", "govtPrice": 10, "privatePrice": 70, "frequentlyUsed": false },
+    { "medicineId": "MED-045", "name": "Alprazolam", "chemical": "C17H13ClN4", "usage": "Anxiety, Panic Disorder", "dosageForm": "Tablet", "prescribedBy": "DOC-001", "govtPrice": 8, "privatePrice": 50, "frequentlyUsed": false },
+    { "medicineId": "MED-046", "name": "Phenytoin", "chemical": "C15H12N2O2", "usage": "Seizures", "dosageForm": "Tablet", "prescribedBy": "DOC-001", "govtPrice": 9, "privatePrice": 60, "frequentlyUsed": false },
+    { "medicineId": "MED-047", "name": "Carbamazepine", "chemical": "C15H12N2O", "usage": "Seizures, Bipolar", "dosageForm": "Tablet", "prescribedBy": "DOC-001", "govtPrice": 11, "privatePrice": 80, "frequentlyUsed": false },
+    { "medicineId": "MED-048", "name": "Gabapentin", "chemical": "C9H17NO2", "usage": "Nerve Pain, Seizures", "dosageForm": "Capsule", "prescribedBy": "DOC-004", "govtPrice": 14, "privatePrice": 95, "frequentlyUsed": false },
+    { "medicineId": "MED-049", "name": "Pregabalin", "chemical": "C8H17NO2", "usage": "Nerve Pain, Fibromyalgia", "dosageForm": "Capsule", "prescribedBy": "DOC-004", "govtPrice": 18, "privatePrice": 110, "frequentlyUsed": false },
+    { "medicineId": "MED-050", "name": "Insulin Glargine", "chemical": "C267H404N72O78S6", "usage": "Diabetes", "dosageForm": "Injection", "prescribedBy": "DOC-003", "govtPrice": 200, "privatePrice": 800, "frequentlyUsed": false }
 ];
 
 export const dummyAmbulances = [
@@ -230,12 +263,12 @@ export const dummyPatients = [
     ],
     "medications": {
       "current": [
-        {"medicineId": "MED-009", "name": "Salbutamol Inhaler", "dosage": "100 mcg/puff, 2 puffs PRN", "reason": "Asthma (rescue)", "type": "current"},
-        {"medicineId": "MED-018", "name": "Multivitamin", "dosage": "Once daily", "reason": "Supplement", "type": "current"}
+        {"medicineId": "MED-010", "name": "Salbutamol Inhaler", "dosage": "100 mcg/puff, 2 puffs PRN", "reason": "Asthma (rescue)", "type": "current"},
+        {"medicineId": "MED-015", "name": "Multivitamin", "dosage": "Once daily", "reason": "Supplement", "type": "current"}
       ],
       "past": [
-        {"medicineId": "MED-016", "name": "Prednisolone", "dosage": "20 mg, 5 days, oral", "reason": "Asthma exacerbation", "type": "past"},
-        {"medicineId": "MED-017", "name": "Azithromycin", "dosage": "500 mg, 3 days, oral", "reason": "Respiratory infection", "type": "past"}
+        {"medicineId": "MED-014", "name": "Prednisolone", "dosage": "20 mg, 5 days, oral", "reason": "Asthma exacerbation", "type": "past"},
+        {"medicineId": "MED-005", "name": "Azithromycin", "dosage": "500 mg, 3 days, oral", "reason": "Respiratory infection", "type": "past"}
       ],
       "otc": [
         {"name": "Paracetamol", "dosage": "500mg PRN", "reason": "Headache/Fever", "type": "otc"},
@@ -313,7 +346,7 @@ export const dummyPatients = [
         {"encounterId": "ENC-006", "date": "2025-09-15", "department": "General Medicine", "doctor": "Dr. Amit Verma", "reason": "Follow-up for Vitamin D deficiency.", "findings": "Levels improving.", "investigations": "Vitamin D test", "treatment": "Continue supplements", "dischargeNotes": "Re-check in 3 months."}
     ],
     "medications": {
-        "current": [{"medicineId": "MED-011", "name": "D-Rise", "dosage": "1 tablet weekly", "reason": "Vitamin D deficiency", "type": "current"}],
+        "current": [{"medicineId": "MED-012", "name": "D-Rise (Vitamin D)", "dosage": "1 tablet weekly", "reason": "Vitamin D deficiency", "type": "current"}],
         "past": [],
         "otc": []
     },
