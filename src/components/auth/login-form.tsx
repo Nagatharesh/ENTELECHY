@@ -52,7 +52,7 @@ const patientSearchSchema = z.object({
 });
 
 const patientLoginSchema = z.object({
-  patientId: z.string().startsWith("PAT-", "Invalid Patient ID format."),
+  patientId: z.string().min(1, "Patient ID is required."),
 });
 
 const doctorSchema = z.object({
@@ -67,7 +67,7 @@ const hospitalSchema = z.object({
 });
 const ambulanceSchema = z.object({
   emailOrPhone: z.string().min(1, "This field is required."),
-  password: z.string().min(8, "Password must be at least 8 characters."),
+  password: zstring().min(8, "Password must be at least 8 characters."),
   vehicleNumber: z.string().regex(/^[A-Z0-9- ]{4,12}$/, "Invalid vehicle number. Must be 4-12 alphanumeric characters."),
 });
 
@@ -136,7 +136,7 @@ export function LoginForm() {
     } else {
         patientLoginForm.setError("patientId", {
             type: "manual",
-            message: "Patient ID not found. Try searching first or use a dummy ID like 'PAT-20251001-0001' for testing.",
+            message: "Patient ID not found. Use a dummy ID like 'P-102345' for testing.",
         });
     }
   }
