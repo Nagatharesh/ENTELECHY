@@ -54,10 +54,14 @@ export function HealthSnapshot({ vitals }: { vitals: Vitals }) {
         return "stable";
     }
 
-    const latestSystolic = parseInt(vitals.bloodPressure[vitals.bloodPressure.length - 1].split('/')[0]);
-    const secondlatestSystolic = parseInt(vitals.bloodPressure[vitals.bloodPressure.length - 2].split('/')[0]);
-
-    const bpTrend = latestSystolic > secondlatestSystolic ? "up" : latestSystolic < secondlatestSystolic ? "down" : "stable";
+    const getBPTrend = (data: string[]): "up" | "down" | "stable" => {
+      if (data.length < 2) return "stable";
+      const lastSystolic = parseInt(data[data.length - 1].split('/')[0]);
+      const secondLastSystolic = parseInt(data[data.length - 2].split('/')[0]);
+      if (lastSystolic > secondLastSystolic) return "up";
+      if (lastSystolic < secondLastSystolic) return "down";
+      return "stable";
+    }
 
   return (
     <Card className="glassmorphism p-4 md:p-6 glowing-shadow">
@@ -79,7 +83,7 @@ export function HealthSnapshot({ vitals }: { vitals: Vitals }) {
                     title="Blood Pressure"
                     value={vitals.bloodPressure[vitals.bloodPressure.length - 1]}
                     unit="mmHg"
-                    trend={bpTrend}
+                    trend={getBPTrend(vitals.bloodPressure)}
                     color="hsl(var(--secondary))"
                 />
                 <HealthMetricCard

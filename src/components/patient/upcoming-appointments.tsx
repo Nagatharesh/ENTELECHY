@@ -2,11 +2,19 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, Clock } from "lucide-react";
-import { Patient } from "@/lib/dummy-data";
+import { Patient, dummyDoctors, dummyHospitals } from "@/lib/dummy-data";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
 type Appointments = Patient["appointments"];
+
+const getDoctorName = (doctorId: string) => {
+  return dummyDoctors.find(d => d.doctorId === doctorId)?.name || "Unknown Doctor";
+}
+
+const getHospitalName = (hospitalId: string) => {
+  return dummyHospitals.find(h => h.hospitalId === hospitalId)?.name || "Unknown Hospital";
+}
 
 export function UpcomingAppointments({ appointments }: { appointments: Appointments }) {
   const sortedAppointments = [...appointments].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
@@ -18,7 +26,7 @@ export function UpcomingAppointments({ appointments }: { appointments: Appointme
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {sortedAppointments.map((appt, index) => (
+          {sortedAppointments.length > 0 ? sortedAppointments.map((appt, index) => (
             <div
               key={index}
               className={cn(
@@ -30,8 +38,8 @@ export function UpcomingAppointments({ appointments }: { appointments: Appointme
                 <Calendar className="w-6 h-6 text-primary" />
               </div>
               <div className="flex-grow">
-                <p className="font-semibold text-white">{appt.doctor}</p>
-                <p className="text-sm text-muted-foreground">{appt.hospital}</p>
+                <p className="font-semibold text-white">{getDoctorName(appt.doctorId)}</p>
+                <p className="text-sm text-muted-foreground">{getHospitalName(appt.hospitalId)}</p>
                 <div className="flex items-center gap-2 text-sm text-primary mt-1">
                   <Clock className="w-4 h-4" />
                   <span>{new Date(appt.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
@@ -39,7 +47,9 @@ export function UpcomingAppointments({ appointments }: { appointments: Appointme
               </div>
               {appt.urgent && <Badge variant="destructive">Urgent</Badge>}
             </div>
-          ))}
+          )) : (
+            <p className="text-muted-foreground text-center py-4">No upcoming appointments.</p>
+          )}
         </div>
       </CardContent>
     </Card>
