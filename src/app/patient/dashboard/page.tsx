@@ -33,6 +33,7 @@ import {
   SidebarTrigger as SidebarTriggerButton
 } from "@/components/ui/sidebar"
 import { AmbulanceBooking } from '@/components/patient/ambulance-booking';
+import { Insurance } from '@/components/patient/insurance';
 
 
 function DashboardContent() {
@@ -83,6 +84,8 @@ function DashboardContent() {
         return <Diagnostics patient={patient} />;
       case 'meds':
         return <Medicines patient={patient} />;
+      case 'insurance':
+        return <Insurance patient={patient} />;
       default:
         return <PatientProfile patient={patient} />;
     }
