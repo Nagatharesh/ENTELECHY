@@ -12,8 +12,11 @@ const RecordIcon = ({ type }: { type: string }) => {
         case "consultation":
             return <FileText className="w-5 h-5 text-primary" />;
         case "lab test":
+        case "x-ray":
             return <TestTube className="w-5 h-5 text-secondary" />;
         case "prescription":
+        case "procedure":
+        case "surgery":
             return <Pill className="w-5 h-5 text-tertiary" />;
         default:
             return <FileText className="w-5 h-5 text-primary" />;
@@ -41,7 +44,7 @@ export function MedicalRecordsTimeline({ records }: { records: MedicalRecords })
                   <div className="flex items-center gap-3">
                     <RecordIcon type={record.type} />
                     <p className="text-sm font-semibold text-white">{record.type}</p>
-                    <span className="text-xs text-muted-foreground">{new Date(record.date).toLocaleDateString()}</span>
+                    <span className="text-xs text-muted-foreground">{new Date(record.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground">{record.details}</p>
                   <p className="text-xs mt-1 text-muted-foreground/50">with {record.doctor}</p>
