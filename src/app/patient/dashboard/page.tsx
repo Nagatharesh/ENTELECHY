@@ -34,6 +34,8 @@ import {
 } from "@/components/ui/sidebar"
 import { AmbulanceBooking } from '@/components/patient/ambulance-booking';
 import { Insurance } from '@/components/patient/insurance';
+import { SmartDevices } from '@/components/patient/smart-devices';
+import { Smartphone } from 'lucide-react';
 
 
 function DashboardContent() {
@@ -86,6 +88,8 @@ function DashboardContent() {
         return <Medicines patient={patient} />;
       case 'insurance':
         return <Insurance patient={patient} />;
+      case 'smart-devices':
+        return <SmartDevices />;
       default:
         return <PatientProfile patient={patient} />;
     }
@@ -101,6 +105,7 @@ function DashboardContent() {
     { id: 'diagnostics', icon: Microscope, label: 'Diagnostics' },
     { id: 'meds', icon: Pill, label: 'Medicines' },
     { id: 'insurance', icon: Shield, label: 'Insurance' },
+    { id: 'smart-devices', icon: Smartphone, label: 'Smart Devices' },
   ];
 
   const NavMenu = ({isSheet = false}: {isSheet?: boolean}) => (
