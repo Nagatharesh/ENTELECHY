@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -10,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import Image from 'next/image';
 import { MapPin, Phone, Users, UserCheck, Clock, Star, MessageSquare, Video, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Appointments } from './appointments'; // Re-use for past appointments view if needed
+import { Appointments, BookingWizard } from './appointments'; 
 
 const center = { lat: 12.9141, lng: 74.8560 }; // St. Joseph Engineering College
 
@@ -24,6 +25,9 @@ export function DoctorsHub({ patient }: { patient: Patient }) {
     const [showRadar, setShowRadar] = useState(true);
     const [selectedHospital, setSelectedHospital] = useState(null);
     const [nearbyHospitals, setNearbyHospitals] = useState([]);
+    const [isBooking, setIsBooking] = useState(false);
+    const [selectedDoctorForBooking, setSelectedDoctorForBooking] = useState(null);
+
 
     useEffect(() => {
         const timer = setTimeout(() => setShowRadar(false), 2200);
@@ -43,7 +47,22 @@ export function DoctorsHub({ patient }: { patient: Patient }) {
 
     const handleClosePanel = () => {
         setSelectedHospital(null);
+        setIsBooking(false);
+        setSelectedDoctorForBooking(null);
     };
+
+    const handleBookClick = (doctor) => {
+        setSelectedDoctorForBooking(doctor);
+        setIsBooking(true);
+    };
+    
+    const handleAppointmentBooked = (newAppointment) => {
+        // In a real app, this would update the global state or refetch data.
+        console.log("New Appointment Booked:", newAppointment);
+        setIsBooking(false);
+        setSelectedDoctorForBooking(null);
+        // Maybe show a success toast here
+    }
 
     return (
         <div className="space-y-6">
@@ -96,20 +115,27 @@ export function DoctorsHub({ patient }: { patient: Patient }) {
                     </div>
                 </CardContent>
             </Card>
-
-            <HospitalDetailPanel hospital={selectedHospital} onClose={handleClosePanel} patient={patient} />
             
-            {/* Past Appointments - Can be a separate component or integrated here */}
+            <Dialog open={!!selectedHospital} onOpenChange={(isOpen) => !isOpen && handleClosePanel()}>
+                <DialogContent className="glassmorphism max-w-4xl h-[90vh] flex flex-col">
+                    {isBooking && selectedDoctorForBooking ? (
+                         <BookingWizard onBook={handleAppointmentBooked} patientId={patient.patientId} preselectedDoctor={selectedDoctorForBooking} onBack={() => setIsBooking(false)} />
+                    ) : (
+                         <HospitalDetailPanel hospital={selectedHospital} onClose={handleClosePanel} onBookClick={handleBookClick} />
+                    )}
+                </DialogContent>
+            </Dialog>
+            
              <div className="mt-8">
                 <h2 className="text-2xl font-bold text-gradient-glow mb-4">Appointment History</h2>
-                <Appointments patient={patient} />
+                <Appointments patient={patient} showBookingButton={false}/>
             </div>
 
         </div>
     );
 }
 
-const HospitalDetailPanel = ({ hospital, onClose, patient }) => {
+const HospitalDetailPanel = ({ hospital, onClose, onBookClick }) => {
     if (!hospital) return null;
     
     const hospitalDoctors = dummyDoctors.filter(d => d.hospitalId === hospital.hospitalId);
@@ -118,39 +144,38 @@ const HospitalDetailPanel = ({ hospital, onClose, patient }) => {
     const eta = 15; // Dummy data
 
     return (
-        <Dialog open={!!hospital} onOpenChange={(isOpen) => !isOpen && onClose()}>
-            <DialogContent className="glassmorphism max-w-2xl h-[80vh] flex flex-col">
-                <DialogHeader>
-                    <DialogTitle className="text-gradient-glow text-2xl">{hospital.name}</DialogTitle>
-                    <DialogDescription className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4"/>{hospital.location}
-                        <span className="mx-2">|</span>
-                        <Phone className="w-4 h-4"/><a href={`tel:${hospital.contact}`}>{hospital.contact}</a>
-                    </DialogDescription>
-                     <Button variant="ghost" size="icon" className="absolute top-4 right-4" onClick={onClose}><X/></Button>
-                </DialogHeader>
-                <div className="flex-grow overflow-y-auto pr-4 -mr-4 space-y-6">
-                    {/* Vitals-like summary */}
-                    <div className="grid grid-cols-3 gap-4 text-center">
-                        <InfoCard icon={Users} label="Patients Waiting" value={hospital.patientLoad} />
-                        <InfoCard icon={UserCheck} label="Your Token" value={`#${yourToken}`} />
-                        <InfoCard icon={Clock} label="Estimated Wait" value={`~${eta} mins`} />
-                    </div>
-                    
-                    {/* Doctor List */}
-                    <div>
-                        <h3 className="text-lg font-semibold text-white mb-2">Doctors Available</h3>
-                        <div className="space-y-3">
-                            {hospitalDoctors.map(doctor => (
-                                <DoctorCard key={doctor.doctorId} doctor={doctor} />
-                            ))}
-                        </div>
+        <>
+            <DialogHeader>
+                <DialogTitle className="text-gradient-glow text-2xl">{hospital.name}</DialogTitle>
+                <DialogDescription className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4"/>{hospital.location}
+                    <span className="mx-2">|</span>
+                    <Phone className="w-4 h-4"/><a href={`tel:${hospital.contact}`}>{hospital.contact}</a>
+                </DialogDescription>
+                 <Button variant="ghost" size="icon" className="absolute top-4 right-4" onClick={onClose}><X/></Button>
+            </DialogHeader>
+            <div className="flex-grow overflow-y-auto pr-4 -mr-4 space-y-6">
+                {/* Vitals-like summary */}
+                <div className="grid grid-cols-3 gap-4 text-center">
+                    <InfoCard icon={Users} label="Patients Waiting" value={hospital.patientLoad} />
+                    <InfoCard icon={UserCheck} label="Your Token" value={`#${yourToken}`} />
+                    <InfoCard icon={Clock} label="Estimated Wait" value={`~${eta} mins`} />
+                </div>
+                
+                {/* Doctor List */}
+                <div>
+                    <h3 className="text-lg font-semibold text-white mb-2">Doctors Available</h3>
+                    <div className="space-y-3">
+                        {hospitalDoctors.map(doctor => (
+                            <DoctorCard key={doctor.doctorId} doctor={doctor} onBookClick={onBookClick}/>
+                        ))}
                     </div>
                 </div>
-            </DialogContent>
-        </Dialog>
+            </div>
+        </>
     );
 }
+
 
 const InfoCard = ({ icon: Icon, label, value }) => (
     <div className="glassmorphism p-4 rounded-lg">
@@ -160,7 +185,7 @@ const InfoCard = ({ icon: Icon, label, value }) => (
     </div>
 );
 
-const DoctorCard = ({ doctor }) => {
+const DoctorCard = ({ doctor, onBookClick }) => {
     return (
         <Card className="glassmorphism p-3 flex items-center gap-4 transition-all duration-300 hover:border-primary/50">
             <Image src={`https://i.pravatar.cc/150?u=${doctor.doctorId}`} alt={doctor.name} width={50} height={50} className="rounded-full border-2 border-primary/30" />
@@ -175,7 +200,7 @@ const DoctorCard = ({ doctor }) => {
             <div className="flex flex-col sm:flex-row gap-2">
                 <Button size="sm" variant="outline"><MessageSquare className="w-4 h-4 sm:mr-2"/> <span className="hidden sm:inline">Chat</span></Button>
                 <Button size="sm" variant="outline"><Video className="w-4 h-4 sm:mr-2"/> <span className="hidden sm:inline">Video Call</span></Button>
-                <Button size="sm" className="glowing-shadow-interactive">Book</Button>
+                <Button size="sm" className="glowing-shadow-interactive" onClick={() => onBookClick(doctor)}>Book</Button>
             </div>
         </Card>
     );

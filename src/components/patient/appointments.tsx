@@ -1,7 +1,8 @@
 
+
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Calendar, Clock, Bot, PlusCircle, Video, MessageSquare, ArrowRight, ArrowLeft, Star } from "lucide-react";
 import { Patient, dummyDoctors, dummyHospitals, Doctor } from "@/lib/dummy-data";
@@ -21,7 +22,7 @@ const getHospitalById = (hospitalId: string) => dummyHospitals.find(h => h.hospi
 const specialties = [...new Set(dummyDoctors.map(d => d.specialty))];
 const cities = [...new Set(dummyHospitals.map(h => h.location.split(',')[0]))];
 
-export function Appointments({ patient }: { patient: Patient }) {
+export function Appointments({ patient, showBookingButton = true }: { patient: Patient, showBookingButton?: boolean }) {
   const [appointments, setAppointments] = useState(patient.appointments);
   const { toast } = useToast();
 
@@ -42,7 +43,7 @@ export function Appointments({ patient }: { patient: Patient }) {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold text-gradient-glow">Appointments</h2>
-        <BookingWizard onBook={handleNewAppointment} patientId={patient.patientId} />
+        {showBookingButton && <BookingDialog onBook={handleNewAppointment} patientId={patient.patientId} />}
       </div>
 
       <Card className="glassmorphism glowing-shadow">
@@ -114,9 +115,22 @@ const AppointmentCard = ({ appointment, isPast = false }) => {
   );
 };
 
-
-function BookingWizard({ onBook, patientId }) {
+function BookingDialog({ onBook, patientId }) {
     const [open, setOpen] = useState(false);
+
+    return (
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button className="glowing-shadow-interactive"><PlusCircle className="mr-2" /> Book New Appointment</Button>
+            </DialogTrigger>
+            <DialogContent className="glassmorphism sm:max-w-[600px]">
+                 <BookingWizard onBook={(appt) => { onBook(appt); setOpen(false); }} patientId={patientId} />
+            </DialogContent>
+        </Dialog>
+    )
+}
+
+export function BookingWizard({ onBook, patientId, preselectedDoctor = null, onBack = null }) {
     const [step, setStep] = useState(1);
 
     const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
@@ -125,6 +139,20 @@ function BookingWizard({ onBook, patientId }) {
     const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [selectedTime, setSelectedTime] = useState<string | null>(null);
+    
+    useEffect(() => {
+        if (preselectedDoctor) {
+            const hospital = getHospitalById(preselectedDoctor.hospitalId);
+            const city = hospital?.location.split(',')[0];
+            
+            setSelectedSpecialty(preselectedDoctor.specialty);
+            setSelectedCity(city || null);
+            setSelectedHospital(preselectedDoctor.hospitalId);
+            setSelectedDoctor(preselectedDoctor);
+            setStep(3); // Skip to date/time selection
+        }
+    }, [preselectedDoctor]);
+
 
     const filteredHospitals = useMemo(() => {
         return dummyHospitals.filter(h => h.location.startsWith(selectedCity || ''));
@@ -142,7 +170,13 @@ function BookingWizard({ onBook, patientId }) {
     }, [selectedSpecialty, selectedCity, selectedHospital, filteredHospitals]);
 
     const handleNext = () => setStep(s => s + 1);
-    const handleBack = () => setStep(s => s - 1);
+    const handleBack = () => {
+        if (preselectedDoctor && step === 3 && onBack) {
+            onBack();
+        } else {
+            setStep(s => s - 1);
+        }
+    }
 
     const reset = () => {
         setStep(1);
@@ -170,7 +204,6 @@ function BookingWizard({ onBook, patientId }) {
         urgent: false
       };
       onBook(newAppointment);
-      setOpen(false);
       reset();
     };
 
@@ -213,29 +246,24 @@ function BookingWizard({ onBook, patientId }) {
     };
 
     return (
-        <Dialog open={open} onOpenChange={(isOpen) => { if (!isOpen) reset(); setOpen(isOpen); }}>
-            <DialogTrigger asChild>
-                <Button className="glowing-shadow-interactive"><PlusCircle className="mr-2" /> Book New Appointment</Button>
-            </DialogTrigger>
-            <DialogContent className="glassmorphism sm:max-w-[600px]">
-                <DialogHeader>
-                    <DialogTitle className="text-gradient-glow text-2xl">Book an Appointment</DialogTitle>
-                    <DialogDescription>Step {step} of 4: Find your doctor and book a slot.</DialogDescription>
-                </DialogHeader>
-                
-                <div className="my-6 min-h-[300px]">
-                    {renderStep()}
+        <>
+            <DialogHeader>
+                <DialogTitle className="text-gradient-glow text-2xl">Book an Appointment</DialogTitle>
+                <DialogDescription>Step {step} of 4: Find your doctor and book a slot.</DialogDescription>
+            </DialogHeader>
+            
+            <div className="my-6 min-h-[300px]">
+                {renderStep()}
+            </div>
+            
+            <DialogFooter className="flex justify-between w-full">
+                <div>{step > 1 && <Button variant="outline" onClick={handleBack}><ArrowLeft className="mr-2"/> Back</Button>}</div>
+                <div>
+                    {step < 4 && <Button onClick={handleNext} disabled={!canGoNext()} className="glowing-shadow-interactive">Next <ArrowRight className="ml-2"/></Button>}
+                    {step === 4 && <Button onClick={handleConfirmBooking} className="glowing-shadow-interactive">Confirm Booking</Button>}
                 </div>
-                
-                <DialogFooter className="flex justify-between w-full">
-                    <div>{step > 1 && <Button variant="outline" onClick={handleBack}><ArrowLeft className="mr-2"/> Back</Button>}</div>
-                    <div>
-                        {step < 4 && <Button onClick={handleNext} disabled={!canGoNext()} className="glowing-shadow-interactive">Next <ArrowRight className="ml-2"/></Button>}
-                        {step === 4 && <Button onClick={handleConfirmBooking} className="glowing-shadow-interactive">Confirm Booking</Button>}
-                    </div>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+            </DialogFooter>
+        </>
     );
 }
 
@@ -352,5 +380,3 @@ const Step4 = ({ doctor, hospital, date, time }) => {
         </div>
     );
 };
-
-    
