@@ -15,7 +15,7 @@ import {
 import { addDays, format } from "date-fns";
 import { Patient } from "@/lib/dummy-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartTooltipContent } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
 type Predictions = Patient["predictions"];
 
@@ -32,6 +32,17 @@ export function PredictionCharts({ predictions }: { predictions: Predictions }) 
     "Probability": predictions.appointmentProbability[i] * 100,
   }));
 
+  const chartConfig = {
+    Adherence: {
+      label: "Adherence",
+      color: "hsl(var(--chart-4))",
+    },
+    Probability: {
+      label: "Probability",
+      color: "hsl(var(--chart-5))",
+    },
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="glassmorphism p-4 md:p-6 glowing-shadow">
@@ -39,6 +50,7 @@ export function PredictionCharts({ predictions }: { predictions: Predictions }) 
                 <CardTitle className="text-gradient-glow text-lg">Medication Adherence (Next 7 Days)</CardTitle>
             </CardHeader>
             <CardContent className="h-[250px] w-full">
+              <ChartContainer config={chartConfig} className="w-full h-full">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={adherenceData}>
                         <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -52,6 +64,7 @@ export function PredictionCharts({ predictions }: { predictions: Predictions }) 
                         <Bar dataKey="Adherence" fill="hsl(var(--chart-4))" radius={[4, 4, 0, 0]} />
                     </BarChart>
                 </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
         </Card>
         <Card className="glassmorphism p-4 md:p-6 glowing-shadow">
@@ -59,6 +72,7 @@ export function PredictionCharts({ predictions }: { predictions: Predictions }) 
                 <CardTitle className="text-gradient-glow text-lg">Appointment Forecast (Next 7 Days)</CardTitle>
             </CardHeader>
             <CardContent className="h-[250px] w-full">
+              <ChartContainer config={chartConfig} className="w-full h-full">
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={appointmentData}>
                         <defs>
@@ -78,6 +92,7 @@ export function PredictionCharts({ predictions }: { predictions: Predictions }) 
                         <Area type="monotone" dataKey="Probability" stroke="hsl(var(--chart-5))" fill="url(#colorUv)" />
                     </AreaChart>
                 </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
         </Card>
     </div>
