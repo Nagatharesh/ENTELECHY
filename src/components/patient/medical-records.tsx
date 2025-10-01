@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -40,7 +41,7 @@ const getMedicineDetails = (medicineId: string) => {
 export function MedicalRecords({ patient }: { patient: Patient }) {
   const allRecords = [
     ...patient.medicalRecords,
-    ...patient.prescriptions.map(p => ({ ...p, type: 'Prescription' })),
+    ...patient.prescriptions.map(p => ({ ...p, type: 'Prescription', details: `Prescription from ${getDoctorName(p.doctorId)}` })),
     ...patient.radiologyReports.map(r => ({ ...r, type: 'Radiology', details: r.summary }))
   ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
@@ -96,11 +97,11 @@ export function MedicalRecords({ patient }: { patient: Patient }) {
                                 <div className="flex items-center gap-3">
                                     <RecordIcon type={record.type} />
                                     <p className="text-sm font-semibold text-white">{record.type}</p>
-                                    <span className="text-xs text-muted-foreground">{new Date(record.date).toLocaleDateString('en-GB')}</span>
+                                    <span className="text-xs text-muted-foreground">{new Date(record.date).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</span>
                                 </div>
                                 <p className="mt-2 text-sm text-muted-foreground">{record.details}</p>
                                 <p className="text-xs mt-1 text-muted-foreground/50">
-                                    with {getDoctorName((record as MedicalRecord).doctorId || (record as Prescription).doctorId || 'DOC-001')}
+                                    with {getDoctorName((record as any).doctorId || 'DOC-001')}
                                 </p>
                                 
                                 {(record.type === 'Prescription' && (record as any).medicines) && (
@@ -142,7 +143,7 @@ export function MedicalRecords({ patient }: { patient: Patient }) {
                                                 <DialogTitle className="text-gradient-glow">Radiology Report</DialogTitle>
                                             </DialogHeader>
                                             <div className="relative w-full aspect-video rounded-md overflow-hidden mt-4">
-                                                 <Image src={(record as RadiologyReport).imageUrl} alt="Radiology Scan" layout="fill" objectFit="contain" />
+                                                 <Image src={(record as RadiologyReport).imageUrl} alt="Radiology Scan" fill objectFit="contain" />
                                             </div>
                                             <p className="mt-4 text-white"><strong>AI Summary: </strong>{(record as RadiologyReport).summary}</p>
                                         </DialogContent>
@@ -196,3 +197,6 @@ export function MedicalRecords({ patient }: { patient: Patient }) {
     </div>
   );
 }
+
+
+    

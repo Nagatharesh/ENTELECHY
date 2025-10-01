@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useSearchParams } from "next/navigation";
@@ -39,14 +40,15 @@ import {
   Hash,
   Car,
   User,
+  Fingerprint
 } from "lucide-react";
 import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
 import { generatePatientId } from "@/lib/utils";
 import { dummyPatients } from "@/lib/dummy-data";
 
-const patientSchema = z.object({
-  phone: z.string().min(10, "Please enter a valid phone number."),
+const patientSearchSchema = z.object({
+  searchTerm: z.string().min(1, "Please enter a search term."),
 });
 
 const patientLoginSchema = z.object({
@@ -83,9 +85,9 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const defaultTab = (searchParams.get("role") as Role) || "patient";
 
-  const patientForm = useForm<z.infer<typeof patientSchema>>({
-    resolver: zodResolver(patientSchema),
-    defaultValues: { phone: "" },
+  const patientSearchForm = useForm<z.infer<typeof patientSearchSchema>>({
+    resolver: zodResolver(patientSearchSchema),
+    defaultValues: { searchTerm: "" },
   });
 
   const patientLoginForm = useForm<z.infer<typeof patientLoginSchema>>({
@@ -106,26 +108,35 @@ export function LoginForm() {
     defaultValues: { emailOrPhone: "", password: "", vehicleNumber: "" },
   });
 
-  function onPatientGenerateId(values: z.infer<typeof patientSchema>) {
-    const existingPatient = dummyPatients.find(p => p.phone === values.phone);
+  function onPatientSearch(values: z.infer<typeof patientSearchSchema>) {
+    const { searchTerm } = values;
+    const existingPatient = dummyPatients.find(p => p.phone === searchTerm || p.aadhaar === searchTerm || p.patientId === searchTerm);
+    
     if (existingPatient) {
       patientLoginForm.setValue("patientId", existingPatient.patientId);
     } else {
-      const newPatientId = generatePatientId();
-      patientLoginForm.setValue("patientId", newPatientId);
-      // In a real app, you'd create a new patient record here.
+      // Assuming a phone number was entered if no match
+      if (/^\+?[0-9]{10,13}$/.test(searchTerm)) {
+        const newPatientId = generatePatientId();
+        patientLoginForm.setValue("patientId", newPatientId);
+        // In a real app, you'd create a new patient record here.
+      } else {
+        patientSearchForm.setError("searchTerm", {
+          type: "manual",
+          message: "Patient not found. Enter a phone number to generate a new ID."
+        });
+      }
     }
   }
 
   function onPatientLogin(values: z.infer<typeof patientLoginSchema>) {
-    // In a real app, you would verify the patient ID.
     const patientExists = dummyPatients.some(p => p.patientId === values.patientId);
     if(patientExists) {
         router.push(`/patient/dashboard?id=${values.patientId}`);
     } else {
         patientLoginForm.setError("patientId", {
             type: "manual",
-            message: "Patient ID not found. Try generating one or use a dummy ID like 'PAT-20251001-0001' for testing.",
+            message: "Patient ID not found. Try searching first or use a dummy ID like 'PAT-20251001-0001' for testing.",
         });
     }
   }
@@ -160,25 +171,25 @@ export function LoginForm() {
           <TabsContent value="patient">
             <CardHeader>
               <CardTitle className="text-gradient-glow">Patient Hub</CardTitle>
-              <CardDescription>First, generate a Patient ID with your phone number.</CardDescription>
+              <CardDescription>First, find your record or generate a new Patient ID.</CardDescription>
             </CardHeader>
             <CardContent>
-              <Form {...patientForm}>
-                <form onSubmit={patientForm.handleSubmit(onPatientGenerateId)} className="space-y-4">
+              <Form {...patientSearchForm}>
+                <form onSubmit={patientSearchForm.handleSubmit(onPatientSearch)} className="space-y-4">
                   <FormField
-                    control={patientForm.control}
-                    name="phone"
+                    control={patientSearchForm.control}
+                    name="searchTerm"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Phone Number</FormLabel>
+                        <FormLabel>Search by Phone, Aadhaar, or Patient ID</FormLabel>
                         <FormControl>
-                          <InputWithIcon icon={Phone} type="tel" placeholder="+9199999XXXXX" {...field} />
+                          <InputWithIcon icon={Fingerprint} type="text" placeholder="Enter your details..." {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full glowing-shadow-interactive">Generate Patient ID</Button>
+                  <Button type="submit" className="w-full glowing-shadow-interactive">Search / Generate ID</Button>
                 </form>
               </Form>
 
@@ -330,3 +341,5 @@ export function LoginForm() {
     </div>
   );
 }
+
+    

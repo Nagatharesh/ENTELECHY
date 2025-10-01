@@ -1,3 +1,4 @@
+
 export const dummyDoctors = [
     {
       "doctorId": "DOC-001",
@@ -134,7 +135,7 @@ export const dummyPatients = [
     "medicalRecords": [
         {"recordId": "REC-001", "date": "2025-09-20", "type": "Consultation", "details": "Routine checkup. BP slightly elevated.", "doctorId": "DOC-001"},
         {"recordId": "REC-002", "date": "2025-07-11", "type": "Lab Test", "details": "Lipid profile. Results normal.", "doctorId": "DOC-001"},
-        {"recordId": "REC-003", "date": "2025-05-02", "type": "Prescription", "details": "Prescribed Amlodipine for hypertension.", "doctorId": "DOC-001", "prescriptionId": "PRE-001"}
+        {"recordId": "REC-003", "date": "2025-05-02", "type": "Procedure", "details": "Prescribed Amlodipine for hypertension.", "doctorId": "DOC-001"}
     ],
     "prescriptions": [
         {"prescriptionId": "PRE-001", "date": "2025-05-02", "doctorId": "DOC-001", "medicines": [{"medicineId": "MED-001", "dosage": "5mg OD"}]}
@@ -171,7 +172,7 @@ export const dummyPatients = [
     },
     "medicalRecords": [
         {"recordId": "REC-004", "date": "2025-09-15", "type": "Consultation", "details": "Follow-up for Asthma. Inhaler dosage adjusted.", "doctorId": "DOC-005"},
-        {"recordId": "REC-005", "date": "2025-08-01", "type": "Prescription", "details": "Prescribed Salbutamol Inhaler and Vitamin D supplements.", "doctorId": "DOC-005", "prescriptionId": "PRE-002"}
+        {"recordId": "REC-005", "date": "2025-08-01", "type": "Procedure", "details": "Prescribed Salbutamol Inhaler and Vitamin D supplements.", "doctorId": "DOC-005"}
     ],
     "prescriptions": [
         {"prescriptionId": "PRE-002", "date": "2025-08-01", "doctorId": "DOC-005", "medicines": [{"medicineId": "MED-009", "dosage": "2 puffs when needed"}, {"medicineId": "MED-011", "dosage": "1 tablet weekly"}]}
@@ -206,7 +207,7 @@ export const dummyPatients = [
       "medicationAdherence": [0.92,0.9,0.94,0.91,0.93,0.92,0.9]
     },
     "medicalRecords": [
-        {"recordId": "REC-006", "date": "2025-08-10", "type": "Consultation", "details": "Diabetes management review. Adjusted Metformin dosage.", "doctorId": "DOC-003", "prescriptionId": "PRE-003"}
+        {"recordId": "REC-006", "date": "2025-08-10", "type": "Consultation", "details": "Diabetes management review. Adjusted Metformin dosage.", "doctorId": "DOC-003"}
     ],
      "prescriptions": [
         {"prescriptionId": "PRE-003", "date": "2025-08-10", "doctorId": "DOC-003", "medicines": [{"medicineId": "MED-002", "dosage": "500mg BD"}]}
@@ -273,7 +274,7 @@ export const dummyPatients = [
     },
     "medicalRecords": [
       {"recordId": "REC-008", "date": "2025-04-15", "type": "Procedure", "details": "Coronary angioplasty with stent placement.", "doctorId": "DOC-004"},
-      {"recordId": "REC-009", "date": "2025-04-15", "type": "Prescription", "details": "Prescribed Aspirin and Clopidogrel.", "doctorId": "DOC-004", "prescriptionId": "PRE-004"}
+      {"recordId": "REC-009", "date": "2025-04-15", "type": "Procedure", "details": "Prescribed Aspirin and Clopidogrel.", "doctorId": "DOC-004"}
     ],
     "prescriptions": [
         {"prescriptionId": "PRE-004", "date": "2025-04-15", "doctorId": "DOC-004", "medicines": [{"medicineId": "MED-003", "dosage": "75mg OD"}, {"medicineId": "MED-013", "dosage": "75mg OD"}]}
@@ -307,7 +308,7 @@ export const dummyPatients = [
       "medicationAdherence": [0.99,0.98,1,0.99,0.98,1,0.99]
     },
      "medicalRecords": [
-        {"recordId": "REC-010", "date": "2025-06-30", "type": "Consultation", "details": "Consulted for severe migraine episode.", "doctorId": "DOC-002", "prescriptionId": "PRE-005"}
+        {"recordId": "REC-010", "date": "2025-06-30", "type": "Consultation", "details": "Consulted for severe migraine episode.", "doctorId": "DOC-002"}
     ],
     "prescriptions": [
         {"prescriptionId": "PRE-005", "date": "2025-06-30", "doctorId": "DOC-002", "medicines": [{"medicineId": "MED-012", "dosage": "50mg as needed"}, {"medicineId": "MED-015", "dosage": "1 tablet OD"}]}
@@ -376,7 +377,7 @@ export const dummyPatients = [
       "medicationAdherence": [0.95,0.96,0.94,0.95,0.96,0.94,0.95]
     },
     "medicalRecords": [
-        {"recordId": "REC-012", "date": "2025-09-01", "type": "Lab Test", "details": "TSH levels check. Dosage adjusted.", "doctorId": "DOC-003", "prescriptionId": "PRE-006"}
+        {"recordId": "REC-012", "date": "2025-09-01", "type": "Lab Test", "details": "TSH levels check. Dosage adjusted.", "doctorId": "DOC-003"}
     ],
     "prescriptions": [
         {"prescriptionId": "PRE-006", "date": "2025-09-01", "doctorId": "DOC-003", "medicines": [{"medicineId": "MED-005", "dosage": "75mcg OD"}]}
@@ -410,7 +411,7 @@ export const dummyPatients = [
       "medicationAdherence": [0.9,0.88,0.92,0.9,0.89,0.91,0.9]
     },
     "medicalRecords": [
-        {"recordId": "REC-013", "date": "2025-08-22", "type": "Consultation", "details": "Prescribed medication for GERD flare-up.", "doctorId": "DOC-001", "prescriptionId": "PRE-007"}
+        {"recordId": "REC-013", "date": "2025-08-22", "type": "Consultation", "details": "Prescribed medication for GERD flare-up.", "doctorId": "DOC-001"}
     ],
     "prescriptions": [
         {"prescriptionId": "PRE-007", "date": "2025-08-22", "doctorId": "DOC-001", "medicines": [{"medicineId": "MED-008", "dosage": "20mg OD"}, {"medicineId": "MED-007", "dosage": "10mg as needed"}]}
@@ -455,3 +456,6 @@ export type Patient = typeof dummyPatients[0];
 export type Doctor = typeof dummyDoctors[0];
 export type Hospital = typeof dummyHospitals[0];
 export type Medicine = typeof dummyMedicines[0];
+
+
+    
