@@ -1,5 +1,13 @@
 
 
+export const dummyAadhaarPatients = [
+    { aadhaar_full: '1234-5678-9012', name: 'Rahul Sharma', dob: '1990-05-15', gender: 'Male', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
+    { aadhaar_full: '2345-6789-0123', name: 'Anjali Mehta', dob: '1994-08-22', gender: 'Female', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
+    { aadhaar_full: '3456-7890-1234', name: 'Vikram Patel', dob: '1977-11-30', gender: 'Male', contact: '+91 9012345678', address: '5 Lakeview, Bangalore', is_test: true },
+    { aadhaar_full: '4567-8901-2345', name: 'Priya Reddy', dob: '1984-02-18', gender: 'Female', contact: '+91 9988776655', address: '22 Sunrise Ave, Hyderabad', is_test: true },
+    { aadhaar_full: '5678-9012-3456', name: 'Sameer Khan', dob: '1972-07-01', gender: 'Male', contact: '+91 9222334455', address: '11 Central Rd, Chennai', is_test: true },
+];
+
 
 export const dummyDoctors = [
     {
@@ -9,7 +17,8 @@ export const dummyDoctors = [
       "hospitalId": "HOS-001",
       "contact": "+919876543210",
       "waitTime": "15 mins",
-      "rating": 4.6
+      "rating": 4.6,
+      "license": "DEL-98765"
     },
     {
       "doctorId": "DOC-002",
@@ -18,7 +27,8 @@ export const dummyDoctors = [
       "hospitalId": "HOS-002",
       "contact": "+919876543211",
       "waitTime": "30 mins",
-      "rating": 4.8
+      "rating": 4.8,
+      "license": "MUM-54321"
     },
     {
       "doctorId": "DOC-003",
@@ -27,7 +37,8 @@ export const dummyDoctors = [
       "hospitalId": "HOS-003",
       "contact": "+919876543212",
       "waitTime": "20 mins",
-      "rating": 4.7
+      "rating": 4.7,
+      "license": "BLR-67890"
     },
     {
       "doctorId": "DOC-004",
@@ -36,13 +47,14 @@ export const dummyDoctors = [
       "hospitalId": "HOS-003",
       "contact": "+919876543214",
       "waitTime": "25 mins",
-      "rating": 4.6
+      "rating": 4.6,
+       "license": "BLR-67891"
     },
-    { "doctorId": "DOC-006", "name": "Dr. Neha Kapoor", "specialty": "Pulmonologist", "hospitalId": "HOS-001", "contact": "+911122223333", "waitTime": "20 mins", "rating": 4.8 },
-    { "doctorId": "DOC-007", "name": "Dr. Amit Verma", "specialty": "General Physician", "hospitalId": "HOS-002", "contact": "+911133334444", "waitTime": "10 mins", "rating": 4.6 },
-    { "doctorId": "DOC-008", "name": "Dr. Ritu Malhotra", "specialty": "Emergency Medicine", "hospitalId": "HOS-003", "contact": "+911144445555", "waitTime": "5 mins", "rating": 4.7 },
-    { "doctorId": "DOC-009", "name": "Dr. Priya Singh", "specialty": "Dermatologist", "hospitalId": "HOS-005", "contact": "+911166667777", "waitTime": "15 mins", "rating": 4.5 },
-    { "doctorId": "DOC-010", "name": "Dr. Rajesh Mehra", "specialty": "Cardiologist", "hospitalId": "HOS-004", "contact": "+919876543215", "waitTime": "40 mins", "rating": 4.9 }
+    { "doctorId": "DOC-006", "name": "Dr. Neha Kapoor", "specialty": "Pulmonologist", "hospitalId": "HOS-001", "contact": "+911122223333", "waitTime": "20 mins", "rating": 4.8, "license": "DEL-11223" },
+    { "doctorId": "DOC-007", "name": "Dr. Amit Verma", "specialty": "General Physician", "hospitalId": "HOS-002", "contact": "+911133334444", "waitTime": "10 mins", "rating": 4.6, "license": "MUM-33445" },
+    { "doctorId": "DOC-008", "name": "Dr. Ritu Malhotra", "specialty": "Emergency Medicine", "hospitalId": "HOS-003", "contact": "+911144445555", "waitTime": "5 mins", "rating": 4.7, "license": "BLR-44556" },
+    { "doctorId": "DOC-009", "name": "Dr. Priya Singh", "specialty": "Dermatologist", "hospitalId": "HOS-005", "contact": "+911166667777", "waitTime": "15 mins", "rating": 4.5, "license": "CHN-66778" },
+    { "doctorId": "DOC-010", "name": "Dr. Rajesh Mehra", "specialty": "Cardiologist", "hospitalId": "HOS-004", "contact": "+919876543215", "waitTime": "40 mins", "rating": 4.9, "license": "HYD-98765" }
 ]
 
 export const dummyHospitals = [
@@ -570,6 +582,7 @@ export const dummyPatients = [
 ];
 
 export type Patient = typeof dummyPatients[0];
+export type AadhaarPatient = typeof dummyAadhaarPatients[0];
 export type Doctor = typeof dummyDoctors[0];
 export type Hospital = typeof dummyHospitals[0];
 export type Medicine = typeof dummyMedicines[0];
