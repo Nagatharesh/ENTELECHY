@@ -5,75 +5,82 @@
 
 @layer base {
   :root {
-    --background: 220 20% 5%; /* Deep Space Black #0A0A0F */
+    /* Aura Color Spectrum - Gradients are handled via Tailwind classes */
+    --background: 228 29% 4%; /* Dark Cosmic Void #050510 */
     --foreground: 220 20% 90%;
 
-    --card: 259 69% 60% / 0.1; /* Cosmic Violet #9D4EDD at 10% opacity */
+    --card: 259 69% 60% / 0.1; /* Fallback based on Radiant Purple */
     --card-foreground: 220 20% 90%;
 
-    --popover: 220 20% 5%;
+    --popover: 228 29% 4%;
     --popover-foreground: 220 20% 90%;
 
-    --primary: 25 100% 50%; /* Cyber Orange #FF6B00 */
-    --primary-foreground: 220 20% 5%;
+    /* --- Core Aura & Power Aura --- */
+    --primary: 38 100% 63%; /* Magma Orange-Red (for buttons/alerts) */
+    --primary-foreground: 220 20% 98%;
 
-    --secondary: 181 100% 50%; /* Neon Cyan #00F5FF */
-    --secondary-foreground: 220 20% 5%;
-
-    --tertiary: 104 100% 54%; /* Neon Lime #39FF14 */
+    /* --- Energy Aura --- */
+    --secondary: 184 100% 50%; /* Plasma Cyan */
+    --secondary-foreground: 228 29% 4%;
+    
+    /* --- Healing Aura --- */
+    --tertiary: 141 100% 47%; /* Bio-Lime */
 
     --muted: 220 20% 10%;
     --muted-foreground: 220 20% 60%;
+    
+    /* --- Love Aura --- */
+    --accent: 328 100% 59%; /* Hyper Pink */
+    --accent-foreground: 220 20% 98%;
 
-    --accent: 331 100% 59%; /* Hot Pink #FF2E92 */
-    --accent-foreground: 220 20% 5%;
+    /* --- Power Aura for Destructive states --- */
+    --destructive: 11 100% 58%; /* Magma Orange-Red */
+    --destructive-foreground: 220 20% 98%;
 
-    --destructive: 331 100% 59%; /* Hot Pink for destructive states */
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 259 69% 60% / 0.2; /* Cosmic Violet at 20% opacity */
+    --border: 268 77% 53% / 0.2; /* Radiant Purple border */
     --input: 220 20% 10% / 0.7;
-    --ring: 25 100% 60%; /* Lighter Cyber Orange */
+    --ring: 38 100% 63%;
 
     --radius: 0.75rem;
 
-    --chart-1: 331 100% 59%; /* Hot Pink */
-    --chart-2: 25 100% 50%;  /* Cyber Orange */
-    --chart-3: 104 100% 54%; /* Neon Lime */
-    --chart-4: 181 100% 50%; /* Neon Cyan */
-    --chart-5: 259 69% 60%; /* Cosmic Violet */
+    /* --- Aura Chart Palette --- */
+    --chart-1: 184 100% 50%; /* Plasma Cyan */
+    --chart-2: 141 100% 47%; /* Bio-Lime */
+    --chart-3: 328 100% 59%; /* Hyper Pink */
+    --chart-4: 45 99% 70%;  /* Celestial Gold */
+    --chart-5: 268 77% 53%; /* Radiant Purple */
   }
 
   .dark {
-    --background: 220 20% 5%; /* Deep Space Black */
+    --background: 228 29% 4%;
     --foreground: 220 20% 90%;
 
     --card: 259 69% 60% / 0.1;
     --card-foreground: 220 20% 90%;
 
-    --popover: 220 20% 5%;
+    --popover: 228 29% 4%;
     --popover-foreground: 220 20% 90%;
 
-    --primary: 25 100% 50%; /* Cyber Orange */
-    --primary-foreground: 220 20% 5%;
+    --primary: 38 100% 63%;
+    --primary-foreground: 220 20% 98%;
 
-    --secondary: 181 100% 50%; /* Neon Cyan */
-    --secondary-foreground: 220 20% 5%;
+    --secondary: 184 100% 50%;
+    --secondary-foreground: 228 29% 4%;
     
-    --tertiary: 104 100% 54%; /* Neon Lime */
+    --tertiary: 141 100% 47%;
 
     --muted: 220 20% 10%;
     --muted-foreground: 220 20% 60%;
 
-    --accent: 331 100% 59%; /* Hot Pink */
-    --accent-foreground: 220 20% 5%;
+    --accent: 328 100% 59%;
+    --accent-foreground: 220 20% 98%;
 
-    --destructive: 331 100% 59%;
+    --destructive: 11 100% 58%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 259 69% 60% / 0.2;
+    --border: 268 77% 53% / 0.2;
     --input: 220 20% 10% / 0.7;
-    --ring: 25 100% 60%;
+    --ring: 38 100% 63%;
   }
 }
 
@@ -84,27 +91,35 @@
   body {
     @apply bg-background text-foreground;
     background-image: 
-      radial-gradient(circle at 15% 50%, hsl(var(--primary) / 0.1), transparent 35%),
-      radial-gradient(circle at 85% 50%, hsl(var(--secondary) / 0.1), transparent 35%),
-      radial-gradient(circle at 50% 90%, hsl(var(--accent) / 0.08), transparent 40%),
-      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="hsl(331 100% 59% / 0.05)"><path d="M0 .5H31.5V32"/></svg>');
+      radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--accent) / 0.1), transparent),
+      radial-gradient(ellipse 80% 50% at 50% 120%, hsl(var(--secondary) / 0.1), transparent),
+      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="hsl(268 77% 53% / 0.03)"><path d="M0 .5H31.5V32"/></svg>');
+    animation: background-aurora 20s ease-in-out infinite;
   }
 
   .glassmorphism {
-    @apply bg-card/50 backdrop-blur-xl border border-white/10 rounded-lg;
+    background-color: hsl(var(--card) / 0.1);
+    @apply backdrop-blur-xl border border-white/5 rounded-lg;
   }
   
   .glowing-shadow {
-    box-shadow: 0 0 20px hsl(var(--primary)/0.3), 0 0 40px hsl(var(--secondary)/0.3), 0 0 60px hsl(var(--accent)/0.2);
+    box-shadow: 0 0 25px hsl(var(--primary)/0.2), 0 0 50px hsl(var(--secondary)/0.2), 0 0 75px hsl(var(--accent)/0.15);
   }
   
   .glowing-shadow-interactive {
-    @apply shadow-[0_0_15px_hsl(var(--primary)/0.4),_0_0_8px_hsl(var(--accent)/0.3)] transition-all duration-300 hover:shadow-[0_0_35px_hsl(var(--primary)/0.6),_0_0_15px_hsl(var(--accent)/0.5)] active:shadow-[0_0_15px_hsl(var(--primary)/0.8),_0_0_8px_hsl(var(--accent)/0.7)];
+    box-shadow: 0 0 15px hsl(var(--primary)/0.4), 0 0 8px hsl(var(--accent)/0.3);
+    transition: all 0.3s ease;
   }
+  .glowing-shadow-interactive:hover {
+     box-shadow: 0 0 40px hsl(var(--primary)/0.7), 0 0 20px hsl(var(--accent)/0.5);
+  }
+   .glowing-shadow-interactive:active {
+     box-shadow: 0 0 20px hsl(var(--primary)/0.9), 0 0 10px hsl(var(--accent)/0.7);
+   }
 
   .text-gradient-glow {
     @apply text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-300;
-    text-shadow: 0 0 10px hsl(var(--primary)/0.8), 0 0 20px hsl(var(--secondary)/0.6), 0 0 30px hsl(var(--accent)/0.4);
+    text-shadow: 0 0 10px hsl(var(--chart-4)/0.8), 0 0 20px hsl(var(--secondary)/0.6), 0 0 30px hsl(var(--accent)/0.4);
   }
 }
 
@@ -125,6 +140,10 @@
 
   .animate-glow-pulse {
     animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  .aura-breathing {
+    animation: aura-breathing 4s ease-in-out infinite;
   }
 
   .radar-container {
@@ -178,6 +197,7 @@
       width: 2px;
       background: linear-gradient(to bottom, hsl(var(--primary)/0.1), hsl(var(--secondary)/0.1), hsl(var(--accent)/0.1));
       box-shadow: 0 0 8px hsl(var(--primary)/0.6);
+      animation: timeline-flow 10s linear infinite;
     }
     .timeline-point-glow {
       position: absolute;
@@ -192,6 +212,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      animation: aura-breathing 3s ease-in-out infinite;
     }
     .timeline-point-glow > svg {
       color: hsl(var(--primary));
@@ -220,5 +241,21 @@
     @keyframes pulse {
       0% { transform: scale(1); opacity: 0.7; }
       100% { transform: scale(4); opacity: 0; }
+    }
+
+    @keyframes aura-breathing {
+      0%, 100% { box-shadow: 0 0 15px hsl(var(--primary)), 0 0 25px hsl(var(--secondary)/0.5); }
+      50% { box-shadow: 0 0 30px hsl(var(--primary)/0.7), 0 0 50px hsl(var(--secondary)/0.7); }
+    }
+    
+    @keyframes timeline-flow {
+      from { background-position: 0 0; }
+      to { background-position: 0 200px; }
+    }
+
+    @keyframes background-aurora {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 }

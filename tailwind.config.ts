@@ -75,6 +75,13 @@ export default {
           border: 'hsl(var(--border))',
           ring: 'hsl(var(--ring))',
         },
+        // Aura Palette
+        'celestial-gold': '#FFD700',
+        'bio-lime': '#39FF14',
+        'plasma-cyan': '#00EFFF',
+        'radiant-purple': '#9D4EDD',
+        'magma-orange': '#FF6347',
+        'hyper-pink': '#FF2E92',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -107,12 +114,12 @@ export default {
           'to': { opacity: '1', transform: 'translateY(0)' },
         },
         'glow-pulse': {
-          '0%, 100%': { boxShadow: '0 0 10px hsl(var(--primary)/0.2), 0 0 10px hsl(var(--secondary)/0.2)' },
-          '50%': { boxShadow: '0 0 25px hsl(var(--primary)/0.5), 0 0 25px hsl(var(--secondary)/0.5)' },
+          '0%, 100%': { boxShadow: '0 0 15px hsl(var(--primary)/0.4), 0 0 30px hsl(var(--secondary)/0.3)' },
+          '50%': { boxShadow: '0 0 35px hsl(var(--primary)/0.8), 0 0 50px hsl(var(--secondary)/0.6)' },
         },
         'heartbeat-glow': {
-          '0%, 100%': { strokeWidth: '3.5', filter: 'drop-shadow(0 0 4px hsl(var(--secondary)))' },
-          '50%': { strokeWidth: '5', filter: 'drop-shadow(0 0 10px hsl(var(--secondary)))' },
+          '0%, 100%': { strokeWidth: '3.5', filter: 'drop-shadow(0 0 6px hsl(var(--secondary)))' },
+          '50%': { strokeWidth: '5', filter: 'drop-shadow(0 0 15px hsl(var(--secondary)))' },
         },
         'logo-rotate': {
             '0%': { transform: 'rotateY(0deg) rotateZ(0deg) scale(1)' },
@@ -121,7 +128,7 @@ export default {
         },
         'ping-slow': {
           '75%, 100%': {
-            transform: 'scale(2)',
+            transform: 'scale(2.5)',
             opacity: '0',
           }
         }
