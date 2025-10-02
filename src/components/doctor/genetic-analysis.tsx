@@ -9,6 +9,7 @@ import { Dna, Bot, AlertTriangle, ShieldCheck, Pill } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from '@/components/ui/badge';
 import { DNA } from '@/components/icons/dna';
+import { Canvas } from '@react-three/fiber';
 
 export function GeneticAnalysis() {
     const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
@@ -64,7 +65,11 @@ export function GeneticAnalysis() {
 const AnalysisInProgress = () => (
     <Card className="glassmorphism glowing-shadow flex flex-col items-center justify-center p-8 space-y-4">
         <div className="w-64 h-64 relative">
-           <DNA />
+            <Canvas>
+                <ambientLight intensity={0.5} />
+                <pointLight position={[10, 10, 10]} />
+                <DNA />
+            </Canvas>
         </div>
         <p className="text-xl font-bold text-gradient-glow animate-pulse">AI Analyzing Genetic Markers...</p>
         <p className="text-muted-foreground">This may take a moment.</p>
@@ -102,7 +107,11 @@ const AnalysisResult = ({ result }: { result: any }) => (
                     <CardTitle className="text-gradient-glow">3D Visualization</CardTitle>
                 </CardHeader>
                 <CardContent className="h-96 flex items-center justify-center">
-                    <DNA interactive={true} />
+                    <Canvas>
+                        <ambientLight intensity={0.5} />
+                        <pointLight position={[10, 10, 10]} />
+                        <DNA interactive={true} />
+                    </Canvas>
                 </CardContent>
             </Card>
         </div>
