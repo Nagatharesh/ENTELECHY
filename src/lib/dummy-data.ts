@@ -17,28 +17,28 @@ export const dummyAadhaarPatients = [
 
 
 export const dummyDoctors = [
-    { "doctorId": "DOC-001", "name": "Dr. Neha Kapoor", "specialty": "Cardiology", "hospitalId": "HOS-001", "contact": "+919876543210", "waitTime": "15 mins", "rating": 4.8, "license": "DEL-98765" },
-    { "doctorId": "DOC-002", "name": "Dr. Amit Verma", "specialty": "Dermatology", "hospitalId": "HOS-002", "contact": "+919876543211", "waitTime": "20 mins", "rating": 4.6, "license": "MUM-54321" },
-    { "doctorId": "DOC-003", "name": "Dr. Ritu Sharma", "specialty": "Pediatrics", "hospitalId": "HOS-007", "contact": "+919876543212", "waitTime": "10 mins", "rating": 4.9, "license": "DEL-11223" },
-    { "doctorId": "DOC-004", "name": "Dr. Arjun Mehta", "specialty": "Orthopedics", "hospitalId": "HOS-006", "contact": "+919876543214", "waitTime": "25 mins", "rating": 4.7, "license": "DEL-67891" },
-    { "doctorId": "DOC-005", "name": "Dr. Priya Singh", "specialty": "Neurology", "hospitalId": "HOS-004", "contact": "+919876543215", "waitTime": "18 mins", "rating": 4.8, "license": "HYD-98765" },
-    { "doctorId": "DOC-006", "name": "Dr. Karan Joshi", "specialty": "General Medicine", "hospitalId": "HOS-001", "contact": "+911122223333", "waitTime": "12 mins", "rating": 4.5, "license": "DEL-33445" },
-    { "doctorId": "DOC-007", "name": "Dr. Shalini Iyer", "specialty": "Cardiology", "hospitalId": "HOS-008", "contact": "+911133334444", "waitTime": "20 mins", "rating": 4.7, "license": "BLR-44556" },
-    { "doctorId": "DOC-008", "name": "Dr. Vivek Reddy", "specialty": "Orthopedics", "hospitalId": "HOS-009", "contact": "+911144445555", "waitTime": "22 mins", "rating": 4.6, "license": "MUM-66778" },
-    { "doctorId": "DOC-009", "name": "Dr. Anjali Nair", "specialty": "Dermatology", "hospitalId": "HOS-003", "contact": "+911166667777", "waitTime": "15 mins", "rating": 4.8, "license": "BLR-98766" },
-    { "doctorId": "DOC-010", "name": "Dr. Rohit Gupta", "specialty": "General Medicine", "hospitalId": "HOS-007", "contact": "+919876543216", "waitTime": "10 mins", "rating": 4.7, "license": "DEL-67892" },
-    { "doctorId": "DOC-011", "name": "Dr. Sneha Bhatia", "specialty": "Pediatrics", "hospitalId": "HOS-002", "contact": "+919876543217", "waitTime": "14 mins", "rating": 4.8, "license": "MUM-98768" },
-    { "doctorId": "DOC-012", "name": "Dr. Rajeev Sinha", "specialty": "Neurology", "hospitalId": "HOS-006", "contact": "+919876543218", "waitTime": "25 mins", "rating": 4.9, "license": "DEL-54322" },
-    { "doctorId": "DOC-013", "name": "Dr. Alok Gupta", "specialty": "Orthopedics", "hospitalId": "HOS-003", "contact": "+919876543219", "waitTime": "25 mins", "rating": 4.6, "license": "BLR-67891" },
-    { "doctorId": "DOC-014", "name": "Dr. Rajesh Mehra", "specialty": "Cardiology", "hospitalId": "HOS-004", "contact": "+919876543220", "waitTime": "40 mins", "rating": 4.9, "license": "HYD-98765" },
-    { "doctorId": "DOC-015", "name": "Dr. Kavya Nair", "specialty": "Neurology", "hospitalId": "HOS-001", "contact": "+919876543221", "waitTime": "35 mins", "rating": 4.8, "license": "DEL-98766" },
-    { "doctorId": "DOC-016", "name": "Dr. Sameer Khan", "specialty": "General Medicine", "hospitalId": "HOS-010", "contact": "+919876543222", "waitTime": "30 mins", "rating": 4.7, "license": "BLR-67893" }
-]
+    { "doctorId": "DOC-001", "name": "Dr. A Kumar", "specialty": "Cardiology", "hospitalId": "HOS-001", "contact": "+919876543210", "waitTime": "15 mins", "rating": 4.8, "license": "DEL-98765", "slots": ["10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "13:00 PM", "13:30 PM", "14:00 PM"], "queue": "3 patients" },
+    { "doctorId": "DOC-002", "name": "Dr. S Mehra", "specialty": "Dermatology", "hospitalId": "HOS-001", "contact": "+919876543211", "waitTime": "20 mins", "rating": 4.6, "license": "MUM-54321", "slots": ["09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM"], "queue": "2 patients" },
+    { "doctorId": "DOC-003", "name": "Dr. R Verma", "specialty": "Neurology", "hospitalId": "HOS-002", "contact": "+919876543212", "waitTime": "10 mins", "rating": 4.9, "license": "DEL-11223", "slots": ["11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "13:00 PM", "13:30 PM", "14:00 PM", "14:30 PM", "15:00 PM", "15:30 PM", "16:00 PM"], "queue": "1 patient" },
+    { "doctorId": "DOC-004", "name": "Dr. P Singh", "specialty": "Pediatrics", "hospitalId": "HOS-001", "contact": "+919876543214", "waitTime": "25 mins", "rating": 4.7, "license": "DEL-67891", "slots": ["08:00 AM", "08:30 AM", "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "13:00 PM"], "queue": "4 patients" },
+    { "doctorId": "DOC-005", "name": "Dr. N Sharma", "specialty": "Orthopedics", "hospitalId": "HOS-002", "contact": "+919876543215", "waitTime": "18 mins", "rating": 4.8, "license": "HYD-98765", "slots": ["10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "13:00 PM", "13:30 PM", "14:00 PM", "14:30 PM", "15:00 PM"], "queue": "2 patients" },
+    { "doctorId": "DOC-006", "name": "Dr. L Kapoor", "specialty": "ENT", "hospitalId": "HOS-001", "contact": "+911122223333", "waitTime": "12 mins", "rating": 4.5, "license": "DEL-33445", "slots": ["09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "13:00 PM", "13:30 PM"], "queue": "2 patients" },
+    { "doctorId": "DOC-007", "name": "Dr. M Jain", "specialty": "Gynecology", "hospitalId": "HOS-002", "contact": "+911133334444", "waitTime": "20 mins", "rating": 4.7, "license": "BLR-44556", "slots": ["10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "13:00 PM", "13:30 PM", "14:00 PM"], "queue": "3 patients" },
+    { "doctorId": "DOC-008", "name": "Dr. T Khanna", "specialty": "Ophthalmology", "hospitalId": "HOS-001", "contact": "+911144445555", "waitTime": "22 mins", "rating": 4.6, "license": "MUM-66778", "slots": ["11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "13:00 PM", "13:30 PM", "14:00 PM", "14:30 PM", "15:00 PM"], "queue": "2 patients" },
+    { "doctorId": "DOC-009", "name": "Dr. K Reddy", "specialty": "General Medicine", "hospitalId": "HOS-002", "contact": "+911166667777", "waitTime": "15 mins", "rating": 4.8, "license": "BLR-98766", "slots": ["08:30 AM", "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM"], "queue": "1 patient" },
+    { "doctorId": "DOC-010", "name": "Dr. V Mehta", "specialty": "Pediatrics", "hospitalId": "HOS-001", "contact": "+919876543216", "waitTime": "10 mins", "rating": 4.7, "license": "DEL-67892", "slots": ["12:00 PM", "12:30 PM", "13:00 PM", "13:30 PM", "14:00 PM", "14:30 PM", "15:00 PM", "15:30 PM", "16:00 PM"], "queue": "2 patients" },
+    { "doctorId": "DOC-011", "name": "Dr. Sneha Bhatia", "specialty": "Pediatrics", "hospitalId": "HOS-003", "contact": "+919876543217", "waitTime": "14 mins", "rating": 4.8, "license": "MUM-98768", "slots": ["09:45 AM", "10:00 AM", "10:15 AM", "10:30 AM", "10:45 AM", "11:00 AM", "11:15 AM"], "queue": "3 patients" },
+    { "doctorId": "DOC-012", "name": "Dr. Rajeev Sinha", "specialty": "Neurology", "hospitalId": "HOS-004", "contact": "+919876543218", "waitTime": "25 mins", "rating": 4.9, "license": "DEL-54322", "slots": ["11:15 AM", "11:30 AM", "11:45 AM", "12:00 PM", "12:15 PM"], "queue": "4 patients" },
+    { "doctorId": "DOC-013", "name": "Dr. Alok Gupta", "specialty": "Orthopedics", "hospitalId": "HOS-005", "contact": "+919876543219", "waitTime": "25 mins", "rating": 4.6, "license": "BLR-67891", "slots": ["14:00 PM", "14:15 PM", "14:30 PM", "14:45 PM"], "queue": "4 patients" },
+    { "doctorId": "DOC-014", "name": "Dr. Rajesh Mehra", "specialty": "Cardiology", "hospitalId": "HOS-006", "contact": "+919876543220", "waitTime": "40 mins", "rating": 4.9, "license": "HYD-98765", "slots": ["15:00 PM", "15:15 PM", "15:30 PM"], "queue": "5 patients" },
+    { "doctorId": "DOC-015", "name": "Dr. Kavya Nair", "specialty": "Neurology", "hospitalId": "HOS-007", "contact": "+919876543221", "waitTime": "35 mins", "rating": 4.8, "license": "DEL-98766", "slots": ["16:00 PM", "16:15 PM", "16:30 PM", "16:45 PM", "17:00 PM"], "queue": "3 patients" },
+    { "doctorId": "DOC-016", "name": "Dr. Sameer Khan", "specialty": "General Medicine", "hospitalId": "HOS-008", "contact": "+919876543222", "waitTime": "30 mins", "rating": 4.7, "license": "BLR-67893", "slots": ["09:00 AM", "09:15 AM", "09:30 AM", "09:45 AM"], "queue": "2 patients" }
+];
 
 export const dummyHospitals = [
     {
         "hospitalId": "HOS-001",
-        "name": "Apollo Hospital",
+        "name": "City Hospital",
         "location": "New Delhi, DL",
         "contact": "+911145678901",
         "patientLoad": "12",
@@ -46,7 +46,7 @@ export const dummyHospitals = [
     },
     {
         "hospitalId": "HOS-002",
-        "name": "Fortis Hospital",
+        "name": "Green Hospital",
         "location": "Mumbai, MH",
         "contact": "+912226206666",
         "patientLoad": "8",
@@ -427,15 +427,15 @@ export const dummyPatients = [
     
     "appointments": [
         { "appointmentId": "APP-001", "date": "2025-10-20T15:30:00Z", "doctorId": "DOC-001", "hospitalId": "HOS-001", "status": "booked", "urgent": false, "token": 12, "patientsAhead": 3, "waitTime": 18, "chatResponse": "Hello, I’ll review your asthma progress during our call.", "summary": "Last prescription: Inhaler 2 puffs PRN.", "feedback": 0 },
-        { "appointmentId": "APP-002", "date": "2025-10-25T11:00:00Z", "doctorId": "DOC-007", "hospitalId": "HOS-008", "status": "booked", "urgent": false, "token": 8, "patientsAhead": 2, "waitTime": 10, "chatResponse": "Please bring your last ECG report.", "summary": "Last visit: Tachycardia, Nebulizer given.", "feedback": 0 },
-        { "appointmentId": "APP-003", "date": "2025-11-02T16:15:00Z", "doctorId": "DOC-009", "hospitalId": "HOS-003", "status": "booked", "urgent": false, "token": 5, "patientsAhead": 1, "waitTime": 5, "chatResponse": "Please send a photo of your skin rash before visit.", "summary": "Last visit: Mild dermatitis, hydrocortisone cream prescribed.", "feedback": 0 },
-        { "appointmentId": "APP-004", "date": "2025-09-15T20:00:00Z", "doctorId": "DOC-006", "hospitalId": "HOS-001", "status": "completed", "urgent": false, "token": 15, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Routine Checkup, BP 130/84.", "feedback": 4 },
-        { "appointmentId": "APP-005", "date": "2025-08-30T18:30:00Z", "doctorId": "DOC-005", "hospitalId": "HOS-004", "status": "completed", "urgent": false, "token": 7, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Migraine treatment, prescribed Sumatriptan.", "feedback": 5 },
-        { "appointmentId": "APP-006", "date": "2025-07-20T14:00:00Z", "doctorId": "DOC-004", "hospitalId": "HOS-006", "status": "completed", "urgent": false, "token": 11, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Knee pain, MRI done, physiotherapy recommended.", "feedback": 3 },
-        { "appointmentId": "APP-007", "date": "2025-06-10T09:45:00Z", "doctorId": "DOC-013", "hospitalId": "HOS-003", "status": "completed", "urgent": true, "token": 2, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Thyroid imbalance, Levothyroxine prescribed.", "feedback": 4 },
-        { "appointmentId": "APP-008", "date": "2025-05-05T12:30:00Z", "doctorId": "DOC-014", "hospitalId": "HOS-002", "status": "completed", "urgent": false, "token": 1, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Preventive cancer screening, all normal.", "feedback": 5 },
-        { "appointmentId": "APP-009", "date": "2025-04-15T10:00:00Z", "doctorId": "DOC-015", "hospitalId": "HOS-005", "status": "completed", "urgent": false, "token": 9, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Child fever, Paracetamol syrup prescribed.", "feedback": 4 },
-        { "appointmentId": "APP-010", "date": "2025-03-10T19:30:00Z", "doctorId": "DOC-016", "hospitalId": "HOS-010", "status": "completed", "urgent": false, "token": 6, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Anxiety counseling, SSRI suggested.", "feedback": 5 }
+        { "appointmentId": "APP-002", "date": "2025-10-25T11:00:00Z", "doctorId": "DOC-007", "hospitalId": "HOS-002", "status": "booked", "urgent": false, "token": 8, "patientsAhead": 2, "waitTime": 10, "chatResponse": "Please bring your last ECG report.", "summary": "Last visit: Tachycardia, Nebulizer given.", "feedback": 0 },
+        { "appointmentId": "APP-003", "date": "2025-11-02T16:15:00Z", "doctorId": "DOC-002", "hospitalId": "HOS-001", "status": "booked", "urgent": false, "token": 5, "patientsAhead": 1, "waitTime": 5, "chatResponse": "Please send a photo of your skin rash before visit.", "summary": "Last visit: Mild dermatitis, hydrocortisone cream prescribed.", "feedback": 0 },
+        { "appointmentId": "APP-004", "date": "2025-09-15T20:00:00Z", "doctorId": "DOC-009", "hospitalId": "HOS-002", "status": "completed", "urgent": false, "token": 15, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Routine Checkup, BP 130/84.", "feedback": 4 },
+        { "appointmentId": "APP-005", "date": "2025-08-30T18:30:00Z", "doctorId": "DOC-005", "hospitalId": "HOS-002", "status": "completed", "urgent": false, "token": 7, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Migraine treatment, prescribed Sumatriptan.", "feedback": 5 },
+        { "appointmentId": "APP-006", "date": "2025-07-20T14:00:00Z", "doctorId": "DOC-004", "hospitalId": "HOS-001", "status": "completed", "urgent": false, "token": 11, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Knee pain, MRI done, physiotherapy recommended.", "feedback": 3 },
+        { "appointmentId": "APP-007", "date": "2025-06-10T09:45:00Z", "doctorId": "DOC-013", "hospitalId": "HOS-005", "status": "completed", "urgent": true, "token": 2, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Thyroid imbalance, Levothyroxine prescribed.", "feedback": 4 },
+        { "appointmentId": "APP-008", "date": "2025-05-05T12:30:00Z", "doctorId": "DOC-014", "hospitalId": "HOS-006", "status": "completed", "urgent": false, "token": 1, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Preventive cancer screening, all normal.", "feedback": 5 },
+        { "appointmentId": "APP-009", "date": "2025-04-15T10:00:00Z", "doctorId": "DOC-011", "hospitalId": "HOS-003", "status": "completed", "urgent": false, "token": 9, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Child fever, Paracetamol syrup prescribed.", "feedback": 4 },
+        { "appointmentId": "APP-010", "date": "2025-03-10T19:30:00Z", "doctorId": "DOC-016", "hospitalId": "HOS-008", "status": "completed", "urgent": false, "token": 6, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Anxiety counseling, SSRI suggested.", "feedback": 5 }
     ],
 
     "medicalEncounters": [
@@ -644,5 +644,8 @@ export type Investigation = Patient["investigations"][0];
 export type Prescription = typeof dummyPrescriptions[0];
 
     
+
+    
+
 
     

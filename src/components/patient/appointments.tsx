@@ -21,6 +21,7 @@ const getDoctorById = (doctorId: string) => dummyDoctors.find(d => d.doctorId ==
 const getHospitalById = (hospitalId: string) => dummyHospitals.find(h => h.hospitalId === hospitalId);
 
 const specialties = [...new Set(dummyDoctors.map(d => d.specialty))];
+const hospitals = [...new Set(dummyHospitals.map(h => h.name))];
 const cities = [...new Set(dummyHospitals.map(h => h.location.split(',')[0]))];
 
 export function Appointments({ patient, showBookingButton = true }: { patient: Patient, showBookingButton?: boolean }) {
@@ -36,7 +37,7 @@ export function Appointments({ patient, showBookingButton = true }: { patient: P
     setAppointments(prev => [...prev, newAppointment]);
     toast({
       title: "Appointment Booked!",
-      description: `Your appointment with ${getDoctorById(newAppointment.doctorId)?.name} is confirmed for ${format(new Date(newAppointment.date), 'PPP p')}.`,
+      description: `Your appointment with ${getDoctorById(newAppointment.doctorId)?.name} is confirmed for ${format(new Date(newAppointment.date), 'PPP p')}. Your token is #${newAppointment.token}.`,
       variant: "default",
     });
   };
@@ -278,7 +279,7 @@ function BookingDialog({ onBook, patientId }) {
         <Dialog open={showRadar} onOpenChange={setShowRadar}>
             <DialogContent className="glassmorphism bg-transparent border-none shadow-none flex items-center justify-center p-0">
                 <DialogHeader>
-                    <DialogTitle className="sr-only">Finding Doctors</DialogTitle>
+                  <DialogTitle className="sr-only">Finding Doctors</DialogTitle>
                 </DialogHeader>
                 <div className="radar-container">
                     <div className="radar-sweep"></div>
@@ -294,7 +295,6 @@ export function BookingWizard({ onBook, patientId, preselectedDoctor = null, onB
     const [step, setStep] = useState(1);
 
     const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
-    const [selectedCity, setSelectedCity] = useState<string | null>(null);
     const [selectedHospital, setSelectedHospital] = useState<string | null>(null);
     const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -303,10 +303,8 @@ export function BookingWizard({ onBook, patientId, preselectedDoctor = null, onB
     useEffect(() => {
         if (preselectedDoctor) {
             const hospital = getHospitalById(preselectedDoctor.hospitalId);
-            const city = hospital?.location.split(',')[0];
             
             setSelectedSpecialty(preselectedDoctor.specialty);
-            setSelectedCity(city || null);
             setSelectedHospital(preselectedDoctor.hospitalId);
             setSelectedDoctor(preselectedDoctor);
             setStep(3); // Skip to date/time selection
@@ -315,19 +313,15 @@ export function BookingWizard({ onBook, patientId, preselectedDoctor = null, onB
 
 
     const filteredHospitals = useMemo(() => {
-        return dummyHospitals.filter(h => h.location.startsWith(selectedCity || ''));
-    }, [selectedCity]);
+        return dummyHospitals;
+    }, []);
     
     const filteredDoctors = useMemo(() => {
         let doctors = dummyDoctors;
         if (selectedSpecialty) doctors = doctors.filter(d => d.specialty === selectedSpecialty);
         if (selectedHospital) doctors = doctors.filter(d => d.hospitalId === selectedHospital);
-        else if (selectedCity) {
-            const cityHospitals = filteredHospitals.map(h => h.hospitalId);
-            doctors = doctors.filter(d => cityHospitals.includes(d.hospitalId));
-        }
         return doctors;
-    }, [selectedSpecialty, selectedCity, selectedHospital, filteredHospitals]);
+    }, [selectedSpecialty, selectedHospital]);
 
     const handleNext = () => setStep(s => s + 1);
     const handleBack = () => {
@@ -341,7 +335,6 @@ export function BookingWizard({ onBook, patientId, preselectedDoctor = null, onB
     const reset = () => {
         setStep(1);
         setSelectedSpecialty(null);
-        setSelectedCity(null);
         setSelectedHospital(null);
         setSelectedDoctor(null);
         setSelectedDate(null);
@@ -362,7 +355,6 @@ export function BookingWizard({ onBook, patientId, preselectedDoctor = null, onB
         hospitalId: selectedDoctor.hospitalId,
         status: "booked",
         urgent: false,
-        // Add dummy data for new fields
         token: Math.floor(Math.random() * 20) + 1,
         patientsAhead: Math.floor(Math.random() * 5),
         waitTime: Math.floor(Math.random() * 30) + 5,
@@ -376,10 +368,9 @@ export function BookingWizard({ onBook, patientId, preselectedDoctor = null, onB
 
     const renderStep = () => {
         switch (step) {
-            case 1: // Specialty, City, Hospital
+            case 1: // Specialty, Hospital
                 return <Step1 
                     specialty={selectedSpecialty} setSpecialty={setSelectedSpecialty}
-                    city={selectedCity} setCity={setSelectedCity}
                     hospital={selectedHospital} setHospital={setSelectedHospital}
                     hospitals={filteredHospitals} />;
             case 2: // Doctor
@@ -404,7 +395,7 @@ export function BookingWizard({ onBook, patientId, preselectedDoctor = null, onB
     
     const canGoNext = () => {
         switch (step) {
-            case 1: return selectedSpecialty;
+            case 1: return selectedSpecialty && selectedHospital;
             case 2: return selectedDoctor;
             case 3: return selectedDate && selectedTime;
             case 4: return true;
@@ -434,7 +425,7 @@ export function BookingWizard({ onBook, patientId, preselectedDoctor = null, onB
     );
 }
 
-const Step1 = ({ specialty, setSpecialty, city, setCity, hospital, setHospital, hospitals }) => (
+const Step1 = ({ specialty, setSpecialty, hospital, setHospital, hospitals }) => (
     <div className="space-y-4 animate-fade-in-up">
         <h3 className="font-semibold text-lg text-white">Filter your search</h3>
         <Select value={specialty || ''} onValueChange={setSpecialty}>
@@ -443,14 +434,8 @@ const Step1 = ({ specialty, setSpecialty, city, setCity, hospital, setHospital, 
                 {specialties.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
             </SelectContent>
         </Select>
-        <Select value={city || ''} onValueChange={(v) => { setCity(v); setHospital(null); }}>
-            <SelectTrigger><SelectValue placeholder="Select City (optional)" /></SelectTrigger>
-            <SelectContent>
-                {cities.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-            </SelectContent>
-        </Select>
-        <Select value={hospital || ''} onValueChange={setHospital} disabled={!city}>
-            <SelectTrigger><SelectValue placeholder="Select Hospital (optional)" /></SelectTrigger>
+        <Select value={hospital || ''} onValueChange={setHospital}>
+            <SelectTrigger><SelectValue placeholder="Select Hospital" /></SelectTrigger>
             <SelectContent>
                 {hospitals.map(h => <SelectItem key={h.hospitalId} value={h.hospitalId}>{h.name}</SelectItem>)}
             </SelectContent>
@@ -474,6 +459,10 @@ const Step2 = ({ doctors, selected, onSelect }) => (
                         <div className="flex-grow">
                             <p className="font-bold text-white">{doc.name}</p>
                             <p className="text-xs text-muted-foreground">{hospital?.name}, {hospital?.location}</p>
+                             <div className="text-xs text-muted-foreground flex gap-4 mt-1">
+                                <span>Queue: {doc.queue}</span>
+                                <span>Wait: ~{doc.waitTime}</span>
+                             </div>
                         </div>
                         <div className="flex items-center gap-1 text-yellow-400">
                             <Star className="w-4 h-4 fill-current"/>
@@ -491,7 +480,7 @@ const Step3 = ({ doctor, date, setDate, time, setTime }) => {
     const availableDates = Array.from({ length: 7 }, (_, i) => addDays(today, i));
     
     // Dummy slots for every doctor for demo purposes
-    const timeSlots = ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"];
+    const timeSlots = doctor?.slots || ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00"];
 
     return (
         <div className="space-y-4 animate-fade-in-up">
@@ -522,7 +511,7 @@ const Step3 = ({ doctor, date, setDate, time, setTime }) => {
                                 variant={time === t ? 'default' : 'outline'}
                                 onClick={() => setTime(t)}
                             >
-                                {format(new Date(`1970-01-01T${t}:00`), 'p')}
+                                {t}
                             </Button>
                         ))}
                     </div>
@@ -542,14 +531,10 @@ const Step4 = ({ doctor, hospital, date, time }) => {
             <Card className="glassmorphism p-4">
                 <p><span className="font-semibold text-muted-foreground">Doctor:</span> <span className="text-white font-bold">{doctor.name} ({doctor.specialty})</span></p>
                 <p><span className="font-semibold text-muted-foreground">Hospital:</span> <span className="text-white">{hospital.name}, {hospital.location}</span></p>
-                <p><span className="font-semibold text-muted-foreground">Date & Time:</span> <span className="text-white">{format(date, 'EEEE, MMMM d, yyyy')} at {format(new Date(`1970-01-01T${time}:00`), 'p')}</span></p>
+                <p><span className="font-semibold text-muted-foreground">Date & Time:</span> <span className="text-white">{format(date, 'EEEE, MMMM d, yyyy')} at {time}</span></p>
             </Card>
         </div>
     );
 };
-
-    
-
-    
 
     
