@@ -64,8 +64,15 @@ export function Appointments({ patient, showBookingButton = true }: { patient: P
         {upcomingAppointments.length > 0 && (
             <Card className="glassmorphism glowing-shadow">
                 <CardHeader>
-                <CardTitle className="text-gradient-glow">Upcoming Appointments</CardTitle>
-                 <DialogDescription className="flex items-center gap-2 text-primary animate-pulse"><Bot className="w-5 h-5"/>AI Suggestion: An earlier slot for Dr. Neha Kapoor is available on Oct 18 at Apollo Hospital.</DialogDescription>
+                  <CardTitle className="text-gradient-glow">Upcoming Appointments</CardTitle>
+                  <Dialog>
+                    <DialogContent className="hidden">
+                      <DialogHeader>
+                        <DialogTitle>AI Suggestion</DialogTitle>
+                        <DialogDescription className="flex items-center gap-2 text-primary animate-pulse"><Bot className="w-5 h-5"/>AI Suggestion: An earlier slot for Dr. Neha Kapoor is available on Oct 18 at Apollo Hospital.</DialogDescription>
+                      </DialogHeader>
+                    </DialogContent>
+                  </Dialog>
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -541,6 +548,8 @@ const Step4 = ({ doctor, hospital, date, time }) => {
         </div>
     );
 };
+
+    
 
     
 
