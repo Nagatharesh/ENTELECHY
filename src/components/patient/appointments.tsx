@@ -218,6 +218,9 @@ function BookingDialog({ onBook, patientId }) {
         
         <Dialog open={showRadar}>
             <DialogContent className="glassmorphism bg-transparent border-none shadow-none flex items-center justify-center p-0">
+                <DialogHeader>
+                    <DialogTitle className="sr-only">Finding Doctors</DialogTitle>
+                </DialogHeader>
                 <div className="radar-container">
                     <div className="radar-sweep"></div>
                     <div className="radar-marker-center"></div>
@@ -478,3 +481,5 @@ const Step4 = ({ doctor, hospital, date, time }) => {
         </div>
     );
 };
+
+    
