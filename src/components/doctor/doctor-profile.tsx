@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Award, Briefcase, Star, TrendingUp, UserCheck, BarChart, User, Users, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
-import { BarChart as RechartsBarChart, Bar as RechartsBar, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
+import { BarChart as RechartsBarChart, Bar as RechartsBar, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
 export function DoctorProfile({ doctor }: { doctor: Doctor }) {
 
@@ -139,4 +139,7 @@ const InfoCard = ({ icon: Icon, label, value }: { icon: React.ElementType, label
         </div>
         <div>
             <p className="text-sm text-muted-foreground">{label}</p>
-            <p className="text-2xl font-bold text-white">{
+            <p className="text-2xl font-bold text-white">{value}</p>
+        </div>
+    </div>
+);

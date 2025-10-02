@@ -120,4 +120,10 @@ export function DoctorCommunication({ doctor }: { doctor: Doctor }) {
                     </>
                 ) : (
                     <div className="flex items-center justify-center h-full">
-                        <p className="text-muted-foreground">Select a conversation to start chatting
+                        <p className="text-muted-foreground">Select a conversation to start chatting</p>
+                    </div>
+                )}
+            </Card>
+        </div>
+    );
+}
