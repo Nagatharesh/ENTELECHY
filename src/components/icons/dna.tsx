@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -31,14 +31,25 @@ const Connectors: React.FC<{ count?: number }> = ({ count = 10 }) => {
 
     const cylinderGeom = useMemo(() => new THREE.CylinderGeometry(0.01, 0.01, 0.8, 8), []);
 
+    useEffect(() => {
+        if (!instancedMeshRef.current) return;
+        for (let i = 0; i < count; i++) {
+            const y = (i - count / 2) * 0.4;
+            dummy.position.set(0, y, 0);
+            dummy.updateMatrix();
+            instancedMeshRef.current.setMatrixAt(i, dummy.matrix);
+        }
+        instancedMeshRef.current.instanceMatrix.needsUpdate = true;
+    }, [count, dummy]);
+
     useFrame((state) => {
         if (!instancedMeshRef.current) return;
         const time = state.clock.getElapsedTime();
         for (let i = 0; i < count; i++) {
-            const y = (i - count / 2) * 0.4;
-            const angle = i * 1 + time * 0.5;
-            dummy.position.set(0, y, 0);
-            dummy.rotation.set(0, angle, 0);
+            instancedMeshRef.current.getMatrixAt(i, dummy.matrix);
+            const position = new THREE.Vector3().setFromMatrixPosition(dummy.matrix);
+            dummy.rotation.set(0, i * 1 + time * 0.5, 0);
+            dummy.position.copy(position);
             dummy.updateMatrix();
             instancedMeshRef.current.setMatrixAt(i, dummy.matrix);
         }
