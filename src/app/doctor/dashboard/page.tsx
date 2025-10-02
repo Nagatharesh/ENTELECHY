@@ -5,6 +5,7 @@ import { Suspense, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
 import { User, Bell, PanelLeft, MessageSquare, Droplets, Microscope } from 'lucide-react';
@@ -29,7 +30,11 @@ import { dummyDoctors, Doctor } from '@/lib/dummy-data';
 import { DoctorProfile } from '@/components/doctor/doctor-profile';
 import { DoctorCommunication } from '@/components/doctor/doctor-communication';
 import { BloodBank } from '@/components/doctor/blood-bank';
-import { GeneticAnalysis } from '@/components/doctor/genetic-analysis';
+
+const GeneticAnalysis = dynamic(() => import('@/components/doctor/genetic-analysis').then(mod => mod.GeneticAnalysis), {
+  ssr: false,
+  loading: () => <div className="w-full h-[60vh] flex items-center justify-center glassmorphism glowing-shadow"><p className="text-lg text-gradient-glow animate-pulse">Loading DNA Hub...</p></div>,
+});
 
 
 function DashboardContent() {
