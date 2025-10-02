@@ -11,12 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+import { ProfileAnalytics } from "./profile-analytics";
 
 const RecordIcon = ({ type }: { type: string }) => {
     switch (type.toLowerCase()) {
@@ -55,20 +50,23 @@ export function MedicalRecords({ patient }: { patient: Patient }) {
   ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
-    <Card className="glassmorphism glowing-shadow h-full">
-        <CardHeader>
-            <CardTitle className="text-gradient-glow">Medical History</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <ScrollArea className="h-[calc(100vh-16rem)] perspective-1000">
-            <div className="w-full space-y-4 pr-4">
-                {allRecords.map((record, index) => (
-                    <EncounterCard key={record.encounterId} record={record as MedicalEncounter} patient={patient} index={index}/>
-                ))}
-            </div>
-            </ScrollArea>
-        </CardContent>
-    </Card>
+    <div className="space-y-8">
+        <ProfileAnalytics patient={patient} />
+        <Card className="glassmorphism glowing-shadow h-full">
+            <CardHeader>
+                <CardTitle className="text-gradient-glow text-2xl">Detailed Medical Timeline</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <ScrollArea className="h-[calc(100vh-20rem)] perspective-1000">
+                <div className="w-full space-y-4 pr-4">
+                    {allRecords.map((record, index) => (
+                        <EncounterCard key={record.encounterId} record={record as MedicalEncounter} patient={patient} index={index}/>
+                    ))}
+                </div>
+                </ScrollArea>
+            </CardContent>
+        </Card>
+    </div>
   );
 }
 
