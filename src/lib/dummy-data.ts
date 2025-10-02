@@ -1,5 +1,8 @@
 
 
+
+
+
 export const dummyAadhaarPatients = [
     { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
     { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
@@ -15,669 +18,422 @@ export const dummyAadhaarPatients = [
     { aadhaar_full: '222233334444', name: 'Rina Das', dob: '1992-01-20', gender: 'F', contact: '+91 5556677889', address: '2 Riverbank, Surat', is_test: true }
 ];
 
-
 export const dummyDoctors = [
-    { "doctorId": "DOC-001", "name": "Dr. A Kumar", "specialty": "Cardiology", "hospitalId": "HOS-001", "contact": "+919876543210", "waitTime": "15 mins", "rating": 4.8, "license": "DEL-98765", "slots": ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00"], "queue": 3 },
-    { "doctorId": "DOC-002", "name": "Dr. S Mehra", "specialty": "Dermatology", "hospitalId": "HOS-001", "contact": "+919876543211", "waitTime": "20 mins", "rating": 4.6, "license": "MUM-54321", "slots": ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00"], "queue": 2 },
-    { "doctorId": "DOC-003", "name": "Dr. R Verma", "specialty": "Neurology", "hospitalId": "HOS-002", "contact": "+919876543212", "waitTime": "10 mins", "rating": 4.9, "license": "DEL-11223", "slots": ["11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00"], "queue": 1 },
-    { "doctorId": "DOC-004", "name": "Dr. P Singh", "specialty": "Pediatrics", "hospitalId": "HOS-001", "contact": "+919876543214", "waitTime": "25 mins", "rating": 4.7, "license": "DEL-67891", "slots": ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00"], "queue": 4 },
-    { "doctorId": "DOC-005", "name": "Dr. N Sharma", "specialty": "Orthopedics", "hospitalId": "HOS-002", "contact": "+919876543215", "waitTime": "18 mins", "rating": 4.8, "license": "HYD-98765", "slots": ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00"], "queue": 2 },
-    { "doctorId": "DOC-006", "name": "Dr. L Kapoor", "specialty": "ENT", "hospitalId": "HOS-001", "contact": "+911122223333", "waitTime": "12 mins", "rating": 4.5, "license": "DEL-33445", "slots": ["09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30"], "queue": 2 },
-    { "doctorId": "DOC-007", "name": "Dr. M Jain", "specialty": "Gynecology", "hospitalId": "HOS-002", "contact": "+911133334444", "waitTime": "20 mins", "rating": 4.7, "license": "BLR-44556", "slots": ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00"], "queue": 3 },
-    { "doctorId": "DOC-008", "name": "Dr. T Khanna", "specialty": "Ophthalmology", "hospitalId": "HOS-001", "contact": "+911144445555", "waitTime": "22 mins", "rating": 4.6, "license": "MUM-66778", "slots": ["11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00"], "queue": 2 },
-    { "doctorId": "DOC-009", "name": "Dr. K Reddy", "specialty": "General Medicine", "hospitalId": "HOS-002", "contact": "+911166667777", "waitTime": "15 mins", "rating": 4.8, "license": "BLR-98766", "slots": ["08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30"], "queue": 1 },
-    { "doctorId": "DOC-010", "name": "Dr. V Mehta", "specialty": "Pediatrics", "hospitalId": "HOS-001", "contact": "+919876543216", "waitTime": "10 mins", "rating": 4.7, "license": "DEL-67892", "slots": ["12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00"], "queue": 2 },
-    { "doctorId": "DOC-011", "name": "Dr. Sneha Bhatia", "specialty": "Pediatrics", "hospitalId": "HOS-003", "contact": "+919876543217", "waitTime": "14 mins", "rating": 4.8, "license": "MUM-98768", "slots": ["09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15"], "queue": 3 },
-    { "doctorId": "DOC-012", "name": "Dr. Rajeev Sinha", "specialty": "Neurology", "hospitalId": "HOS-004", "contact": "+919876543218", "waitTime": "25 mins", "rating": 4.9, "license": "DEL-54322", "slots": ["11:15", "11:30", "11:45", "12:00", "12:15"], "queue": 4 },
-    { "doctorId": "DOC-013", "name": "Dr. Alok Gupta", "specialty": "Orthopedics", "hospitalId": "HOS-005", "contact": "+919876543219", "waitTime": "25 mins", "rating": 4.6, "license": "BLR-67891", "slots": ["14:00", "14:15", "14:30", "14:45"], "queue": 4 },
-    { "doctorId": "DOC-014", "name": "Dr. Rajesh Mehra", "specialty": "Cardiology", "hospitalId": "HOS-006", "contact": "+919876543220", "waitTime": "40 mins", "rating": 4.9, "license": "HYD-98765", "slots": ["15:00", "15:15", "15:30"], "queue": 5 },
-    { "doctorId": "DOC-015", "name": "Dr. Kavya Nair", "specialty": "Neurology", "hospitalId": "HOS-007", "contact": "+919876543221", "waitTime": "35 mins", "rating": 4.8, "license": "DEL-98766", "slots": ["16:00", "16:15", "16:30", "16:45", "17:00"], "queue": 3 },
-    { "doctorId": "DOC-016", "name": "Dr. Sameer Khan", "specialty": "General Medicine", "hospitalId": "HOS-008", "contact": "+919876543222", "waitTime": "30 mins", "rating": 4.7, "license": "BLR-67893", "slots": ["09:00", "09:15", "09:30", "09:45"], "queue": 2 }
+    { doctorId: "DOC-001", name: "Dr. A Kumar", specialty: "Cardiology", hospitalId: "HOS-001", contact: "+919876543210", waitTime: "15 mins", rating: 4.8, qualifications: ["MD", "PhD"], experience: 10, license: "DEL-98765", slots: ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00"], queue: 3, stats: { surgeriesPerformed: 320, successRate: 98, consultations: 500, patientVolume: 1200, feedback: { star5: 280, star4: 30, star3: 5, star2: 3, star1: 2 } }, certificates: [{ name: "Fellowship in Interventional Cardiology", institution: "American College of Cardiology", year: 2015 }, { name: "Advanced Cardiac Life Support", institution: "AHA", year: 2022 }] },
+    { doctorId: "DOC-002", name: "Dr. S Mehra", specialty: "Dermatology", hospitalId: "HOS-001", contact: "+919876543211", waitTime: "20 mins", rating: 4.6, qualifications: ["MBBS", "DNB"], experience: 6, license: "MUM-54321", slots: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00"], queue: 2, stats: { surgeriesPerformed: 180, successRate: 97, consultations: 800, patientVolume: 1500, feedback: { star5: 150, star4: 20, star3: 8, star2: 1, star1: 1 } }, certificates: [{ name: "Advanced Cosmetic Dermatology", institution: "IADVL", year: 2018 }] },
+    { doctorId: "DOC-003", name: "Dr. R Verma", specialty: "Neurology", hospitalId: "HOS-002", contact: "+919876543212", waitTime: "10 mins", rating: 4.9, qualifications: ["MBBS", "DM"], experience: 8, license: "DEL-11223", slots: ["11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00"], queue: 1, stats: { surgeriesPerformed: 210, successRate: 95, consultations: 650, patientVolume: 1000, feedback: { star5: 200, star4: 5, star3: 2, star2: 2, star1: 1 } }, certificates: [{ name: "Stroke Management Certification", institution: "World Stroke Organization", year: 2019 }] },
+    { doctorId: "DOC-004", name: "Dr. P Singh", specialty: "Pediatrics", hospitalId: "HOS-001", contact: "+919876543214", waitTime: "25 mins", rating: 4.7, qualifications: ["MBBS", "MD"], experience: 12, license: "DEL-67891", slots: ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00"], queue: 4, stats: { surgeriesPerformed: 50, successRate: 99, consultations: 1200, patientVolume: 2000, feedback: { star5: 45, star4: 3, star3: 1, star2: 1, star1: 0 } }, certificates: [{ name: "Neonatal Resuscitation Program", institution: "IAP", year: 2020 }] },
+    { doctorId: "DOC-005", name: "Dr. N Sharma", specialty: "Orthopedics", hospitalId: "HOS-002", contact: "+919876543215", waitTime: "18 mins", rating: 4.8, qualifications: ["MS Ortho"], experience: 9, license: "HYD-98765", slots: ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00"], queue: 2, stats: { surgeriesPerformed: 400, successRate: 96, consultations: 700, patientVolume: 1100, feedback: { star5: 380, star4: 15, star3: 3, star2: 1, star1: 1 } }, certificates: [{ name: "Joint Replacement Fellowship", institution: "SICOT", year: 2021 }] },
+    { doctorId: "DOC-006", name: "Dr. L Kapoor", specialty: "ENT", hospitalId: "HOS-001", contact: "+919876543216", waitTime: "12 mins", rating: 4.5, qualifications: ["MS ENT"], experience: 7, license: "CHN-12345", slots: ["09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30"], queue: 2, stats: { surgeriesPerformed: 250, successRate: 97, consultations: 900, patientVolume: 1600, feedback: { star5: 220, star4: 25, star3: 5, star2: 0, star1: 0 } }, certificates: [{ name: "Micro-Ear Surgery Workshop", institution: "AIIMS", year: 2019 }] },
+    { doctorId: "DOC-007", name: "Dr. M Jain", specialty: "Gynecology", hospitalId: "HOS-002", contact: "+919876543217", waitTime: "22 mins", rating: 4.9, qualifications: ["MD", "DGO"], experience: 15, license: "PUN-67890", slots: ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00"], queue: 5, stats: { surgeriesPerformed: 500, successRate: 99, consultations: 1500, patientVolume: 2500, feedback: { star5: 480, star4: 15, star3: 5, star2: 0, star1: 0 } }, certificates: [{ name: "Laparoscopic Surgery Specialist", institution: "FOGSI", year: 2017 }] },
+    { doctorId: "DOC-008", name: "Dr. T Khanna", specialty: "Ophthalmology", hospitalId: "HOS-001", contact: "+919876543218", waitTime: "10 mins", rating: 4.8, qualifications: ["MS"], experience: 11, license: "BLR-54321", slots: ["11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00"], queue: 1, stats: { surgeriesPerformed: 600, successRate: 98, consultations: 1000, patientVolume: 1800, feedback: { star5: 550, star4: 40, star3: 10, star2: 0, star1: 0 } }, certificates: [{ name: "Phacoemulsification Mastery", institution: "AIOS", year: 2018 }] },
+    { doctorId: "DOC-009", name: "Dr. K Reddy", specialty: "General Medicine", hospitalId: "HOS-002", contact: "+919876543219", waitTime: "5 mins", rating: 4.6, qualifications: ["MBBS"], experience: 5, license: "KOL-11223", slots: ["08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30"], queue: 1, stats: { surgeriesPerformed: 20, successRate: 99, consultations: 2000, patientVolume: 3000, feedback: { star5: 15, star4: 3, star3: 2, star2: 0, star1: 0 } }, certificates: [{ name: "Diabetes Care", institution: "IMA", year: 2023 }] },
+    { doctorId: "DOC-010", name: "Dr. V Mehta", specialty: "Pediatrics", hospitalId: "HOS-001", contact: "+919876543220", waitTime: "15 mins", rating: 4.7, qualifications: ["MD", "DCH"], experience: 9, license: "AMD-98765", slots: ["12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00"], queue: 3, stats: { surgeriesPerformed: 30, successRate: 99, consultations: 1100, patientVolume: 1900, feedback: { star5: 25, star4: 5, star3: 0, star2: 0, star1: 0 } }, certificates: [{ name: "Pediatric Advanced Life Support", institution: "AHA", year: 2021 }] },
+    { doctorId: "DOC-011", name: "Dr. Neha Kapoor", specialty: "Pulmonology", hospitalId: "HOS-001", contact: "+919876543221", waitTime: "18 mins", rating: 4.8, qualifications: ["MD", "DTCD"], experience: 8, license: "PUN-54321", slots: ["10:00", "10:30", "15:30", "16:00"], queue: 3, stats: { surgeriesPerformed: 100, successRate: 96, consultations: 800, patientVolume: 1400, feedback: { star5: 90, star4: 8, star3: 2, star2: 0, star1: 0 } }, certificates: [{ name: "Bronchoscopy Workshop", institution: "ICS", year: 2020 }] },
+    { doctorId: "DOC-012", name: "Dr. Ritu Malhotra", specialty: "Cardiology", hospitalId: "HOS-002", contact: "+919876543222", waitTime: "10 mins", rating: 4.9, qualifications: ["DM Cardiology"], experience: 12, license: "DEL-11224", slots: ["11:00", "11:30", "12:00"], queue: 2, stats: { surgeriesPerformed: 450, successRate: 99, consultations: 1200, patientVolume: 2000, feedback: { star5: 430, star4: 15, star3: 5, star2: 0, star1: 0 } }, certificates: [{ name: "Echocardiography Expert", institution: "IAE", year: 2016 }] },
+    { doctorId: "DOC-013", name: "Dr. Aarav Mehta", specialty: "Dermatology", hospitalId: "HOS-003", contact: "+919876543223", waitTime: "5 mins", rating: 4.7, qualifications: ["MD"], experience: 5, license: "MUM-67891", slots: ["16:15", "16:45", "17:15"], queue: 1, stats: { surgeriesPerformed: 120, successRate: 98, consultations: 950, patientVolume: 1700, feedback: { star5: 110, star4: 8, star3: 2, star2: 0, star1: 0 } }, certificates: [{ name: "Aesthetic Medicine", institution: "ACSI", year: 2022 }] },
+    { doctorId: "DOC-014", name: "Dr. Amit Verma", specialty: "General Medicine", hospitalId: "HOS-002", contact: "+919876543224", waitTime: "12 mins", rating: 4.6, qualifications: ["MBBS"], experience: 10, license: "DEL-98766", slots: ["20:00", "20:30"], queue: 2, stats: { surgeriesPerformed: 10, successRate: 99, consultations: 2500, patientVolume: 4000, feedback: { star5: 8, star4: 2, star3: 0, star2: 0, star1: 0 } }, certificates: [{ name: "Critical Care Basics", institution: "ISCCM", year: 2021 }] },
+    { doctorId: "DOC-015", name: "Dr. Kavya Nair", specialty: "Neurology", hospitalId: "HOS-004", contact: "+919876543225", waitTime: "20 mins", rating: 4.9, qualifications: ["DM Neurology"], experience: 9, license: "DEL-11225", slots: ["18:30", "19:00"], queue: 3, stats: { surgeriesPerformed: 150, successRate: 97, consultations: 700, patientVolume: 1200, feedback: { star5: 140, star4: 8, star3: 2, star2: 0, star1: 0 } }, certificates: [{ name: "Epilepsy Management", institution: "IAN", year: 2019 }] },
+    { doctorId: "DOC-016", name: "Dr. Rohit Sharma", specialty: "Orthopedics", hospitalId: "HOS-001", contact: "+919876543226", waitTime: "15 mins", rating: 4.7, qualifications: ["MS Ortho"], experience: 7, license: "BLR-54322", slots: ["14:00", "14:30"], queue: 2, stats: { surgeriesPerformed: 300, successRate: 96, consultations: 600, patientVolume: 1000, feedback: { star5: 280, star4: 15, star3: 5, star2: 0, star1: 0 } }, certificates: [{ name: "Arthroscopy Fellowship", institution: "IAS", year: 2020 }] },
+    { doctorId: "DOC-017", name: "Dr. Sneha Reddy", specialty: "Endocrinology", hospitalId: "HOS-003", contact: "+919876543227", waitTime: "10 mins", rating: 4.8, qualifications: ["DM Endocrinology"], experience: 11, license: "HYD-98766", slots: ["09:45", "10:15"], queue: 1, stats: { surgeriesPerformed: 50, successRate: 99, consultations: 1000, patientVolume: 1500, feedback: { star5: 45, star4: 5, star3: 0, star2: 0, star1: 0 } }, certificates: [{ name: "Thyroid Disorders Management", institution: "ESI", year: 2018 }] },
+    { doctorId: "DOC-018", name: "Dr. Vikram Singh", specialty: "Oncology", hospitalId: "HOS-005", contact: "+919876543228", waitTime: "25 mins", rating: 4.9, qualifications: ["DM Oncology"], experience: 14, license: "MUM-67892", slots: ["12:30", "13:00"], queue: 4, stats: { surgeriesPerformed: 600, successRate: 95, consultations: 800, patientVolume: 1300, feedback: { star5: 580, star4: 15, star3: 5, star2: 0, star1: 0 } }, certificates: [{ name: "Advanced Immunotherapy", institution: "ISMPO", year: 2022 }] },
+    { doctorId: "DOC-019", name: "Dr. Pooja Desai", specialty: "Pediatrics", hospitalId: "HOS-006", contact: "+919876543229", waitTime: "12 mins", rating: 4.8, qualifications: ["MD", "DCH"], experience: 10, license: "CHN-12346", slots: ["10:00", "10:30"], queue: 2, stats: { surgeriesPerformed: 40, successRate: 99, consultations: 1300, patientVolume: 2100, feedback: { star5: 35, star4: 5, star2: 0, star1: 0, star3: 0 } }, certificates: [{ name: "Pediatric Nutrition", institution: "IAP", year: 2019 }] },
+    { doctorId: "DOC-020", name: "Dr. Sameer Khan", specialty: "Psychiatry", hospitalId: "HOS-001", contact: "+919876543230", waitTime: "30 mins", rating: 4.9, qualifications: ["MD Psychiatry"], experience: 9, license: "BLR-54323", slots: ["19:30", "20:00"], queue: 5, stats: { surgeriesPerformed: 0, successRate: 99, consultations: 1500, patientVolume: 2200, feedback: { star5: 0, star4: 0, star3: 0, star2: 0, star1: 0 } }, certificates: [{ name: "Cognitive Behavioral Therapy", institution: "IPS", year: 2018 }] }
 ];
+
 
 export const dummyHospitals = [
-    {
-        "hospitalId": "HOS-001",
-        "name": "City Hospital",
-        "location": "New Delhi, DL",
-        "contact": "+911145678901",
-        "patientLoad": 12,
-        "coordinates": {"lat": 28.7041, "lng": 77.1025}
-    },
-    {
-        "hospitalId": "HOS-002",
-        "name": "Green Hospital",
-        "location": "Mumbai, MH",
-        "contact": "+912226206666",
-        "patientLoad": 8,
-        "coordinates": {"lat": 19.0760, "lng": 72.8777}
-    },
-    {
-        "hospitalId": "HOS-003",
-        "name": "Manipal Hospitals",
-        "location": "Bangalore, KA",
-        "contact": "+918022221111",
-        "patientLoad": 20,
-        "coordinates": {"lat": 12.9716, "lng": 77.5946}
-    },
-    {
-        "hospitalId": "HOS-004",
-        "name": "Narayana Health",
-        "location": "Hyderabad, TS",
-        "contact": "+914023607777",
-        "patientLoad": 15,
-        "coordinates": {"lat": 17.3850, "lng": 78.4867}
-    },
-    {
-        "hospitalId": "HOS-005",
-        "name": "Rainbow Children’s Hospital",
-        "location": "Chennai, TN",
-        "contact": "+914428282828",
-        "patientLoad": 10,
-        "coordinates": {"lat": 13.0827, "lng": 80.2707}
-    },
-    { "hospitalId": "HOS-006", "name": "Max Healthcare", "location": "New Delhi, DL", "contact": "+911147135000", "patientLoad": 18, "coordinates": { "lat": 28.5676, "lng": 77.2122 } },
-    { "hospitalId": "HOS-007", "name": "AIIMS", "location": "New Delhi, DL", "contact": "+911126588500", "patientLoad": 50, "coordinates": { "lat": 28.5663, "lng": 77.2123 } },
-    { "hospitalId": "HOS-008", "name": "Columbia Asia", "location": "Bangalore, KA", "contact": "+918066756666", "patientLoad": 14, "coordinates": { "lat": 12.9345, "lng": 77.6268 } },
-    { "hospitalId": "HOS-009", "name": "Yashoda Hospital", "location": "Hyderabad, TS", "contact": "+914024177000", "patientLoad": 45, "coordinates": { "lat": 17.3616, "lng": 78.4747 } },
-    { "hospitalId": "HOS-010", "name": "NIMHANS", "location": "Bangalore, KA", "contact": "+918026995000", "patientLoad": 30, "coordinates": { "lat": 12.9400, "lng": 77.5960 } }
-]
-
-export const dummyMedicines = [
-    { "medicineId": "MED-001", "name": "Paracetamol", "chemical": "C8H9NO2", "usage": "Fever, Pain", "dosageForm": "Tablet", "prescribedBy": "DOC-007", "govtPrice": 2, "privatePrice": 12, "frequentlyUsed": true },
-    { "medicineId": "MED-002", "name": "Cetirizine", "chemical": "C21H25ClN2O3", "usage": "Cold, Allergy", "dosageForm": "Tablet", "prescribedBy": "DOC-006", "govtPrice": 4, "privatePrice": 20, "frequentlyUsed": true },
-    { "medicineId": "MED-003", "name": "Ibuprofen", "chemical": "C13H18O2", "usage": "Pain, Inflammation", "dosageForm": "Tablet", "prescribedBy": "DOC-004", "govtPrice": 5, "privatePrice": 30, "frequentlyUsed": true },
-    { "medicineId": "MED-004", "name": "Amoxicillin", "chemical": "C16H19N3O5S", "usage": "Infection", "dosageForm": "Capsule", "prescribedBy": "DOC-008", "govtPrice": 15, "privatePrice": 75, "frequentlyUsed": false },
-    { "medicineId": "MED-005", "name": "Azithromycin", "chemical": "C38H72N2O12", "usage": "Infection", "dosageForm": "Tablet", "prescribedBy": "DOC-009", "govtPrice": 25, "privatePrice": 120, "frequentlyUsed": false },
-    { "medicineId": "MED-006", "name": "Metformin", "chemical": "C4H11N5", "usage": "Diabetes", "dosageForm": "Tablet", "prescribedBy": "DOC-003", "govtPrice": 3, "privatePrice": 15, "frequentlyUsed": true },
-    { "medicineId": "MED-007", "name": "Amlodipine", "chemical": "C20H25ClN2O5", "usage": "Hypertension", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 5, "privatePrice": 25, "frequentlyUsed": true },
-    { "medicineId": "MED-008", "name": "Atorvastatin", "chemical": "C33H35FN2O5", "usage": "High Cholesterol", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 8, "privatePrice": 50, "frequentlyUsed": false },
-    { "medicineId": "MED-009", "name": "Omeprazole", "chemical": "C17H19N3O3S", "usage": "Acidity, GERD", "dosageForm": "Capsule", "prescribedBy": "DOC-007", "govtPrice": 6, "privatePrice": 35, "frequentlyUsed": true },
-    { "medicineId": "MED-010", "name": "Salbutamol Inhaler", "chemical": "C13H21NO3", "usage": "Asthma, COPD", "dosageForm": "Inhaler", "prescribedBy": "DOC-006", "govtPrice": 50, "privatePrice": 250, "frequentlyUsed": true },
-    { "medicineId": "MED-012", "name": "Vitamin D3 Supplement", "chemical": "C27H44O", "usage": "Vitamin D Deficiency", "dosageForm": "Capsule", "prescribedBy": "DOC-007", "govtPrice": 20, "privatePrice": 100, "frequentlyUsed": true },
-    { "medicineId": "MED-013", "name": "Clopidogrel", "chemical": "C16H16ClNO2S", "usage": "Blood Thinner", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 12, "privatePrice": 70, "frequentlyUsed": false },
-    { "medicineId": "MED-014", "name": "Prednisolone", "chemical": "C21H28O5", "usage": "Inflammation, Allergy", "dosageForm": "Tablet", "prescribedBy": "DOC-006", "govtPrice": 10, "privatePrice": 45, "frequentlyUsed": false },
-    { "medicineId": "MED-015", "name": "Multivitamin", "chemical": "Varies", "usage": "Supplement", "dosageForm": "Tablet", "prescribedBy": "DOC-007", "govtPrice": 15, "privatePrice": 90, "frequentlyUsed": true },
-    { "medicineId": "MED-016", "name": "Iron Folic Acid", "chemical": "Varies", "usage": "Anemia", "dosageForm": "Tablet", "prescribedBy": "DOC-002", "govtPrice": 7, "privatePrice": 40, "frequentlyUsed": false },
-    { "medicineId": "MED-017", "name": "Ondansetron", "chemical": "C18H19N3O", "usage": "Nausea, Vomiting", "dosageForm": "Tablet", "prescribedBy": "DOC-008", "govtPrice": 8, "privatePrice": 40, "frequentlyUsed": false },
-    { "medicineId": "MED-018", "name": "Loratadine", "chemical": "C22H23ClN2O2", "usage": "Allergy", "dosageForm": "Tablet", "prescribedBy": "DOC-009", "govtPrice": 5, "privatePrice": 25, "frequentlyUsed": false },
-    { "medicineId": "MED-019", "name": "Diclofenac Gel", "chemical": "C14H11Cl2NO2", "usage": "Pain Relief (Topical)", "dosageForm": "Gel", "prescribedBy": "DOC-004", "govtPrice": 20, "privatePrice": 80, "frequentlyUsed": true },
-    { "medicineId": "MED-020", "name": "Pantoprazole", "chemical": "C16H15F2N3O4S", "usage": "Acidity, GERD", "dosageForm": "Tablet", "prescribedBy": "DOC-007", "govtPrice": 7, "privatePrice": 45, "frequentlyUsed": false },
-    { "medicineId": "MED-021", "name": "Telmisartan", "chemical": "C33H30N4O2", "usage": "Hypertension", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 9, "privatePrice": 60, "frequentlyUsed": false },
-    { "medicineId": "MED-022", "name": "Rosuvastatin", "chemical": "C22H28FN3O6S", "usage": "High Cholesterol", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 10, "privatePrice": 70, "frequentlyUsed": false },
-    { "medicineId": "MED-023", "name": "Glimpiride", "chemical": "C24H34N4O5S", "usage": "Diabetes", "dosageForm": "Tablet", "prescribedBy": "DOC-003", "govtPrice": 6, "privatePrice": 30, "frequentlyUsed": false },
-    { "medicineId": "MED-024", "name": "Hydrochlorothiazide", "chemical": "C7H8ClN3O4S2", "usage": "Hypertension, Diuretic", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 4, "privatePrice": 20, "frequentlyUsed": false },
-    { "medicineId": "MED-025", "name": "Montelukast", "chemical": "C35H36ClNO3S", "usage": "Asthma, Allergy", "dosageForm": "Tablet", "prescribedBy": "DOC-006", "govtPrice": 15, "privatePrice": 80, "frequentlyUsed": true },
-    { "medicineId": "MED-026", "name": "Ciprofloxacin", "chemical": "C17H18FN3O3", "usage": "Infection", "dosageForm": "Tablet", "prescribedBy": "DOC-007", "govtPrice": 12, "privatePrice": 65, "frequentlyUsed": false },
-    { "medicineId": "MED-027", "name": "Domperidone", "chemical": "C22H24ClN5O2", "usage": "Nausea, Vomiting", "dosageForm": "Tablet", "prescribedBy": "DOC-007", "govtPrice": 5, "privatePrice": 25, "frequentlyUsed": false },
-    { "medicineId": "MED-028", "name": "Folic Acid", "chemical": "C19H19N7O6", "usage": "Supplement, Anemia", "dosageForm": "Tablet", "prescribedBy": "DOC-002", "govtPrice": 2, "privatePrice": 10, "frequentlyUsed": false },
-    { "medicineId": "MED-029", "name": "Calcium Carbonate", "chemical": "CaCO3", "usage": "Supplement", "dosageForm": "Tablet", "prescribedBy": "DOC-004", "govtPrice": 3, "privatePrice": 15, "frequentlyUsed": false },
-    { "medicineId": "MED-030", "name": "Tramadol", "chemical": "C16H25NO2", "usage": "Severe Pain", "dosageForm": "Injection", "prescribedBy": "DOC-008", "govtPrice": 20, "privatePrice": 100, "frequentlyUsed": false },
-    { "medicineId": "MED-031", "name": "Miconazole Cream", "chemical": "C18H14Cl4N2O", "usage": "Fungal Infection", "dosageForm": "Cream", "prescribedBy": "DOC-009", "govtPrice": 25, "privatePrice": 90, "frequentlyUsed": false },
-    { "medicineId": "MED-032", "name": "Losartan", "chemical": "C22H23ClN6O", "usage": "Hypertension", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 8, "privatePrice": 55, "frequentlyUsed": false },
-    { "medicineId": "MED-033", "name": "Fluconazole", "chemical": "C13H12F2N6O", "usage": "Fungal Infection", "dosageForm": "Capsule", "prescribedBy": "DOC-009", "govtPrice": 10, "privatePrice": 50, "frequentlyUsed": false },
-    { "medicineId": "MED-034", "name": "Bisoprolol", "chemical": "C18H31NO4", "usage": "Heart Conditions", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 7, "privatePrice": 40, "frequentlyUsed": false },
-    { "medicineId": "MED-035", "name": "Doxycycline", "chemical": "C22H24N2O8", "usage": "Infection", "dosageForm": "Capsule", "prescribedBy": "DOC-007", "govtPrice": 9, "privatePrice": 60, "frequentlyUsed": false },
-    { "medicineId": "MED-036", "name": "Esomeprazole", "chemical": "C17H19N3O3S", "usage": "Acidity, GERD", "dosageForm": "Capsule", "prescribedBy": "DOC-007", "govtPrice": 8, "privatePrice": 50, "frequentlyUsed": false },
-    { "medicineId": "MED-037", "name": "Vildagliptin", "chemical": "C17H25N3O2", "usage": "Diabetes", "dosageForm": "Tablet", "prescribedBy": "DOC-003", "govtPrice": 10, "privatePrice": 75, "frequentlyUsed": false },
-    { "medicineId": "MED-038", "name": "Tamsulosin", "chemical": "C20H28N2O5S", "usage": "Prostate", "dosageForm": "Capsule", "prescribedBy": "DOC-001", "govtPrice": 15, "privatePrice": 90, "frequentlyUsed": false },
-    { "medicineId": "MED-039", "name": "Warfarin", "chemical": "C19H16O4", "usage": "Blood Thinner", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 5, "privatePrice": 30, "frequentlyUsed": false },
-    { "medicineId": "MED-040", "name": "Digoxin", "chemical": "C41H64O14", "usage": "Heart Failure", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 6, "privatePrice": 40, "frequentlyUsed": false },
-    { "medicineId": "MED-041", "name": "Spironolactone", "chemical": "C24H32O4S", "usage": "Diuretic, Heart Failure", "dosageForm": "Tablet", "prescribedBy": "DOC-010", "govtPrice": 7, "privatePrice": 45, "frequentlyUsed": false },
-    { "medicineId": "MED-042", "name": "Allopurinol", "chemical": "C5H4N4O", "usage": "Gout", "dosageForm": "Tablet", "prescribedBy": "DOC-001", "govtPrice": 4, "privatePrice": 25, "frequentlyUsed": false },
-    { "medicineId": "MED-043", "name": "Finasteride", "chemical": "C23H36N2O2", "usage": "Prostate, Hair Loss", "dosageForm": "Tablet", "prescribedBy": "DOC-009", "govtPrice": 20, "privatePrice": 120, "frequentlyUsed": false },
-    { "medicineId": "MED-044", "name": "Sertraline", "chemical": "C17H17Cl2N", "usage": "Depression, Anxiety", "dosageForm": "Tablet", "prescribedBy": "DOC-001", "govtPrice": 10, "privatePrice": 70, "frequentlyUsed": false },
-    { "medicineId": "MED-045", "name": "Alprazolam", "chemical": "C17H13ClN4", "usage": "Anxiety, Panic Disorder", "dosageForm": "Tablet", "prescribedBy": "DOC-001", "govtPrice": 8, "privatePrice": 50, "frequentlyUsed": false },
-    { "medicineId": "MED-046", "name": "Phenytoin", "chemical": "C15H12N2O2", "usage": "Seizures", "dosageForm": "Tablet", "prescribedBy": "DOC-001", "govtPrice": 9, "privatePrice": 60, "frequentlyUsed": false },
-    { "medicineId": "MED-047", "name": "Carbamazepine", "chemical": "C15H12N2O", "usage": "Seizures, Bipolar", "dosageForm": "Tablet", "prescribedBy": "DOC-001", "govtPrice": 11, "privatePrice": 80, "frequentlyUsed": false },
-    { "medicineId": "MED-048", "name": "Gabapentin", "chemical": "C9H17NO2", "usage": "Nerve Pain, Seizures", "dosageForm": "Capsule", "prescribedBy": "DOC-004", "govtPrice": 14, "privatePrice": 95, "frequentlyUsed": false },
-    { "medicineId": "MED-049", "name": "Pregabalin", "chemical": "C8H17NO2", "usage": "Nerve Pain, Fibromyalgia", "dosageForm": "Capsule", "prescribedBy": "DOC-004", "govtPrice": 18, "privatePrice": 110, "frequentlyUsed": false },
-    { "medicineId": "MED-050", "name": "Insulin Glargine", "chemical": "C267H404N72O78S6", "usage": "Diabetes", "dosageForm": "Injection", "prescribedBy": "DOC-003", "govtPrice": 200, "privatePrice": 800, "frequentlyUsed": false }
+    { hospitalId: "HOS-001", name: "City Hospital", location: "Delhi", contact: "+911122334455", patientLoad: 75, coordinates: { lat: 12.9150, lng: 74.8565 } },
+    { hospitalId: "HOS-002", name: "Green Hospital", location: "Mumbai", contact: "+912233445566", patientLoad: 60, coordinates: { lat: 12.9130, lng: 74.8550 } },
+    { hospitalId: "HOS-003", name: "Blue Hospital", location: "Bangalore", contact: "+918099887766", patientLoad: 85, coordinates: { lat: 12.9165, lng: 74.8580 } },
+    { hospitalId: "HOS-004", name: "AIIMS", location: "New Delhi", contact: "+911126588500", patientLoad: 95, coordinates: { lat: 12.9120, lng: 74.8590 } },
+    { hospitalId: "HOS-005", name: "Tata Memorial", location: "Mumbai", contact: "+912224177000", patientLoad: 90, coordinates: { lat: 12.9180, lng: 74.8540 } },
+    { hospitalId: "HOS-006", name: "Rainbow Children’s Hospital", location: "Chennai", contact: "+914448600000", patientLoad: 70, coordinates: { lat: 12.9100, lng: 74.8530 } }
 ];
+
+export const dummyPrescriptions = [
+  {
+    prescription_id: "PRES-001",
+    patient_aadhaar_masked: "1234",
+    doctor: {
+      name: "Amit Verma",
+      specialty: "General Physician"
+    },
+    clinic: {
+      name: "Fortis Hospital, Delhi"
+    },
+    date: "2025-09-15T20:00:00.000Z",
+    medicines: [
+      { name: "Paracetamol", strength: "500mg", dose: "1 tablet", form: "Tablet", frequency: "SOS for fever", duration_days: 5 },
+      { name: "Vitamin C", strength: "1000mg", dose: "1 tablet", form: "Tablet", frequency: "Once daily", duration_days: 30 }
+    ],
+    notes: "Routine checkup. BP slightly elevated at 130/84. Recommended salt reduction.",
+    e_sign_status: "signed",
+    token_number: 14,
+    download_pdf_url: "#",
+    suggested_pharmacy: { name: "Apollo Pharmacy", location: "Near Fortis Hospital" },
+    total_cost_inr: 250.50
+  },
+  {
+    prescription_id: "PRES-002",
+    patient_aadhaar_masked: "2345",
+    doctor: {
+      name: "Kavya Nair",
+      specialty: "Neurologist"
+    },
+    clinic: {
+      name: "AIIMS, New Delhi"
+    },
+    date: "2025-08-30T18:30:00.000Z",
+    medicines: [
+      { name: "Sumatriptan", strength: "50mg", dose: "1 tablet", form: "Tablet", frequency: "At onset of migraine", duration_days: 10 },
+      { name: "Propranolol", strength: "40mg", dose: "1 tablet", form: "Tablet", frequency: "Twice daily", duration_days: 30 }
+    ],
+    notes: "Patient complaining of frequent migraines with aura. Prescribed Sumatriptan for acute attacks and Propranolol for prophylaxis.",
+    e_sign_status: "signed",
+    token_number: 9,
+    download_pdf_url: "#",
+    suggested_pharmacy: { name: "MedPlus", location: "South Delhi" },
+    total_cost_inr: 850.00
+  },
+  {
+    prescription_id: "PRES-003",
+    patient_aadhaar_masked: "3456",
+    doctor: {
+      name: "Rohit Sharma",
+      specialty: "Orthopedic Surgeon"
+    },
+    clinic: {
+      name: "Columbia Asia, Bangalore"
+    },
+    date: "2025-07-20T14:00:00.000Z",
+    medicines: [
+      { name: "Etoricoxib", strength: "90mg", dose: "1 tablet", form: "Tablet", frequency: "Once daily", duration_days: 7 },
+      { name: "Glucosamine", strength: "1500mg", dose: "1 sachet", form: "Powder", frequency: "Once daily", duration_days: 90 }
+    ],
+    notes: "Right knee pain. MRI shows early osteoarthritis. Physiotherapy recommended alongside medication.",
+    e_sign_status: "pending",
+    token_number: 5,
+    download_pdf_url: "#",
+    suggested_pharmacy: { name: "Wellness Forever", location: "Bangalore" },
+    total_cost_inr: 1200.75
+  },
+    {
+    prescription_id: "PRES-004",
+    patient_aadhaar_masked: "4567",
+    doctor: {
+      name: "Sneha Reddy",
+      specialty: "Endocrinologist"
+    },
+    clinic: {
+      name: "Narayana Health, Hyderabad"
+    },
+    date: "2025-06-10T09:45:00.000Z",
+    medicines: [
+      { name: "Levothyroxine", strength: "50mcg", dose: "1 tablet", form: "Tablet", frequency: "Once daily before breakfast", duration_days: 90 }
+    ],
+    notes: "Hypothyroidism diagnosed. Started on Levothyroxine. Follow-up with TSH after 6 weeks.",
+    e_sign_status: "signed",
+    token_number: 2,
+    download_pdf_url: "#",
+    suggested_pharmacy: { name: "Generic Aadhaar Pharmacy", location: "Hyderabad" },
+    total_cost_inr: 350.00
+  },
+  {
+    prescription_id: "PRES-005",
+    patient_aadhaar_masked: "5678",
+    doctor: {
+      name: "Vikram Singh",
+      specialty: "Oncologist"
+    },
+    clinic: {
+      name: "Tata Memorial, Mumbai"
+    },
+    date: "2025-05-05T12:30:00.00Z",
+    medicines: [],
+    notes: "Preventive cancer screening. All reports are normal. Advised regular follow-ups annually.",
+    e_sign_status: "unsigned",
+    token_number: 1,
+    download_pdf_url: "#",
+    suggested_pharmacy: { name: "N/A", location: "N/A" },
+    total_cost_inr: 0.00
+  }
+];
+export type Prescription = typeof dummyPrescriptions[0];
+export type AadhaarPatient = typeof dummyAadhaarPatients[0];
+
+export type Doctor = typeof dummyDoctors[0];
 
 export const dummyAmbulances = [
-  { 
-    "id": "AMB-001", "vehicle_no": "MH-12-AB-1234", "driver_name": "Ramesh Kumar", "driver_phone": "+919000000001", 
-    "type": "Basic", "status": "available", "current_coords": {"lat": 19.0860, "lng": 72.8877}, "speed_kmph": 60, "hospital_id": "HOS-001",
-    "oxygenLevel": 95, "facilities": { "ventilator": false, "emergencyKit": true },
-    "driver": { "name": "Ramesh", "experience": 5, "completedRides": 320, "rating": 4.9 }
-  },
-  { 
-    "id": "AMB-002", "vehicle_no": "DL-3C-CD-5678", "driver_name": "Anjali Mehta", "driver_phone": "+919000000002", 
-    "type": "ICU", "status": "available", "current_coords": {"lat": 28.7141, "lng": 77.1125}, "speed_kmph": 50, "hospital_id": "HOS-002",
-    "oxygenLevel": 98, "facilities": { "ventilator": true, "emergencyKit": true },
-    "driver": { "name": "Anjali", "experience": 3, "completedRides": 150, "rating": 4.8 }
-  },
-  { 
-    "id": "AMB-003", "vehicle_no": "TS-09-EF-9012", "driver_name": "Karan Sharma", "driver_phone": "+919000000003", 
-    "type": "Advanced Life Support", "status": "on-trip", "current_coords": {"lat": 17.4050, "lng": 78.4967}, "speed_kmph": 70, "hospital_id": "HOS-003",
-    "oxygenLevel": 90, "facilities": { "ventilator": true, "emergencyKit": true },
-    "driver": { "name": "Karan", "experience": 4, "completedRides": 210, "rating": 4.7 }
-  },
-  {"id": "AMB-004", "vehicle_no": "KA-01-GH-3456", "driver_name": "Mohammed Aslam", "driver_phone": "+919000000004", "type": "Basic", "status": "available", "current_coords": {"lat": 12.9816, "lng": 77.6046}, "speed_kmph": 55, "hospital_id": "HOS-004", "oxygenLevel": 92, "facilities": {"ventilator": false, "emergencyKit": true}, "driver": {"name": "Mohammed", "experience": 6, "completedRides": 450, "rating": 4.9}},
-  {"id": "AMB-005", "vehicle_no": "MH-14-IJ-7890", "driver_name": "Kiran Patel", "driver_phone": "+919000000005", "type": "ICU", "status": "offline", "current_coords": {"lat": 18.5304, "lng": 73.8667}, "speed_kmph": 0, "hospital_id": "HOS-005", "oxygenLevel": 100, "facilities": {"ventilator": true, "emergencyKit": true}, "driver": {"name": "Kiran", "experience": 2, "completedRides": 90, "rating": 4.6}},
-  {"id": "AMB-006", "vehicle_no": "MH-12-KL-2468", "driver_name": "Rajesh Gupta", "driver_phone": "+919000000006", "type": "Basic", "status": "available", "current_coords": {"lat": 19.0660, "lng": 72.8677}, "speed_kmph": 45, "hospital_id": "HOS-001", "oxygenLevel": 96, "facilities": {"ventilator": false, "emergencyKit": false}, "driver": {"name": "Rajesh", "experience": 8, "completedRides": 600, "rating": 4.9}},
-  {"id": "AMB-007", "vehicle_no": "DL-3C-MN-1357", "driver_name": "Pooja Iyer", "driver_phone": "+919000000007", "type": "Advanced Life Support", "status": "on-trip", "current_coords": {"lat": 28.6941, "lng": 77.0925}, "speed_kmph": 65, "hospital_id": "HOS-002", "oxygenLevel": 91, "facilities": {"ventilator": true, "emergencyKit": true}, "driver": {"name": "Pooja", "experience": 3, "completedRides": 180, "rating": 4.8}},
-  {"id": "AMB-008", "vehicle_no": "TS-09-OP-8642", "driver_name": "Deepak Reddy", "driver_phone": "+919000000008", "type": "Basic", "status": "available", "current_coords": {"lat": 17.3750, "lng": 78.4767}, "speed_kmph": 58, "hospital_id": "HOS-003", "oxygenLevel": 94, "facilities": {"ventilator": false, "emergencyKit": true}, "driver": {"name": "Deepak", "experience": 5, "completedRides": 310, "rating": 4.7}},
-  {"id": "AMB-009", "vehicle_no": "KA-01-QR-9753", "driver_name": "Sandeep Singh", "driver_phone": "+919000000009", "type": "ICU", "status": "offline", "current_coords": {"lat": 12.9616, "lng": 77.5846}, "speed_kmph": 0, "hospital_id": "HOS-04", "oxygenLevel": 99, "facilities": {"ventilator": true, "emergencyKit": true}, "driver": {"name": "Sandeep", "experience": 7, "completedRides": 550, "rating": 4.9}},
-  {"id": "AMB-010", "vehicle_no": "MH-14-ST-1928", "driver_name": "Meena Joshi", "driver_phone": "+919000000010", "type": "Advanced Life Support", "status": "available", "current_coords": {"lat": 18.5104, "lng": 73.8467}, "speed_kmph": 52, "hospital_id": "HOS-005", "oxygenLevel": 93, "facilities": {"ventilator": true, "emergencyKit": true}, "driver": {"name": "Meena", "experience": 4, "completedRides": 250, "rating": 4.8}}
+  { id: "AMB-001", vehicle_no: "MH-01-AB-1234", driver_name: "Ramesh Kumar", driver_phone: "+919000000001", type: "ICU", speed_kmph: 60, status: "available", current_coords: { lat: 19.08, lng: 72.88 }, driver: {name: 'Ramesh Kumar', experience: 5, completedRides: 320, rating: 4.9, contact: '9000000001'}, facilities: { oxygenLevel: 95, ventilator: true, emergencyKit: true }, oxygenLevel: 95 },
+  { id: "AMB-002", vehicle_no: "DL-02-CD-5678", driver_name: "Sunil Mehta", driver_phone: "+919000000002", type: "Basic", speed_kmph: 50, status: "available", current_coords: { lat: 19.06, lng: 72.86 }, driver: {name: 'Sunil Mehta', experience: 3, completedRides: 150, rating: 4.8, contact: '9000000002'}, facilities: { oxygenLevel: 98, ventilator: false, emergencyKit: true }, oxygenLevel: 98 },
+  { id: "AMB-003", vehicle_no: "KA-03-EF-9012", driver_name: "Anita Sharma", driver_phone: "+919000000003", type: "Advanced Life Support", speed_kmph: 70, status: "enroute", current_coords: { lat: 19.09, lng: 72.89 }, driver: {name: 'Anita Sharma', experience: 4, completedRides: 210, rating: 4.7, contact: '9000000003'}, facilities: { oxygenLevel: 90, ventilator: true, emergencyKit: false }, oxygenLevel: 90 },
+  { id: "AMB-004", vehicle_no: "TN-04-GH-3456", driver_name: "Mohammed Aslam", driver_phone: "+919000000004", type: "Basic", speed_kmph: 45, status: "available", current_coords: { lat: 19.05, lng: 72.88 }, driver: {name: 'Mohammed Aslam', experience: 2, completedRides: 100, rating: 4.6, contact: '9000000004'}, facilities: { oxygenLevel: 99, ventilator: false, emergencyKit: true }, oxygenLevel: 99 },
+  { id: "AMB-005", vehicle_no: "GJ-05-IJ-7890", driver_name: "Kiran Patel", driver_phone: "+919000000005", type: "ICU", speed_kmph: 65, status: "available", current_coords: { lat: 19.07, lng: 72.85 }, driver: {name: 'Kiran Patel', experience: 6, completedRides: 400, rating: 4.9, contact: '9000000005'}, facilities: { oxygenLevel: 96, ventilator: true, emergencyKit: true }, oxygenLevel: 96 },
+  { id: "AMB-006", vehicle_no: "WB-06-KL-1234", driver_name: "Rajesh Gupta", driver_phone: "+919000000006", type: "Advanced Life Support", speed_kmph: 75, status: "maintenance", current_coords: { lat: 19.10, lng: 72.90 }, driver: {name: 'Rajesh Gupta', experience: 7, completedRides: 500, rating: 4.8, contact: '9000000006'}, facilities: { oxygenLevel: 88, ventilator: true, emergencyKit: true }, oxygenLevel: 88 },
+  { id: "AMB-007", vehicle_no: "RJ-07-MN-5678", driver_name: "Pooja Iyer", driver_phone: "+919000000007", type: "Basic", speed_kmph: 55, status: "available", current_coords: { lat: 19.08, lng: 72.87 }, driver: {name: 'Pooja Iyer', experience: 3, completedRides: 180, rating: 4.7, contact: '9000000007'}, facilities: { oxygenLevel: 97, ventilator: false, emergencyKit: false }, oxygenLevel: 97 },
+  { id: "AMB-008", vehicle_no: "UP-08-OP-9012", driver_name: "Deepak Reddy", driver_phone: "+919000000008", type: "ICU", speed_kmph: 68, status: "available", current_coords: { lat: 19.06, lng: 72.89 }, driver: {name: 'Deepak Reddy', experience: 5, completedRides: 350, rating: 4.9, contact: '9000000008'}, facilities: { oxygenLevel: 94, ventilator: true, emergencyKit: true }, oxygenLevel: 94 },
+  { id: "AMB-009", vehicle_no: "MP-09-QR-3456", driver_name: "Sandeep Singh", driver_phone: "+919000000009", type: "Basic", speed_kmph: 52, status: "available", current_coords: { lat: 19.09, lng: 72.86 }, driver: {name: 'Sandeep Singh', experience: 2, completedRides: 120, rating: 4.6, contact: '9000000009'}, facilities: { oxygenLevel: 98, ventilator: false, emergencyKit: true }, oxygenLevel: 98 },
+  { id: "AMB-010", vehicle_no: "HR-10-ST-7890", driver_name: "Meena Joshi", driver_phone: "+919000000010", type: "Advanced Life Support", speed_kmph: 72, status: "available", current_coords: { lat: 19.07, lng: 72.90 }, driver: {name: 'Meena Joshi', experience: 6, completedRides: 450, rating: 4.8, contact: '9000000010'}, facilities: { oxygenLevel: 92, ventilator: true, emergencyKit: true }, oxygenLevel: 92 }
 ];
+
+
+export const dummyMedicines = [
+    { medicineId: "MED-001", name: "Paracetamol", chemical: "Acetaminophen", usage: "Fever, Pain", frequentlyUsed: true, prescribedBy: "DOC-009", govtPrice: 10.50, privatePrice: 25.00 },
+    { medicineId: "MED-002", name: "Ibuprofen", chemical: "Propionic Acid", usage: "Pain, Inflammation", frequentlyUsed: true, prescribedBy: "DOC-005", govtPrice: 15.00, privatePrice: 40.00 },
+    { medicineId: "MED-003", name: "Amoxicillin", chemical: "Penicillin", usage: "Bacterial Infection", frequentlyUsed: false, prescribedBy: "DOC-004", govtPrice: 50.75, privatePrice: 120.00 },
+    { medicineId: "MED-004", name: "Metformin", chemical: "Biguanide", usage: "Diabetes", frequentlyUsed: true, prescribedBy: "DOC-017", govtPrice: 8.00, privatePrice: 30.00 },
+    { medicineId: "MED-005", name: "Atorvastatin", chemical: "Statin", usage: "High Cholesterol", frequentlyUsed: false, prescribedBy: "DOC-001", govtPrice: 25.00, privatePrice: 90.00 },
+    { medicineId: "MED-006", name: "Amlodipine", chemical: "Dihydropyridine", usage: "High Blood Pressure", frequentlyUsed: true, prescribedBy: "DOC-001", govtPrice: 12.00, privatePrice: 35.00 },
+    { medicineId: "MED-007", name: "Salbutamol Inhaler", chemical: "Beta-agonist", usage: "Asthma", frequentlyUsed: true, prescribedBy: "DOC-011", govtPrice: 150.00, privatePrice: 350.00 },
+    { medicineId: "MED-008", name: "Sertraline", chemical: "SSRI", usage: "Depression, Anxiety", frequentlyUsed: false, prescribedBy: "DOC-020", govtPrice: 40.00, privatePrice: 150.00 },
+    { medicineId: "MED-009", name: "Cetirizine", chemical: "Antihistamine", usage: "Allergies", frequentlyUsed: true, prescribedBy: "DOC-002", govtPrice: 5.00, privatePrice: 15.00 },
+    { medicineId: "MED-010", name: "Pantoprazole", chemical: "Proton Pump Inhibitor", usage: "Acidity, GERD", frequentlyUsed: true, prescribedBy: "DOC-009", govtPrice: 7.50, privatePrice: 28.00 }
+];
+export type Medicine = typeof dummyMedicines[0];
 
 export const dummyInsurancePlans = [
-    {
-        "planId": "PLAN_POL1001",
-        "hospitalId": "HOS-001",
-        "hospitalName": "Apollo Hospital",
-        "planName": "Apollo Health Protect",
-        "insurerName": "Apollo Insurance Co.",
-        "city": "New Delhi",
-        "premiumMonthly": 1200,
-        "premiumAnnual": 13500,
-        "coverageLimit": 500000,
-        "opdCoverage": 10000,
-        "inclusions": ["Inpatient hospitalization", "ICU", "surgeries", "diagnostic tests", "ambulance (up to ₹2,000/ride)"],
-        "exclusions": ["Cosmetic surgery", "self-inflicted injuries", "experimental treatments"],
-        "waitingPeriodMonths": 12,
-        "copayPercent": 10,
-        "rating": 4.5,
-        "contactPhone": "011-12345678",
-        "contactEmail": "claims@apolloins.co.in",
-        "policyText": "Full inpatient coverage up to ₹5L. Pre-existing conditions waiting 12 months. Claim documents: discharge summary, investigation reports, doctor prescription, ID proof. 10% co-pay for private hospitals (5% for government hospitals)."
-    },
-    {
-        "planId": "PLAN_POL1002",
-        "hospitalId": "HOS-002",
-        "hospitalName": "Fortis Hospital",
-        "planName": "Fortis Care Shield",
-        "insurerName": "Fortis Insurance Partners",
-        "city": "New Delhi",
-        "premiumMonthly": 1400,
-        "premiumAnnual": 15750,
-        "coverageLimit": 1000000,
-        "opdCoverage": 15000,
-        "inclusions": ["Specialist consultation", "daycare procedures", "maternity cover after 24 months"],
-        "exclusions": ["Dental root canals", "fertility treatments"],
-        "waitingPeriodMonths": 24,
-        "copayPercent": 15,
-        "rating": 4.7,
-        "contactPhone": "011-87654321",
-        "contactEmail": "support@fortisins.co.in",
-        "policyText": "Comprehensive coverage up to ₹10L. Maternity benefits available after a 24-month waiting period. Co-pay is 15% for private and 7% for government facilities."
-    },
-    {
-        "planId": "PLAN_POL1003",
-        "hospitalId": "HOS-003",
-        "hospitalName": "AIIMS Network",
-        "planName": "AIIMS Public Care Plan",
-        "insurerName": "Government Health Scheme",
-        "city": "New Delhi",
-        "premiumMonthly": 400,
-        "premiumAnnual": 4200,
-        "coverageLimit": 300000,
-        "opdCoverage": 5000,
-        "inclusions": ["Emergency care", "essential surgeries", "government diagnostic rates"],
-        "exclusions": ["Private room upgrades", "experimental therapy"],
-        "waitingPeriodMonths": 6,
-        "copayPercent": 2,
-        "rating": 4.2,
-        "contactPhone": "011-33445566",
-        "contactEmail": "claims@govhealth.in",
-        "policyText": "Subsidized plan for government hospitals only. Coverage up to ₹3L with a nominal 2% co-pay. 6-month waiting period for pre-existing conditions based on government criteria."
-    },
-    {
-        "planId": "PLAN_POL1004",
-        "hospitalId": "HOS-004",
-        "hospitalName": "Medanta",
-        "planName": "Medanta Premier Cover",
-        "insurerName": "Medanta Insurance Associates",
-        "city": "Hyderabad",
-        "premiumMonthly": 1600,
-        "premiumAnnual": 18000,
-        "coverageLimit": 1500000,
-        "opdCoverage": 20000,
-        "inclusions": ["Organ transplant cover (sub-limits apply)", "advanced imaging", "domiciliary care"],
-        "exclusions": ["Alternative therapy not recommended by hospital"],
-        "waitingPeriodMonths": 24,
-        "copayPercent": 10,
-        "rating": 4.8,
-        "contactPhone": "040-22223333",
-        "contactEmail": "care@medantains.com",
-        "policyText": "Premier plan with ₹15L coverage. Includes organ transplant cover with specific sub-limits and a 24-month waiting period. 10% co-pay applies."
-    },
-    {
-        "planId": "PLAN_POL1005",
-        "hospitalId": "HOS-005",
-        "hospitalName": "Max Healthcare",
-        "planName": "Max Health Basic",
-        "insurerName": "Max Insure Pvt Ltd",
-        "city": "Chennai",
-        "premiumMonthly": 900,
-        "premiumAnnual": 10000,
-        "coverageLimit": 400000,
-        "opdCoverage": 12000,
-        "inclusions": ["Maternity add-on optional after 18 months", "daycare procedures"],
-        "exclusions": ["Vision & dental (except accidental)"],
-        "waitingPeriodMonths": 12,
-        "copayPercent": 8,
-        "rating": 4.3,
-        "contactPhone": "044-44556677",
-        "contactEmail": "help@maxins.co.in",
-        "policyText": "Basic coverage of ₹4L with an optional maternity add-on. Vision and dental expenses are not covered unless due to an accident. 12-month waiting period for pre-existing conditions."
-    },
-    {
-        "planId": "PLAN_POL1006",
-        "hospitalId": "HOS-001",
-        "hospitalName": "Apollo Hospital",
-        "planName": "Apollo Senior Secure",
-        "insurerName": "Apollo Senior Care",
-        "city": "New Delhi",
-        "premiumMonthly": 2200,
-        "premiumAnnual": 24000,
-        "coverageLimit": 600000,
-        "opdCoverage": 15000,
-        "inclusions": ["Home nursing", "domiciliary treatment (limited)", "annual geriatric checkup"],
-        "exclusions": ["Cosmetic & non-medically necessary procedures"],
-        "waitingPeriodMonths": 18,
-        "copayPercent": 12,
-        "rating": 4.6,
-        "contactPhone": "011-12340000",
-        "contactEmail": "senior@apolloins.co.in",
-        "policyText": "Specialized plan for senior citizens with ₹6L coverage. Includes benefits like home nursing and annual geriatric checkups. 18-month waiting period for chronic conditions."
-    },
-    {
-        "planId": "PLAN_POL1007",
-        "hospitalId": "HOS-001",
-        "hospitalName": "Multi-Hospital Network",
-        "planName": "CityCare Universal",
-        "insurerName": "CityCare Mutual",
-        "city": "Multi-city",
-        "premiumMonthly": 1000,
-        "premiumAnnual": 11000,
-        "coverageLimit": 750000,
-        "opdCoverage": 18000,
-        "inclusions": ["Telemedicine consultations", "daycare", "second opinion support"],
-        "exclusions": ["High-risk cosmetic procedures"],
-        "waitingPeriodMonths": 12,
-        "copayPercent": 10,
-        "rating": 4.4,
-        "contactPhone": "022-99887766",
-        "contactEmail": "contact@citycare.co.in",
-        "policyText": "Universal plan with coverage across multiple cities. Includes modern benefits like telemedicine and second opinion support. Standard 12-month waiting period."
-    },
-    {
-        "planId": "PLAN_POL1008",
-        "hospitalId": "HOS-002",
-        "hospitalName": "Fortis Hospital",
-        "planName": "Fortis Family Pack",
-        "insurerName": "Fortis Insurance Partners",
-        "city": "New Delhi / Mumbai",
-        "premiumMonthly": 2800,
-        "premiumAnnual": 31500,
-        "coverageLimit": 800000,
-        "opdCoverage": 25000,
-        "inclusions": ["Newborn cover after 90 days", "vaccination add-ons"],
-        "exclusions": ["Cosmetic procedures", "fertility treatments within the first 24 months"],
-        "waitingPeriodMonths": 24,
-        "copayPercent": 10,
-        "rating": 4.7,
-        "contactPhone": "011-87650001",
-        "contactEmail": "family@fortisins.co.in",
-        "policyText": "Family floater plan covering up to 4 members with a total sum of ₹8L. Includes newborn cover after 90 days. 24-month waiting period for specific chronic illnesses."
-    },
-    {
-        "planId": "PLAN_POL1009",
-        "hospitalId": "HOS-004",
-        "hospitalName": "Medanta",
-        "planName": "Medanta Corporate Care",
-        "insurerName": "Medanta Corporate Insurance",
-        "city": "Hyderabad / Pan India",
-        "premiumMonthly": null,
-        "premiumAnnual": 2200,
-        "coverageLimit": 1000000,
-        "opdCoverage": null,
-        "inclusions": ["Preventive health checks", "corporate tie-ups for cashless claims"],
-        "exclusions": ["Non-work related elective surgery as per corporate policy"],
-        "waitingPeriodMonths": 0,
-        "copayPercent": 5,
-        "rating": 4.9,
-        "contactPhone": "040-22220000",
-        "contactEmail": "corp@medantains.com",
-        "policyText": "Group insurance plan with cashless claims through corporate tie-ups. Waiting periods and specific terms are as per the corporate policy negotiated with the employer."
-    },
-    {
-        "planId": "PLAN_POL1010",
-        "hospitalId": "HOS-005",
-        "hospitalName": "Max Healthcare",
-        "planName": "Max Emergency Assist",
-        "insurerName": "Max Emergency Services",
-        "city": "Chennai / Nearby districts",
-        "premiumMonthly": 500,
-        "premiumAnnual": 5400,
-        "coverageLimit": 200000,
-        "opdCoverage": 5000,
-        "inclusions": ["Free ambulance up to 5 rides/year", "emergency triage", "discounted OPD"],
-        "exclusions": ["Long-term inpatient chronic care beyond limit"],
-        "waitingPeriodMonths": 0,
-        "copayPercent": 5,
-        "rating": 4.1,
-        "contactPhone": "044-44550011",
-        "contactEmail": "emergency@maxins.co.in",
-        "policyText": "Emergency-focused plan with ₹2L coverage. No waiting period for emergency cover. Includes up to 5 free ambulance rides per year. Not intended for long-term chronic care."
-    }
+    { planId: 'INS-001', planName: 'Suraksha Health', insurerName: 'LIC', hospitalName: 'City Hospital', city: 'Delhi', coverageLimit: 500000, premiumAnnual: 10000, premiumMonthly: 850, copayPercent: 10, waitingPeriodMonths: 24, rating: 4.5, inclusions: ['Hospitalization', 'Day Care', 'Pre & Post Hospitalization'], exclusions: ['Cosmetic Surgery', 'Dental'], policyText: 'Standard policy terms apply. Pre-existing diseases covered after 2 years.' },
+    { planId: 'INS-002', planName: 'Arogya Sanjeevani', insurerName: 'HDFC Ergo', hospitalName: 'Green Hospital', city: 'Mumbai', coverageLimit: 300000, premiumAnnual: 8000, premiumMonthly: 680, copayPercent: 5, waitingPeriodMonths: 36, rating: 4.7, inclusions: ['Room Rent Capped', 'ICU Charges', 'Ambulance'], exclusions: ['Maternity', 'Alternative Treatments'], policyText: 'Government-mandated standard policy. Co-pay is 5%.' },
+    { planId: 'INS-003', planName: 'Optima Restore', insurerName: 'Apollo Munich', hospitalName: 'Blue Hospital', city: 'Bangalore', coverageLimit: 1000000, premiumAnnual: 15000, premiumMonthly: 1275, copayPercent: 0, waitingPeriodMonths: 36, opdCoverage: 20000, rating: 4.9, inclusions: ['Restore Benefit', 'OPD cover', 'Health Checkups'], exclusions: ['Self-inflicted injuries', 'War-related injuries'], policyText: 'Restore benefit refills sum insured if exhausted.' },
+    { planId: 'INS-004', planName: 'Family Floater', insurerName: 'Star Health', hospitalName: 'AIIMS', city: 'New Delhi', coverageLimit: 750000, premiumAnnual: 12000, premiumMonthly: 1020, copayPercent: 15, waitingPeriodMonths: 24, rating: 4.6, inclusions: ['Family Cover', 'Maternity', 'Newborn Baby Cover'], exclusions: ['Adventure Sports', 'Mental Disorders'], policyText: 'Covers up to 2 adults and 2 children. Co-pay of 15% on all claims.' },
+];
+export type InsurancePlan = typeof dummyInsurancePlans[0];
+
+
+export const dummyGeneticData = [
+    { patientId: 'P-102345', markers: [{ gene: 'BRCA1', riskFactor: 'High', details: 'Associated with increased risk for breast and ovarian cancers.' }], recommendations: { preventiveCare: 'Regular mammograms and genetic counseling recommended.', medication: 'Consider PARP inhibitors if cancer develops.' } },
+    { patientId: 'P-102346', markers: [{ gene: 'APOE ε4', riskFactor: 'Medium', details: 'Associated with a higher risk of developing late-onset Alzheimer\'s disease.' }], recommendations: { preventiveCare: 'Adopt a heart-healthy diet, regular exercise, and cognitive stimulation.', medication: 'No specific preventive medication; manage cardiovascular risk factors.' } },
+    { patientId: 'P-102347', markers: [{ gene: 'HBB', riskFactor: 'Low', details: 'Carrier for sickle cell trait. Generally asymptomatic but can pass the trait to children.' }], recommendations: { preventiveCare: 'Genetic counseling if planning a family.', medication: 'No treatment required for sickle cell trait.' } },
 ];
 
-export const dummyPatients = [
+export const dummyOrganStatus = [
+    { patientId: 'P-102345', organs: [{ name: 'Heart', status: 'Normal', details: 'No abnormalities detected.', annotations: [] }] },
+    { patientId: 'P-102346', organs: [{ name: 'Liver', status: 'Fatty Liver', details: 'Mild steatosis observed, likely due to lifestyle.', annotations: [{ text: 'Fatty Deposits', position: [0.5, 0.5, 0.5] }] }] },
+    { patientId: 'P-102347', organs: [{ name: 'Lungs', status: 'Mild Infection', details: 'Minor inflammation in the lower lobe, suggestive of bronchitis.', annotations: [{ text: 'Inflammation', position: [0, -1, 0] }] }, { name: 'Brain', status: 'Tumor Detected', details: 'Small benign tumor in the temporal lobe.', annotations: [{ text: 'Benign Tumor', position: [1, 0, 0] }] }] }
+];
+
+
+export const dummyCommunication = [
   {
-    "patientId": "P-102345",
-    "name": "Ananya Sharma",
-    "phone": "+919876543210",
-    "email": "ananya.sharma@example.com",
-    "dob": "1993-07-22", // Age: 32
-    "gender": "Female",
-    "bloodGroup": "B+",
-    "aadhaar": "1234-5678-9012",
-    "address": { "street": "45, Green Park", "city": "New Delhi", "state": "DL", "zip": "110016" },
-    "emergencyContact": { "name": "Priya Sharma", "phone": "+919888800001" },
-    "insurance": { "provider": "Star Health", "policyId": "INS-A01" },
-    
-    "healthOverview": {
-      "status": "Good",
-      "riskLevel": "Medium",
-      "chronicConditions": ["Mild Asthma", "Vitamin D Deficiency"],
-      "allergies": ["Penicillin"],
-      "lifestyle": "Non-smoker, vegetarian, occasional exercise",
-      "latestNotes": "Follow-up for Vitamin D levels in 3 months. Continue asthma management as needed."
-    },
-    
-    "medications": {
-      "current": [
-        { "medicineId": "MED-010", "name": "Salbutamol Inhaler", "dosage": "2 puffs PRN", "reason": "Asthma", "type": "current" },
-        { "medicineId": "MED-012", "name": "Vitamin D3 Supplement", "dosage": "2000 IU daily", "reason": "Deficiency", "type": "current" },
-        { "medicineId": "MED-002", "name": "Cetirizine", "dosage": "10mg PRN", "reason": "Allergies", "type": "current" }
-      ],
-      "past": [
-        { "medicineId": "MED-014", "name": "Prednisolone", "dosage": "20 mg, 5 days", "reason": "Asthma exacerbation", "type": "past" }
-      ],
-      "otc": []
-    },
-
-    "analytics": {
-      "vitalSigns": [
-        { "month": "Apr", "BP": 125, "HR": 76 },
-        { "month": "May", "BP": 122, "HR": 75 },
-        { "month": "Jun", "BP": 130, "HR": 80 },
-        { "month": "Jul", "BP": 128, "HR": 78 },
-        { "month": "Aug", "BP": 126, "HR": 77 },
-        { "month": "Sep", "BP": 128, "HR": 78 }
-      ],
-      "spO2": 97,
-      "medicationCompliance": [
-        { "name": "Vitamin D3", "adherence": 87 },
-        { "name": "Inhaler Usage", "adherence": 92 }
-      ],
-      "lifestyleScore": [
-        { "metric": "Diet", "score": 75 },
-        { "metric": "Exercise", "score": 60 },
-        { "metric": "Sleep", "score": 82 },
-        { "metric": "Stress", "score": 68 },
-        { "metric": "Social", "score": 88 }
-      ],
-      "futureRisk": {
-        "asthmaFlareUp": { "risk": "Moderate", "details": "Increased pollen count expected in the next 3 months." },
-        "vitaminD": { "risk": "Low", "details": "Trend is improving with supplementation." },
-        "cardiovascular": { "risk": "Low", "details": "BP and lifestyle factors are within a healthy range." }
-      }
-    },
-    
-    "predictions": {
-      "vitalsNext7Days": {
-        "heartRate": [83, 84, 82, 85, 84, 83, 82],
-        "bloodPressure": ["129/85", "130/86", "128/84", "131/86", "130/85", "129/84", "128/84"]
-      },
-      "appointmentProbability": [0.15, 0.2, 0.18, 0.25, 0.22, 0.2, 0.19],
-      "medicationAdherence": [0.95, 0.96, 0.94, 0.97, 0.95, 0.96, 0.95],
-      "risk": {
-        "hypertension": "Low",
-        "diabetes": "Low",
-        "heartDisease": "Low"
-      },
-      "preventiveMeasures": "Continue regular exercise and monitor salt intake."
-    },
-
-    "vitals": {
-      "heartRate": [78, 80, 81, 79, 85, 82, 82],
-      "bloodPressure": ["125/80","126/82","128/81","127/83","130/85","128/84","128/84"],
-      "bloodSugar": [95, 98, 100, 97, 96, 99, 101],
-      "oxygenSaturation": [97, 97, 98, 97, 96, 98, 97],
-      "temperature": 36.7,
-      "bmi": 24.3,
-      "sleepHours": [6, 7, 6.5, 7, 6, 6.5, 7]
-    },
-    
-    "appointments": [
-        { "appointmentId": "APP-001", "date": "2025-10-20T15:30:00Z", "doctorId": "DOC-001", "hospitalId": "HOS-001", "status": "booked", "urgent": false, "token": 12, "patientsAhead": 3, "waitTime": 18, "chatResponse": "Hello, I’ll review your asthma progress during our call.", "summary": "Last prescription: Inhaler 2 puffs PRN.", "feedback": 0 },
-        { "appointmentId": "APP-002", "date": "2025-10-25T11:00:00Z", "doctorId": "DOC-007", "hospitalId": "HOS-002", "status": "booked", "urgent": false, "token": 8, "patientsAhead": 2, "waitTime": 10, "chatResponse": "Please bring your last ECG report.", "summary": "Last visit: Tachycardia, Nebulizer given.", "feedback": 0 },
-        { "appointmentId": "APP-003", "date": "2025-11-02T16:15:00Z", "doctorId": "DOC-002", "hospitalId": "HOS-001", "status": "booked", "urgent": false, "token": 5, "patientsAhead": 1, "waitTime": 5, "chatResponse": "Please send a photo of your skin rash before visit.", "summary": "Last visit: Mild dermatitis, hydrocortisone cream prescribed.", "feedback": 0 },
-        { "appointmentId": "APP-004", "date": "2025-09-15T20:00:00Z", "doctorId": "DOC-009", "hospitalId": "HOS-002", "status": "completed", "urgent": false, "token": 15, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Routine Checkup, BP 130/84.", "feedback": 4 },
-        { "appointmentId": "APP-005", "date": "2025-08-30T18:30:00Z", "doctorId": "DOC-005", "hospitalId": "HOS-002", "status": "completed", "urgent": false, "token": 7, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Migraine treatment, prescribed Sumatriptan.", "feedback": 5 },
-        { "appointmentId": "APP-006", "date": "2025-07-20T14:00:00Z", "doctorId": "DOC-004", "hospitalId": "HOS-001", "status": "completed", "urgent": false, "token": 11, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Knee pain, MRI done, physiotherapy recommended.", "feedback": 3 },
-        { "appointmentId": "APP-007", "date": "2025-06-10T09:45:00Z", "doctorId": "DOC-013", "hospitalId": "HOS-005", "status": "completed", "urgent": true, "token": 2, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Thyroid imbalance, Levothyroxine prescribed.", "feedback": 4 },
-        { "appointmentId": "APP-008", "date": "2025-05-05T12:30:00Z", "doctorId": "DOC-014", "hospitalId": "HOS-006", "status": "completed", "urgent": false, "token": 1, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Preventive cancer screening, all normal.", "feedback": 5 },
-        { "appointmentId": "APP-009", "date": "2025-04-15T10:00:00Z", "doctorId": "DOC-011", "hospitalId": "HOS-003", "status": "completed", "urgent": false, "token": 9, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Child fever, Paracetamol syrup prescribed.", "feedback": 4 },
-        { "appointmentId": "APP-010", "date": "2025-03-10T19:30:00Z", "doctorId": "DOC-016", "hospitalId": "HOS-008", "status": "completed", "urgent": false, "token": 6, "patientsAhead": 0, "waitTime": 0, "chatResponse": "", "summary": "Anxiety counseling, SSRI suggested.", "feedback": 5 }
-    ],
-
-    "medicalEncounters": [
-      {
-        "encounterId": "ENC-001",
-        "date": "2024-03-01",
-        "department": "Pulmonology",
-        "doctor": "Dr. Neha Kapoor",
-        "reason": "Seasonal Asthma flare, shortness of breath, wheezing",
-        "findings": "Wheezing, RR 18/min, SpO₂ 96%",
-        "investigations": "Spirometry, Chest X-ray",
-        "treatment": "Salbutamol inhaler 2 puffs PRN, Prednisolone 20 mg daily x5 days",
-        "dischargeNotes": "Follow-up in 1 month. Outcome: Symptoms improved."
-      },
-      {
-        "encounterId": "ENC-002",
-        "date": "2025-01-15",
-        "department": "General Medicine",
-        "doctor": "Dr. Amit Verma",
-        "reason": "Routine Annual Checkup",
-        "findings": "BP 130/84, HR 80, BMI 24.1",
-        "investigations": "Fasting glucose 92 mg/dL, Lipid profile, ECG",
-        "treatment": "Lifestyle counseling (diet & exercise)",
-        "dischargeNotes": "Monthly BP monitoring. Outcome: Stable."
-      },
-      {
-        "encounterId": "ENC-003",
-        "date": "2025-09-12",
-        "department": "Emergency",
-        "doctor": "Dr. Ritu Malhotra",
-        "reason": "Acute shortness of breath after running",
-        "findings": "Tachycardia 110 bpm, SpO₂ 95%",
-        "investigations": "ECG, Peak flow, Chest auscultation",
-        "treatment": "Nebulized bronchodilator, Observation 4 hours",
-        "dischargeNotes": "Follow-up with Pulmonology if recurs. Outcome: Symptoms improved."
-      },
-      {
-        "encounterId": "ENC-004",
-        "date": "2025-09-28",
-        "department": "Cardiology",
-        "doctor": "Dr. Rajesh Mehra",
-        "reason": "Follow-up for borderline high BP",
-        "findings": "BP 128/84. No other significant findings.",
-        "investigations": "2D Echocardiogram, Stress Test",
-        "treatment": "Advised DASH diet, increase cardio exercise to 5x/week.",
-        "dischargeNotes": "Re-check BP in 3 months. No medication needed at this time. Outcome: Monitoring."
-      },
-      {
-        "encounterId": "ENC-005",
-        "date": "2025-10-05",
-        "department": "Dermatology",
-        "doctor": "Dr. Priya Singh",
-        "reason": "Minor skin rash on arm",
-        "findings": "Mild contact dermatitis, likely from a new detergent.",
-        "investigations": "None",
-        "treatment": "Topical hydrocortisone cream 1% for 1 week.",
-        "dischargeNotes": "Avoid new detergent. Follow-up if rash persists. Outcome: Improving."
-      }
-    ],
-
-    "investigations": [
-      {"investigationId": "INV-001", "date": "2024-03-02", "type": "Spirometry", "summary": "Mild reversible obstructive pattern.", "doctor": "Dr. Neha Kapoor"},
-      {"investigationId": "INV-002", "date": "2024-03-02", "type": "Chest X-ray", "summary": "Clear lung fields, no acute abnormalities.", "doctor": "Dr. Neha Kapoor", "imageUrl": "https://picsum.photos/seed/rad1/600/400"},
-      {"investigationId": "INV-003", "date": "2025-01-16", "type": "Blood Test", "summary": "FBG 92 mg/dL; Lipid profile borderline.", "doctor": "Dr. Amit Verma"},
-      {"investigationId": "INV-004", "date": "2025-09-12", "type": "ECG", "summary": "Transient sinus tachycardia; no ischemia.", "doctor": "Dr. Ritu Malhotra"},
-      {"investigationId": "INV-005", "date": "2025-09-30", "type": "Ultrasound", "summary": "2D Echo: Structurally normal heart, EF 60%.", "doctor": "Dr. Rajesh Mehra", "imageUrl": "https://picsum.photos/seed/rad2/600/400"},
-      {"investigationId": "INV-006", "date": "2025-09-30", "type": "MRI", "summary": "Stress Test: Negative for inducible ischemia.", "doctor": "Dr. Rajesh Mehra"}
-    ],
-    "vaccinations": ["COVID-19 (2 doses + booster)", "Tetanus (Up to date)", "Annual flu vaccine"],
-    "carePlan": {
-      "shortTerm": "Use inhaler PRN; peak flow twice daily for 2 weeks; follow-up Pulmonology if recurrence.",
-      "longTerm": "30 min cardio 3-5x/week; reduce refined sugars; monthly BP checks; annual flu vaccine; up-to-date COVID boosters.",
-      "nextFollowUp": "Pulmonology - 2025-10-20"
-    },
-    "currentStatus": {
-      "clinicalStatus": "Stable with intermittent exertional dyspnea",
-      "workRestrictions": "None; avoid smoke/dust"
-    }
+    id: 1,
+    with: dummyDoctors.find(d => d.doctorId === "DOC-003"),
+    lastMessage: { text: "Sure, I'll take a look at the MRI.", timestamp: "10:30 AM" },
+    messages: [
+      { sender: "Dr. A Kumar", text: "Hey, can you check the neuro scans for patient P-102345?", timestamp: "10:28 AM" },
+      { sender: "Dr. R Verma", text: "Sure, I'll take a look at the MRI.", timestamp: "10:30 AM" }
+    ]
   },
   {
-    "patientId": "PAT-20251001-0002",
-    "name": "Anjali Verma",
-    "phone": "+919999900002",
-    "email": "anjali.verma@example.com",
-    "dob": "1992-08-20",
-    "gender": "Female",
-    "aadhaar": "2345-6789-0123",
-    "address": { "street": "45, GK-1", "city": "New Delhi", "state": "DL", "zip": "110048" },
-    "bloodGroup": "A+",
-    "healthOverview": {
-      "status": "Good",
-      "riskLevel": "Low",
-      "chronicConditions": ["Vitamin D deficiency"],
-      "allergies": [],
-      "lifestyle": "Non-smoker, non-vegetarian, regular exercise",
-      "latestNotes": "Follow-up for Vitamin D levels in 3 months."
-    },
-    "emergencyContact": { "name": "Rohan Verma", "phone": "+919888800002" },
-    "insurance": { "provider": "ICICI Lombard", "policyId": "INS-B02" },
-    "vitals": {
-      "heartRate": [78, 80, 77, 79, 78, 80, 81],
-      "bloodPressure": ["118/76","120/78","119/77","118/76","119/77","120/78","121/79"],
-      "bloodSugar": [90, 92, 91, 93, 92, 94, 95],
-      "oxygenSaturation": [96, 97, 96, 95, 97, 96, 97],
-      "temperature": 36.8,
-      "bmi": 22.1,
-      "sleepHours": [7, 8, 7.5, 8, 7, 7.5, 8]
-    },
-     "medications": {
-      "current": [{"medicineId": "MED-012", "name": "Vitamin D3 Supplement", "dosage": "1 tablet weekly", "reason": "Vitamin D deficiency", "type": "current"}],
-      "past": [],
-      "otc": []
-    },
-    "appointments": [
-      {"appointmentId": "APP-011", "date": "2025-10-07T11:00:00Z", "doctorId": "DOC-002", "hospitalId": "HOS-002", "status": "booked", "urgent": false, "token": 4, "patientsAhead": 1, "waitTime": 12, "chatResponse": "See you soon.", "summary": "Routine Gynac checkup.", "feedback": 0 }
-    ],
-    "predictions": {
-      "vitalsNext7Days": {"heartRate": [79,78,80,81,79,78,80], "bloodPressure": ["119/77","120/78","118/76","119/77","120/78","119/77","118/76"]},
-      "appointmentProbability": [0.85,0.8,0.75,0.9,0.85,0.8,0.9],
-      "medicationAdherence": [0.97,0.96,0.95,0.98,0.97,0.96,0.97],
-      "risk": {
-        "hypertension": "Low",
-        "diabetes": "Low",
-        "heartDisease": "Low"
-      },
-       "preventiveMeasures": "Continue Vitamin D supplements, regular sun exposure."
-    },
-    "medicalEncounters": [
-        {"encounterId": "ENC-006", "date": "2025-09-15", "department": "General Medicine", "doctor": "Dr. Amit Verma", "reason": "Follow-up for Vitamin D deficiency.", "findings": "Levels improving.", "investigations": "Vitamin D test", "treatment": "Continue supplements", "dischargeNotes": "Re-check in 3 months."}
-    ],
-    "investigations": [
-        {"investigationId": "INV-007", "date": "2025-09-15", "type": "Blood Test", "summary": "Vitamin D levels at 25 ng/mL (previously 10 ng/mL).", "doctor": "Dr. Amit Verma"}
-    ],
-    "vaccinations": ["COVID-19 (2 doses + booster)", "Tetanus (Up to date)"],
-    "carePlan": {
-        "shortTerm": "Continue Vitamin D supplement weekly.",
-        "longTerm": "Annual health checkups.",
-        "nextFollowUp": "General Medicine - 2025-12-15"
-    },
-    "currentStatus": {
-        "clinicalStatus": "Stable and healthy",
-        "workRestrictions": "None"
-    }
+    id: 2,
+    with: dummyDoctors.find(d => d.doctorId === "DOC-002"),
+    lastMessage: { text: "Thanks for the quick report!", timestamp: "Yesterday" },
+    messages: [
+      { sender: "Dr. S Mehra", text: "The biopsy report is in. It's benign.", timestamp: "Yesterday" },
+      { sender: "Dr. A Kumar", text: "Thanks for the quick report!", timestamp: "Yesterday" }
+    ]
   }
 ];
 
-export const dummyPrescriptions = dummyAadhaarPatients.flatMap((patient, pIndex) => {
-    return Array.from({ length: 10 }, (_, i) => {
-        const docIndex = (pIndex + i) % dummyDoctors.length;
-        const hospitalIndex = (pIndex + i) % dummyHospitals.length;
-        const medIndex1 = (pIndex * 2 + i) % dummyMedicines.length;
-        const medIndex2 = (pIndex * 2 + i + 1) % dummyMedicines.length;
-        const statusCycle = ['signed', 'pending', 'unsigned', 'rejected'];
+export const dummyBloodBank = [
+    { bloodType: "A+", units: 50, hospitalId: "HOS-001" },
+    { bloodType: "A-", units: 20, hospitalId: "HOS-001" },
+    { bloodType: "B+", units: 35, hospitalId: "HOS-001" },
+    { bloodType: "B-", units: 15, hospitalId: "HOS-001" },
+    { bloodType: "AB+", units: 10, hospitalId: "HOS-001" },
+    { bloodType: "AB-", units: 5, hospitalId: "HOS-001" },
+    { bloodType: "O+", units: 80, hospitalId: "HOS-001" },
+    { bloodType: "O-", units: 30, hospitalId: "HOS-001" },
+    
+    { bloodType: "A+", units: 40, hospitalId: "HOS-002" },
+    { bloodType: "O+", units: 90, hospitalId: "HOS-002" },
+    { bloodType: "B+", units: 25, hospitalId: "HOS-002" },
+    
+    { bloodType: "A+", units: 60, hospitalId: "HOS-003" },
+    { bloodType: "O-", units: 40, hospitalId: "HOS-003" }
+];
 
-        return {
-            "prescription_id": `PR-${patient.aadhaar_full.slice(0, 4)}-${i + 1}`,
-            "patient_aadhaar_masked": patient.aadhaar_full.slice(-4),
-            "date": `2025-10-${String(20 - i).padStart(2, '0')}T10:15:00+05:30`,
-            "doctor": dummyDoctors[docIndex],
-            "clinic": dummyHospitals[hospitalIndex],
-            "medicines": [
-                {
-                    "name": dummyMedicines[medIndex1].name,
-                    "strength": "500 mg",
-                    "form": "Tablet",
-                    "dose": "1 tab",
-                    "frequency": "TDS",
-                    "duration_days": 5,
-                    "instructions": "After food"
-                },
-                {
-                    "name": dummyMedicines[medIndex2].name,
-                    "strength": "10 mg",
-                    "form": "Tablet",
-                    "dose": "1 tab",
-                    "frequency": "OD",
-                    "duration_days": 5,
-                    "instructions": "At night"
-                }
-            ],
-            "total_cost_inr": Math.floor(Math.random() * 500) + 100,
-            "suggested_pharmacy": {
-                "name": "City Pharmacy",
-                "address": "Near " + dummyHospitals[hospitalIndex].name,
-                "phone": "+91 11 55556666"
-            },
-            "e_sign_status": statusCycle[i % 4],
-            "e_sign_url": `https://storage.example.com/prescriptions/PR-${patient.aadhaar_full.slice(0, 4)}-${i + 1}-signed.pdf`,
-            "token_number": Math.random() > 0.5 ? Math.floor(Math.random() * 20) + 1 : null,
-            "notes": "Follow up after 7 days if symptoms persist.",
-            "download_pdf_url": `https://storage.example.com/prescriptions/PR-${patient.aadhaar_full.slice(0, 4)}-${i + 1}-signed.pdf`,
-            "is_test": true
+
+// --- START OF PATIENT INTERFACES AND DATA ---
+
+export interface MedicalEncounter {
+  encounterId: string;
+  date: string;
+  department: string;
+  doctor: string;
+  reason: string;
+  findings: string;
+  treatment: string;
+  dischargeNotes: string;
+  investigations?: string;
+}
+
+export interface Investigation {
+  investigationId: string;
+  date: string;
+  doctor: string;
+  type: string;
+  summary: string;
+  imageUrl?: string;
+}
+
+export interface Patient {
+    patientId: string;
+    name: string;
+    dob: string;
+    gender: "Male" | "Female" | "Other";
+    bloodGroup: "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
+    phone: string;
+    aadhaar: string;
+    emergencyContact: {
+        name: string;
+        phone: string;
+    };
+    healthOverview: {
+        chronicConditions: string[];
+        allergies: string[];
+        lifestyle: string;
+    };
+    vitals: {
+        heartRate: number[];
+        bloodPressure: string[];
+        bloodSugar: number[];
+        oxygenSaturation: number[];
+    };
+    medications: {
+        current: { name: string, dosage: string }[];
+        past: { name: string, dosage: string }[];
+    };
+    appointments: {
+        appointmentId: string;
+        date: string;
+        doctorId: string;
+        hospitalId: string;
+        status: "booked" | "completed" | "cancelled";
+        urgent: boolean;
+        token: number;
+        patientsAhead: number;
+        waitTime: number;
+        chatResponse: string;
+        summary: string;
+        feedback: number;
+    }[];
+    medicalEncounters: MedicalEncounter[];
+    investigations: Investigation[];
+    insurance: {
+        provider: string;
+        policyNumber: string;
+    };
+    predictions: {
+        vitalsNext7Days: {
+            heartRate: number[];
+            bloodPressure: string[];
+        };
+        medicationAdherence: number[];
+        appointmentProbability: number[];
+    };
+     analytics: {
+        vitalSigns: { month: string, BP: number, HR: number }[];
+        spO2: number;
+        medicalVisits: { month: string, visits: number }[];
+        medicationCompliance: { name: string, adherence: number }[];
+        lifestyleScore: { metric: string, score: number }[];
+        futureRisk: {
+            cardiac: { risk: 'Low' | 'Moderate' | 'High', details: string };
+            diabetes: { risk: 'Low' | 'Moderate' | 'High', details: string };
+            stroke: { risk: 'Low' | 'Moderate' | 'High', details:string };
+        };
+    };
+}
+
+
+export const dummyPatients: Patient[] = [
+  {
+    patientId: "P-102345",
+    name: "Ananya Sharma",
+    dob: "1995-08-15",
+    gender: "Female",
+    bloodGroup: "O+",
+    phone: "+919876543210",
+    aadhaar: "1234-5678-9012",
+    emergencyContact: { name: "Ravi Sharma", phone: "+919876543211" },
+    healthOverview: {
+      chronicConditions: ["Asthma", "Migraine"],
+      allergies: ["Pollen"],
+      lifestyle: "Moderately Active",
+    },
+    vitals: {
+      heartRate: [72, 75, 78, 76, 74, 80, 77],
+      bloodPressure: ["118/78", "120/80", "122/81", "119/79", "121/80", "120/80", "122/82"],
+      bloodSugar: [85, 90, 88, 92, 91, 89, 93],
+      oxygenSaturation: [98, 99, 98, 97, 99, 98, 99],
+    },
+    medications: {
+      current: [{ name: "Salbutamol Inhaler", dosage: "2 puffs PRN" }, { name: "Sumatriptan", dosage: "50mg at onset" }],
+      past: [{ name: "Montelukast", dosage: "10mg daily" }],
+    },
+    appointments: [
+      { appointmentId: "APP-001", date: "2025-10-20T15:30:00.000Z", doctorId: "DOC-011", hospitalId: "HOS-001", status: "booked", urgent: false, token: 12, patientsAhead: 3, waitTime: 18, chatResponse: "Hello, I'll review your asthma progress during our call.", summary: "Last prescription: Inhaler 2 puffs PRN.", feedback: 0 },
+      { appointmentId: "APP-002", date: "2025-10-25T11:00:00.000Z", doctorId: "DOC-012", hospitalId: "HOS-002", status: "booked", urgent: true, token: 8, patientsAhead: 2, waitTime: 10, chatResponse: "Please bring your last ECG report.", summary: "Last visit: Tachycardia, Nebulizer given.", feedback: 0 },
+      { appointmentId: "APP-003", date: "2025-11-02T16:15:00.000Z", doctorId: "DOC-013", hospitalId: "HOS-003", status: "booked", urgent: false, token: 5, patientsAhead: 1, waitTime: 5, chatResponse: "Please send a photo of your skin rash before visit.", summary: "Last visit: Mild dermatitis, hydrocortisone cream prescribed.", feedback: 0 },
+      { appointmentId: "APP-004", date: "2025-09-15T20:00:00.000Z", doctorId: "DOC-014", hospitalId: "HOS-002", status: "completed", urgent: false, token: 0, patientsAhead: 0, waitTime: 0, chatResponse: "", summary: "Routine Checkup, BP 130/84.", feedback: 4 },
+      { appointmentId: "APP-005", date: "2025-08-30T18:30:00.000Z", doctorId: "DOC-015", hospitalId: "HOS-004", status: "completed", urgent: false, token: 0, patientsAhead: 0, waitTime: 0, chatResponse: "", summary: "Migraine treatment, prescribed Sumatriptan.", feedback: 5 },
+      { appointmentId: "APP-006", date: "2025-07-20T14:00:00.000Z", doctorId: "DOC-016", hospitalId: "HOS-001", status: "completed", urgent: false, token: 0, patientsAhead: 0, waitTime: 0, chatResponse: "", summary: "Knee pain, MRI done, physiotherapy recommended.", feedback: 3 },
+      { appointmentId: "APP-007", date: "2025-06-10T09:45:00.000Z", doctorId: "DOC-017", hospitalId: "HOS-003", status: "completed", urgent: false, token: 0, patientsAhead: 0, waitTime: 0, chatResponse: "", summary: "Thyroid imbalance, Levothyroxine prescribed.", feedback: 4 },
+      { appointmentId: "APP-008", date: "2025-05-05T12:30:00.000Z", doctorId: "DOC-018", hospitalId: "HOS-005", status: "completed", urgent: false, token: 0, patientsAhead: 0, waitTime: 0, chatResponse: "", summary: "Preventive cancer screening, all normal.", feedback: 5 },
+      { appointmentId: "APP-009", date: "2025-04-15T10:00:00.000Z", doctorId: "DOC-019", hospitalId: "HOS-006", status: "completed", urgent: false, token: 0, patientsAhead: 0, waitTime: 0, chatResponse: "", summary: "Child fever, Paracetamol syrup prescribed.", feedback: 4 },
+      { appointmentId: "APP-010", date: "2025-03-10T19:30:00.000Z", doctorId: "DOC-020", hospitalId: "HOS-001", status: "completed", urgent: false, token: 0, patientsAhead: 0, waitTime: 0, chatResponse: "", summary: "Anxiety counseling, SSRI suggested.", feedback: 5 },
+    ],
+    medicalEncounters: [
+        { encounterId: "ENC-001", date: "2024-03-01", department: "Pulmonology", doctor: "Dr. Neha Kapoor", reason: "Follow-up for Asthma", findings: "Lungs clear, peak flow rate improved.", treatment: "Continued Salbutamol PRN, added Montelukast.", dischargeNotes: "Advised to avoid pollen.", investigations: "Spirometry" },
+        { encounterId: "ENC-002", date: "2024-01-15", department: "Neurology", doctor: "Dr. Kavya Nair", reason: "Severe Headache", findings: "Classic migraine with aura.", treatment: "Prescribed Sumatriptan.", dischargeNotes: "Advised to maintain a headache diary." },
+        { encounterId: "ENC-003", date: "2023-11-20", department: "Emergency", doctor: "Dr. Amit Verma", reason: "Acute Asthma Attack", findings: "Severe bronchospasm.", treatment: "Nebulization with Salbutamol and Ipratropium.", dischargeNotes: "Discharged after 4 hours of observation." , investigations: "ECG, Blood Test"},
+        { encounterId: "ENC-004", date: "2023-09-10", department: "Dermatology", doctor: "Dr. S Mehra", reason: "Skin Rash", findings: "Allergic dermatitis.", treatment: "Topical steroid cream.", dischargeNotes: "Advised to use hypoallergenic products." },
+    ],
+    investigations: [
+        { investigationId: "INV-001", date: "2024-03-01", doctor: "Dr. Neha Kapoor", type: "Spirometry", summary: "FEV1/FVC ratio of 0.75, showing mild obstructive pattern." },
+        { investigationId: "INV-002", date: "2023-11-20", doctor: "Dr. Amit Verma", type: "ECG", summary: "Sinus tachycardia, rate 110 bpm." },
+        { investigationId: "INV-003", date: "2023-11-20", doctor: "Dr. Amit Verma", type: "Blood Test", summary: "WBC count slightly elevated." },
+        { investigationId: "INV-004", date: "2023-08-05", doctor: "Dr. A Kumar", type: "X-Ray", summary: "Chest X-ray clear, no infiltrates.", imageUrl: "https://placehold.co/600x400/000000/FFFFFF/png?text=Chest+X-Ray" },
+    ],
+    insurance: {
+      provider: "Star Health",
+      policyNumber: "SH12345678",
+    },
+    predictions: {
+      vitalsNext7Days: {
+        heartRate: [78, 79, 77, 80, 78, 79, 81],
+        bloodPressure: ["121/81", "123/82", "122/80", "124/83", "123/81", "122/82", "124/82"],
+      },
+      medicationAdherence: [0.9, 0.95, 0.88, 0.92, 0.94, 0.89, 0.93],
+      appointmentProbability: [0.2, 0.3, 0.25, 0.4, 0.35, 0.5, 0.6],
+    },
+    analytics: {
+        vitalSigns: [
+            { month: 'Apr', BP: 125, HR: 80 }, { month: 'May', BP: 122, HR: 78 },
+            { month: 'Jun', BP: 124, HR: 82 }, { month: 'Jul', BP: 120, HR: 75 },
+            { month: 'Aug', BP: 121, HR: 76 }, { month: 'Sep', BP: 118, HR: 72 },
+        ],
+        spO2: 98,
+        medicalVisits: [
+            { month: 'Jan', visits: 1 }, { month: 'Mar', visits: 2 },
+            { month: 'Jun', visits: 1 }, { month: 'Sep', visits: 3 },
+        ],
+        medicationCompliance: [
+            { name: 'Salbutamol', adherence: 90 },
+            { name: 'Sumatriptan', adherence: 75 },
+            { name: 'Montelukast', adherence: 95 },
+        ],
+        lifestyleScore: [
+            { metric: 'Diet', score: 70 }, { metric: 'Exercise', score: 60 },
+            { metric: 'Stress', score: 50 }, { metric: 'Sleep', score: 80 },
+        ],
+        futureRisk: {
+            cardiac: { risk: 'Low', details: 'Low risk due to controlled BP and healthy lifestyle.' },
+            diabetes: { risk: 'Low', details: 'No significant indicators for diabetes.' },
+            stroke: { risk: 'Moderate', details: 'Migraines with aura slightly increase stroke risk. BP management is key.' },
         }
-    })
-});
-
-export type Patient = typeof dummyPatients[0];
-export type AadhaarPatient = typeof dummyAadhaarPatients[0];
-export type Doctor = typeof dummyDoctors[0];
-export type Hospital = typeof dummyHospitals[0];
-export type Medicine = typeof dummyMedicines[0];
-export type Ambulance = typeof dummyAmbulances[0];
-export type InsurancePlan = typeof dummyInsurancePlans[0];
-export type MedicalEncounter = Patient["medicalEncounters"][0];
-export type Investigation = Patient["investigations"][0];
-export type Prescription = typeof dummyPrescriptions[0];
-
-    
-
-    
-
-
-    
-
-
-    
+    }
+  },
+];
+// --- END OF PATIENT INTERFACES AND DATA ---
