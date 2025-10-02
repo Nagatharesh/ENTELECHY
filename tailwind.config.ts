@@ -143,6 +143,24 @@ export default {
           '0%': { transform: 'scale(1)', opacity: '0.7' },
           '100%': { transform: 'scale(4)', opacity: '0' },
         },
+         ripple: {
+          '0%': {
+            transform: 'scale(1)',
+            opacity: '0.6',
+          },
+          '100%': {
+            transform: 'scale(2.5)',
+            opacity: '0',
+          },
+        },
+         'aura-breathing': {
+          '0%, 100%': { boxShadow: '0 0 15px hsl(var(--primary)), 0 0 25px hsl(var(--secondary)/0.5)' },
+          '50%': { boxShadow: '0 0 30px hsl(var(--primary)/0.7), 0 0 50px hsl(var(--secondary)/0.7)' },
+        },
+        'timeline-flow': {
+          from: { backgroundPosition: '0 0' },
+          to: { backgroundPosition: '0 200px' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -156,6 +174,9 @@ export default {
         'radar-sweep': 'radar-sweep 2s linear forwards',
         'appear': 'appear 0.5s forwards',
         'pulse': 'pulse 1.5s infinite',
+        'ripple': 'ripple 1s linear infinite',
+        'aura-breathing': 'aura-breathing 4s ease-in-out infinite',
+        'timeline-flow': 'timeline-flow 10s linear infinite',
       },
     },
   },
