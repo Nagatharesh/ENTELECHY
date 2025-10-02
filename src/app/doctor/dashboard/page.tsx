@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
 import { User, Bell, PanelLeft, Dna, MessageSquare, Droplets, BrainCircuit } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import {
   Sheet,
   SheetContent,
@@ -30,7 +31,14 @@ import { DoctorProfile } from '@/components/doctor/doctor-profile';
 import { GeneticAnalysis } from '@/components/doctor/genetic-analysis';
 import { DoctorCommunication } from '@/components/doctor/doctor-communication';
 import { BloodBank } from '@/components/doctor/blood-bank';
-import { OrganVisualization } from '@/components/doctor/organ-visualization';
+
+const OrganVisualization = dynamic(
+  () => import('@/components/doctor/organ-visualization').then(mod => mod.OrganVisualization),
+  { 
+    ssr: false,
+    loading: () => <div className="w-full h-96 flex items-center justify-center glassmorphism"><p className="text-lg text-gradient-glow animate-pulse">Loading 3D Viewer...</p></div>
+  }
+);
 
 
 function DashboardContent() {
