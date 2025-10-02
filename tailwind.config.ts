@@ -131,7 +131,18 @@ export default {
             transform: 'scale(2.5)',
             opacity: '0',
           }
-        }
+        },
+        'radar-sweep': {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' },
+        },
+        'appear': {
+          to: { opacity: '1' },
+        },
+        'pulse': {
+          '0%': { transform: 'scale(1)', opacity: '0.7' },
+          '100%': { transform: 'scale(4)', opacity: '0' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -142,8 +153,13 @@ export default {
         'heartbeat-glow': 'heartbeat-glow 1.5s ease-in-out infinite',
         'logo-rotate': 'logo-rotate 5s ease-in-out infinite',
         'ping-slow': 'ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'radar-sweep': 'radar-sweep 2s linear forwards',
+        'appear': 'appear 0.5s forwards',
+        'pulse': 'pulse 1.5s infinite',
       },
     },
   },
   plugins: [require('tailwindcss-animate')],
 } satisfies Config;
+
+    

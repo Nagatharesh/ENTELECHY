@@ -5,12 +5,13 @@ import { useState, useEffect, useMemo } from 'react';
 import { dummyAmbulances, Patient, dummyHospitals } from '@/lib/dummy-data';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Ambulance, Phone, Car, Clock, MapPin, XCircle, Bot, ShieldPlus, HeartPulse, Brain, ArrowRight } from 'lucide-react';
+import { Ambulance, Phone, Car, Clock, MapPin, XCircle, Bot, ShieldPlus, HeartPulse, Brain, ArrowRight, User, Star, TrendingUp, HelpCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { Progress } from '@/components/ui/progress';
 
 const AmbulanceCard = ({ ambulance, onSelect, patientCoords }) => {
     const distance = useMemo(() => {
@@ -83,6 +84,7 @@ const BookingConfirmation = ({ ambulance, distance, eta, onConfirm, onCancel }) 
 const TrackingView = ({ booking, onCancel }) => {
     const [eta, setEta] = useState(booking.eta);
     const [progress, setProgress] = useState(0);
+    const [oxygenLevel, setOxygenLevel] = useState(booking.ambulance.oxygenLevel);
 
     useEffect(() => {
         if (booking.status !== 'enroute') return;
@@ -95,6 +97,9 @@ const TrackingView = ({ booking, onCancel }) => {
             elapsedTime++;
             const newProgress = Math.min((elapsedTime / totalDuration) * 100, 100);
             setProgress(newProgress);
+            
+            // Simulate oxygen level fluctuation
+            setOxygenLevel(prev => Math.max(85, Math.min(100, prev + (Math.random() - 0.5) * 0.2)));
 
             if(newProgress >= 100){
                 clearInterval(interval);
@@ -160,11 +165,12 @@ const TrackingView = ({ booking, onCancel }) => {
                         Live 3D Tracking Simulation
                     </div>
                 </div>
-                <div className="mt-6 space-y-4">
-                     <InfoRow icon={Car} label="Vehicle No" value={booking.ambulance.vehicle_no} />
-                     <InfoRow icon={Phone} label="Driver Contact" value={booking.ambulance.driver_name} isPhone={true} phone={booking.ambulance.driver_phone}/>
-                     <InfoRow icon={Clock} label="Arriving In" value={`~${Math.ceil(eta)} minutes`} />
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                    <DriverInfoCard driver={booking.ambulance.driver} />
+                    <FacilityStatusCard ambulance={booking.ambulance} oxygenLevel={oxygenLevel} />
                 </div>
+                
                 <div className="mt-6 flex justify-center">
                     <Button variant="destructive" onClick={onCancel} className="w-full max-w-xs">
                         <XCircle className="mr-2"/>
@@ -176,17 +182,76 @@ const TrackingView = ({ booking, onCancel }) => {
     );
 };
 
-const InfoRow = ({icon: Icon, label, value, isPhone = false, phone}) => (
+const DriverInfoCard = ({ driver }) => (
+    <Card className="glassmorphism p-4">
+        <CardHeader className="p-0 mb-4 flex-row items-center justify-between">
+            <CardTitle className="text-white text-lg">Driver Profile</CardTitle>
+            <Button size="sm" variant="outline" asChild><a href={`tel:${driver.contact}`}><Phone/></a></Button>
+        </CardHeader>
+        <CardContent className="p-0 space-y-3">
+            <StatBar icon={User} label="Name" value={driver.name} />
+            <StatBar icon={TrendingUp} label="Experience" value={`${driver.experience} years`} />
+            <StatBar icon={Car} label="Completed Rides" value={driver.completedRides} />
+            <StatBar icon={Star} label="Rating" value={`${driver.rating}/5`} isRating />
+        </CardContent>
+    </Card>
+);
+
+const FacilityStatusCard = ({ ambulance, oxygenLevel }) => (
+    <Card className="glassmorphism p-4">
+        <CardHeader className="p-0 mb-4">
+            <CardTitle className="text-white text-lg">Ambulance Status</CardTitle>
+        </CardHeader>
+        <CardContent className="p-0 space-y-3">
+            <ProgressBar label="Oxygen Level" value={oxygenLevel} unit="%" color="hsl(var(--secondary))" />
+            <FacilityItem label="Ventilator" available={ambulance.facilities.ventilator} />
+            <FacilityItem label="Emergency Kit" available={ambulance.facilities.emergencyKit} />
+        </CardContent>
+    </Card>
+);
+
+const StatBar = ({ icon: Icon, label, value, isRating=false }) => (
+    <div>
+        <div className="flex justify-between items-center text-sm mb-1">
+            <p className="text-muted-foreground flex items-center gap-2"><Icon className="w-4 h-4" />{label}</p>
+            {isRating ? (
+                <div className="flex items-center gap-1 font-bold text-yellow-400">
+                    <Star className="w-4 h-4 fill-current"/>{value}
+                </div>
+            ) : (
+                <p className="font-semibold text-white">{value}</p>
+            )}
+        </div>
+    </div>
+);
+
+const ProgressBar = ({ label, value, unit, color }) => (
+    <div>
+        <div className="flex justify-between items-center text-sm mb-1">
+            <p className="text-muted-foreground">{label}</p>
+            <p className="font-semibold text-white">{Math.round(value)}{unit}</p>
+        </div>
+        <Progress value={value} indicatorColor={color} />
+    </div>
+);
+
+const FacilityItem = ({ label, available }) => (
+    <div className="flex justify-between items-center text-sm">
+        <p className="text-muted-foreground flex items-center gap-2"><HelpCircle className="w-4 h-4"/>{label}</p>
+        <Badge variant={available ? "default" : "destructive"} className="bg-opacity-70">
+            {available ? "Available" : "Unavailable"}
+        </Badge>
+    </div>
+);
+
+
+const InfoRow = ({icon: Icon, label, value}) => (
     <div className="flex items-center justify-between p-3 rounded-lg bg-card/50">
         <div className="flex items-center gap-3">
             <Icon className="w-5 h-5 text-primary" />
             <span className="text-muted-foreground">{label}</span>
         </div>
-        {isPhone ? (
-             <a href={`tel:${phone}`} className="font-semibold text-white hover:text-primary transition-colors">{value}</a>
-        ) : (
-            <span className="font-semibold text-white">{value}</span>
-        )}
+        <span className="font-semibold text-white">{value}</span>
     </div>
 );
 
@@ -359,5 +424,7 @@ const AmbulanceTypeCard = ({ icon: Icon, type, selected, onSelect }) => {
         </Card>
     )
 }
+
+    
 
     

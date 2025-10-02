@@ -136,16 +136,31 @@ export const dummyMedicines = [
 ];
 
 export const dummyAmbulances = [
-  {"id": "AMB-001", "vehicle_no": "MH-12-AB-1234", "driver_name": "Ravi Kumar", "driver_phone": "+919000000001", "type": "Basic", "status": "available", "current_coords": {"lat": 19.0860, "lng": 72.8877}, "speed_kmph": 60, "hospital_id": "HOS-001"},
-  {"id": "AMB-002", "vehicle_no": "DL-3C-CD-5678", "driver_name": "Sunil Mehta", "driver_phone": "+919000000002", "type": "ICU", "status": "available", "current_coords": {"lat": 28.7141, "lng": 77.1125}, "speed_kmph": 50, "hospital_id": "HOS-002"},
-  {"id": "AMB-003", "vehicle_no": "TS-09-EF-9012", "driver_name": "Anita Sharma", "driver_phone": "+919000000003", "type": "Advanced Life Support", "status": "on-trip", "current_coords": {"lat": 17.4050, "lng": 78.4967}, "speed_kmph": 70, "hospital_id": "HOS-003"},
-  {"id": "AMB-004", "vehicle_no": "KA-01-GH-3456", "driver_name": "Mohammed Aslam", "driver_phone": "+919000000004", "type": "Basic", "status": "available", "current_coords": {"lat": 12.9816, "lng": 77.6046}, "speed_kmph": 55, "hospital_id": "HOS-004"},
-  {"id": "AMB-005", "vehicle_no": "MH-14-IJ-7890", "driver_name": "Kiran Patel", "driver_phone": "+919000000005", "type": "ICU", "status": "offline", "current_coords": {"lat": 18.5304, "lng": 73.8667}, "speed_kmph": 0, "hospital_id": "HOS-005"},
-  {"id": "AMB-006", "vehicle_no": "MH-12-KL-2468", "driver_name": "Rajesh Gupta", "driver_phone": "+919000000006", "type": "Basic", "status": "available", "current_coords": {"lat": 19.0660, "lng": 72.8677}, "speed_kmph": 45, "hospital_id": "HOS-001"},
-  {"id": "AMB-007", "vehicle_no": "DL-3C-MN-1357", "driver_name": "Pooja Iyer", "driver_phone": "+919000000007", "type": "Advanced Life Support", "status": "on-trip", "current_coords": {"lat": 28.6941, "lng": 77.0925}, "speed_kmph": 65, "hospital_id": "HOS-002"},
-  {"id": "AMB-008", "vehicle_no": "TS-09-OP-8642", "driver_name": "Deepak Reddy", "driver_phone": "+919000000008", "type": "Basic", "status": "available", "current_coords": {"lat": 17.3750, "lng": 78.4767}, "speed_kmph": 58, "hospital_id": "HOS-003"},
-  {"id": "AMB-009", "vehicle_no": "KA-01-QR-9753", "driver_name": "Sandeep Singh", "driver_phone": "+919000000009", "type": "ICU", "status": "offline", "current_coords": {"lat": 12.9616, "lng": 77.5846}, "speed_kmph": 0, "hospital_id": "HOS-04"},
-  {"id": "AMB-010", "vehicle_no": "MH-14-ST-1928", "driver_name": "Meena Joshi", "driver_phone": "+919000000010", "type": "Advanced Life Support", "status": "available", "current_coords": {"lat": 18.5104, "lng": 73.8467}, "speed_kmph": 52, "hospital_id": "HOS-005"}
+  { 
+    "id": "AMB-001", "vehicle_no": "MH-12-AB-1234", "driver_name": "Ramesh Kumar", "driver_phone": "+919000000001", 
+    "type": "Basic", "status": "available", "current_coords": {"lat": 19.0860, "lng": 72.8877}, "speed_kmph": 60, "hospital_id": "HOS-001",
+    "oxygenLevel": 95, "facilities": { "ventilator": false, "emergencyKit": true },
+    "driver": { "name": "Ramesh", "experience": 5, "completedRides": 320, "rating": 4.9 }
+  },
+  { 
+    "id": "AMB-002", "vehicle_no": "DL-3C-CD-5678", "driver_name": "Anjali Mehta", "driver_phone": "+919000000002", 
+    "type": "ICU", "status": "available", "current_coords": {"lat": 28.7141, "lng": 77.1125}, "speed_kmph": 50, "hospital_id": "HOS-002",
+    "oxygenLevel": 98, "facilities": { "ventilator": true, "emergencyKit": true },
+    "driver": { "name": "Anjali", "experience": 3, "completedRides": 150, "rating": 4.8 }
+  },
+  { 
+    "id": "AMB-003", "vehicle_no": "TS-09-EF-9012", "driver_name": "Karan Sharma", "driver_phone": "+919000000003", 
+    "type": "Advanced Life Support", "status": "on-trip", "current_coords": {"lat": 17.4050, "lng": 78.4967}, "speed_kmph": 70, "hospital_id": "HOS-003",
+    "oxygenLevel": 90, "facilities": { "ventilator": true, "emergencyKit": true },
+    "driver": { "name": "Karan", "experience": 4, "completedRides": 210, "rating": 4.7 }
+  },
+  {"id": "AMB-004", "vehicle_no": "KA-01-GH-3456", "driver_name": "Mohammed Aslam", "driver_phone": "+919000000004", "type": "Basic", "status": "available", "current_coords": {"lat": 12.9816, "lng": 77.6046}, "speed_kmph": 55, "hospital_id": "HOS-004", "oxygenLevel": 92, "facilities": {"ventilator": false, "emergencyKit": true}, "driver": {"name": "Mohammed", "experience": 6, "completedRides": 450, "rating": 4.9}},
+  {"id": "AMB-005", "vehicle_no": "MH-14-IJ-7890", "driver_name": "Kiran Patel", "driver_phone": "+919000000005", "type": "ICU", "status": "offline", "current_coords": {"lat": 18.5304, "lng": 73.8667}, "speed_kmph": 0, "hospital_id": "HOS-005", "oxygenLevel": 100, "facilities": {"ventilator": true, "emergencyKit": true}, "driver": {"name": "Kiran", "experience": 2, "completedRides": 90, "rating": 4.6}},
+  {"id": "AMB-006", "vehicle_no": "MH-12-KL-2468", "driver_name": "Rajesh Gupta", "driver_phone": "+919000000006", "type": "Basic", "status": "available", "current_coords": {"lat": 19.0660, "lng": 72.8677}, "speed_kmph": 45, "hospital_id": "HOS-001", "oxygenLevel": 96, "facilities": {"ventilator": false, "emergencyKit": false}, "driver": {"name": "Rajesh", "experience": 8, "completedRides": 600, "rating": 4.9}},
+  {"id": "AMB-007", "vehicle_no": "DL-3C-MN-1357", "driver_name": "Pooja Iyer", "driver_phone": "+919000000007", "type": "Advanced Life Support", "status": "on-trip", "current_coords": {"lat": 28.6941, "lng": 77.0925}, "speed_kmph": 65, "hospital_id": "HOS-002", "oxygenLevel": 91, "facilities": {"ventilator": true, "emergencyKit": true}, "driver": {"name": "Pooja", "experience": 3, "completedRides": 180, "rating": 4.8}},
+  {"id": "AMB-008", "vehicle_no": "TS-09-OP-8642", "driver_name": "Deepak Reddy", "driver_phone": "+919000000008", "type": "Basic", "status": "available", "current_coords": {"lat": 17.3750, "lng": 78.4767}, "speed_kmph": 58, "hospital_id": "HOS-003", "oxygenLevel": 94, "facilities": {"ventilator": false, "emergencyKit": true}, "driver": {"name": "Deepak", "experience": 5, "completedRides": 310, "rating": 4.7}},
+  {"id": "AMB-009", "vehicle_no": "KA-01-QR-9753", "driver_name": "Sandeep Singh", "driver_phone": "+919000000009", "type": "ICU", "status": "offline", "current_coords": {"lat": 12.9616, "lng": 77.5846}, "speed_kmph": 0, "hospital_id": "HOS-04", "oxygenLevel": 99, "facilities": {"ventilator": true, "emergencyKit": true}, "driver": {"name": "Sandeep", "experience": 7, "completedRides": 550, "rating": 4.9}},
+  {"id": "AMB-010", "vehicle_no": "MH-14-ST-1928", "driver_name": "Meena Joshi", "driver_phone": "+919000000010", "type": "Advanced Life Support", "status": "available", "current_coords": {"lat": 18.5104, "lng": 73.8467}, "speed_kmph": 52, "hospital_id": "HOS-005", "oxygenLevel": 93, "facilities": {"ventilator": true, "emergencyKit": true}, "driver": {"name": "Meena", "experience": 4, "completedRides": 250, "rating": 4.8}}
 ];
 
 export const dummyInsurancePlans = [
@@ -658,6 +673,9 @@ export type Investigation = Patient["investigations"][0];
 export type Prescription = typeof dummyPrescriptions[0];
 
     
+
+    
+
 
     
 
