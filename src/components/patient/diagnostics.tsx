@@ -421,5 +421,3 @@ const HistoryAnalyticsCard = ({ history }) => (
         </div>
     </Card>
 );
-
-    

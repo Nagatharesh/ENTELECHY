@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from "@/hooks/use-toast";
 import { cn } from '@/lib/utils';
 import { FileDown, FileText, CheckCircle, ShieldCheck, Building, Star, Filter, X } from 'lucide-react';
 import { Label } from '../ui/label';
@@ -49,7 +49,6 @@ export function Insurance({ patient }: { patient: Patient }) {
         toast({
             title: "Policy Confirmed!",
             description: `Your policy number is ${policyNumber}. You can download the documents now.`,
-            variant: 'default',
         });
         handleCloseDialog();
     };

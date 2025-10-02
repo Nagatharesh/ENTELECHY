@@ -71,7 +71,6 @@ export function Medicines({ patient }: { patient: Patient }) {
         toast({
             title: "Medicine Booked!",
             description: `${selectedMedicine.name} (${quantity}) will be delivered in ~${eta} minutes.`,
-            variant: "default",
         });
     };
     

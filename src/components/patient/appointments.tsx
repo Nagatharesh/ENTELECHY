@@ -38,7 +38,6 @@ export function Appointments({ patient, showBookingButton = true }: { patient: P
     toast({
       title: "Appointment Booked!",
       description: `Your appointment with ${getDoctorById(newAppointment.doctorId)?.name} is confirmed for ${format(new Date(newAppointment.date), 'PPP p')}. Your token is #${newAppointment.token}.`,
-      variant: "default",
     });
   };
   
@@ -256,6 +255,7 @@ const AppointmentCard = ({ appointment, isPast = false, onInteraction }) => {
 function BookingDialog({ onBook, patientId }) {
     const [open, setOpen] = useState(false);
     const [showRadar, setShowRadar] = useState(false);
+    const { toast } = useToast();
 
     const handleTriggerClick = () => {
         setShowRadar(true);
@@ -263,6 +263,11 @@ function BookingDialog({ onBook, patientId }) {
             setShowRadar(false);
             setOpen(true);
         }, 2000);
+    }
+    
+    const handleBookAppointment = (newAppointment) => {
+        onBook(newAppointment);
+        setOpen(false);
     }
 
     return (
@@ -272,7 +277,7 @@ function BookingDialog({ onBook, patientId }) {
                 <Button onClick={handleTriggerClick} className="glowing-shadow-interactive"><PlusCircle className="mr-2" /> Book New Appointment</Button>
             </DialogTrigger>
             <DialogContent className="glassmorphism sm:max-w-[600px]">
-                 <BookingWizard onBook={(appt) => { onBook(appt); setOpen(false); }} patientId={patientId} />
+                 <BookingWizard onBook={handleBookAppointment} patientId={patientId} />
             </DialogContent>
         </Dialog>
         
@@ -536,5 +541,3 @@ const Step4 = ({ doctor, hospital, date, time }) => {
         </div>
     );
 };
-
-    
