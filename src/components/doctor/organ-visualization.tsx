@@ -51,12 +51,14 @@ function Model({ path, scale, annotations }) {
     );
 }
 
-useGLTF.preload(Object.values(organModels).map(m => m.path));
-
-
 export function OrganVisualization() {
     const [selectedPatientId, setSelectedPatientId] = useState(dummyOrganStatus[0].patientId);
     const [selectedOrgan, setSelectedOrgan] = useState('Heart');
+
+    useEffect(() => {
+        // Preload models on the client side
+        Object.values(organModels).forEach(model => useGLTF.preload(model.path));
+    }, []);
 
     const patientData = dummyOrganStatus.find(p => p.patientId === selectedPatientId);
     const organData = patientData?.organs.find(o => o.name === selectedOrgan);
