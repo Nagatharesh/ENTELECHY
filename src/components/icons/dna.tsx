@@ -9,10 +9,9 @@ interface DNAStrandProps {
     position?: [number, number, number];
     rotationY?: number;
     color1?: string;
-    color2?: string;
 }
 
-const DNAStrand: React.FC<DNAStrandProps> = ({ position, rotationY, color1, color2 }) => {
+const DNAStrand: React.FC<DNAStrandProps> = ({ position, rotationY, color1 }) => {
     const meshRef = useRef<THREE.Mesh>(null);
 
     const points = useMemo(() => {
