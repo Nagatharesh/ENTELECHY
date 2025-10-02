@@ -11,6 +11,7 @@ import { BrainCircuit, Heart, Activity, ShieldAlert } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from '../ui/badge';
 import { cn } from '@/lib/utils';
+import * as React from 'react';
 
 
 const organModels = {
@@ -87,7 +88,7 @@ export function OrganVisualization() {
                             <directionalLight position={[5, 5, 5]} intensity={2} />
                             <pointLight position={[-5, -5, -5]} intensity={3} color="magenta" />
                             <Suspense fallback={<Html><div className="text-white">Loading Model...</div></Html>}>
-                                <Model path={organModels[selectedOrgan].path} scale={organModels[selectedOrgan].scale} annotations={annotations} />
+                                <Model key={selectedOrgan} path={organModels[selectedOrgan].path} scale={organModels[selectedOrgan].scale} annotations={annotations} />
                             </Suspense>
                             <OrbitControls enableZoom={true} enablePan={true} />
                         </Canvas>
@@ -130,4 +131,12 @@ export function OrganVisualization() {
                                 <h4 className="font-semibold text-white mt-4">Annotations:</h4>
                                 <ul className="list-disc list-inside text-muted-foreground text-sm space-y-1 mt-2">
                                      {organData.annotations.map((anno, i) => <li key={i}>{anno.text}</li>)}
-                               
+                                </ul>
+                            </div>
+                         )}
+                    </CardContent>
+                 </Card>
+            </div>
+        </div>
+    );
+}
