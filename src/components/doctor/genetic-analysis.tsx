@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { BarChart, LineChart, PieChart, Info, FlaskConical, Stethoscope } from 'lucide-react';
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 import { Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend, Line as RechartsLine, Pie, Cell, Sector } from 'recharts';
+import { Button } from '../ui/button';
 
 const renderActiveShape = (props: any) => {
     const RADIAN = Math.PI / 180;
