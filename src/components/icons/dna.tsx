@@ -35,7 +35,7 @@ const DNAStrand: React.FC<DNAStrandProps> = ({ position, rotationY, color1, colo
 };
 
 
-const Connectors = ({ count = 10, interactive }) => {
+const Connectors = ({ count = 10, interactive }: {count?: number, interactive: boolean}) => {
     const instancedMeshRef = useRef<THREE.InstancedMesh>(null);
     const dummy = useMemo(() => new THREE.Object3D(), []);
 
@@ -77,7 +77,7 @@ const Connectors = ({ count = 10, interactive }) => {
 };
 
 
-export const DNA = ({ interactive = false }) => {
+export const DNA = ({ interactive = false }: {interactive?: boolean}) => {
     const groupRef = useRef<THREE.Group>(null);
 
     useFrame((state, delta) => {
