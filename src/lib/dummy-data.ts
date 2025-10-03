@@ -5,6 +5,7 @@
 
 
 
+
 export const dummyAadhaarPatients = [
     { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
     { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
@@ -506,8 +507,8 @@ export const dummyDnaPatients: DnaPatient[] = [
       markers: [{ gene: 'BRCA1', risk: 'High' }],
     },
     medication: {
-      current: 'None',
-      aiSuggestion: 'Preventive hormone therapy (e.g., Tamoxifen) and trial drugs.',
+      current: 'Preventive hormone therapy',
+      aiSuggestion: 'Genetic counseling + AI-driven clinical trial drugs.',
     },
     advanced: {
       predictedDiseases: ['Ovarian Cancer'],
