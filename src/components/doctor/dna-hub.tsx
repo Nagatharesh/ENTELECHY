@@ -13,12 +13,9 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { Zap, Activity, Heart, Brain, Shield, Info, X } from 'lucide-react';
 import dynamic from 'next/dynamic';
-
-const DnaVisualization = dynamic(() => import('./dna-visualization').then(mod => mod.DnaVisualization), {
-  ssr: false,
-  loading: () => <div className="w-24 h-48 flex items-center justify-center"><p className="text-xs text-primary animate-pulse">Loading DNA...</p></div>
-});
-
+import { Canvas } from '@react-three/fiber';
+import { DnaVisualization } from './dna-visualization';
+import { Stars, OrbitControls } from '@react-three/drei';
 
 const riskColors = {
   Low: 'text-green-400',
@@ -47,31 +44,31 @@ export function DnaHub() {
           <CardDescription>Select a patient's DNA to analyze their genetic makeup and predictive health insights.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="relative h-[400px] w-full perspective-1000">
-            {dummyDnaPatients.map((patient, index) => {
-              const angle = (index / dummyDnaPatients.length) * Math.PI * 2;
-              const radius = 250;
-              const x = Math.cos(angle) * radius;
-              const z = Math.sin(angle) * radius;
-              return (
-                <motion.div
-                  key={patient.id}
-                  className="absolute"
-                  style={{ top: '50%', left: '50%', x: '-50%', y: '-50%' }}
-                  animate={{ 
-                    transform: `translateX(${x}px) translateZ(${z}px) rotateY(${-angle}rad) rotateX(0.5rad)` 
-                  }}
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                >
-                  <DnaVisualization
-                    onClick={() => handlePatientSelect(patient)}
-                    color1={chartColors[index % chartColors.length]}
-                    color2={chartColors[(index + 1) % chartColors.length]}
-                  />
-                </motion.div>
-              );
-            })}
+          <div className="relative h-[400px] w-full">
+            <Canvas camera={{ position: [0, 2, 10], fov: 50 }}>
+              <ambientLight intensity={1.5} />
+              <pointLight position={[10, 10, 10]} intensity={3} color="cyan" />
+              <pointLight position={[-10, -10, -10]} intensity={2} color="magenta" />
+              <Stars radius={200} depth={50} count={5000} factor={10} saturation={0} fade speed={1} />
+              <Suspense fallback={null}>
+                  {dummyDnaPatients.map((patient, index) => {
+                      const angle = (index / dummyDnaPatients.length) * Math.PI * 2;
+                      const radius = 2.5;
+                      const x = Math.cos(angle) * radius;
+                      const z = Math.sin(angle) * radius;
+                      return (
+                          <DnaVisualization
+                            key={patient.id}
+                            position={[x, 0, z]}
+                            onClick={() => handlePatientSelect(patient)}
+                            color1={chartColors[index % chartColors.length]}
+                            color2={chartColors[(index + 1) % chartColors.length]}
+                          />
+                      );
+                  })}
+              </Suspense>
+              <OrbitControls enableZoom={true} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+            </Canvas>
           </div>
         </CardContent>
       </Card>
