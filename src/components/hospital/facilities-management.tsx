@@ -1,13 +1,16 @@
 
+
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { cn } from "@/lib/utils"
+
 
 export function FacilitiesManagement({ hospitalData }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -342,7 +345,7 @@ export function FacilitiesManagement({ hospitalData }) {
           const lightMat = new THREE.MeshStandardMaterial({ color: 0xdfe9f5, emissive: 0x0e2540 });
           for (let i = 0; i < 2; i++) {
             const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.1,2.0,10), new THREE.MeshStandardMaterial({ color: 0x9aa3ab }));
-            arm.rotation.z = Math.PI/2; arm.position.set(-1 + i*2, 2.6, -0.2);
+            arm.rotation.z = Math.PI / 2; arm.position.set(-1 + i*2, 2.6, -0.2);
             const head = new THREE.Mesh(new THREE.CylinderGeometry(0.9,0.9,0.2,20), lightMat);
             head.position.set(-1 + i*2, 2.4, -0.2);
             room.add(arm, head);
@@ -550,17 +553,17 @@ export function FacilitiesManagement({ hospitalData }) {
         };
 
         const onClick = () => {
-          if (hovered) {
-            selected = hovered.object;
-            updateInfo(selected);
-            focusOnObject(selected);
-            highlight(selected);
-            const root = findTopGroup(selected);
-            if (root && root.userData && root.userData.type === 'door') {
-              if (root.userData.sliding) root.userData.sliding.open = !root.userData.sliding.open;
-              if (root.userData.hinged) root.userData.hinged.open = !root.userData.hinged.open;
+            if (hovered) {
+                const target = hovered;
+                updateInfo(target);
+                focusOnObject(target);
+                highlight(target);
+                const root = findTopGroup(target);
+                if (root && root.userData && root.userData.type === 'door') {
+                    if (root.userData.sliding) root.userData.sliding.open = !root.userData.sliding.open;
+                    if (root.userData.hinged) root.userData.hinged.open = !root.userData.hinged.open;
+                }
             }
-          }
         };
 
         const onDblClick = () => {
@@ -610,7 +613,7 @@ export function FacilitiesManagement({ hospitalData }) {
             applyToggles(newToggles);
         };
 
-        Object.values(toggles).forEach((el: any) => el?.addEventListener('change', handleToggleChange));
+        Object.values(document.querySelectorAll('#hud input[type="checkbox"]')).forEach(el => el.addEventListener('change', handleToggleChange));
         applyToggles(toggles);
 
         const onWindowResize = () => {
@@ -652,9 +655,9 @@ export function FacilitiesManagement({ hospitalData }) {
           raycaster.setFromCamera(mouse, camera);
           const intersect = raycaster.intersectObjects(world.children, true)[0];
           if (intersect && intersect.object.visible) {
-            hovered = intersect;
+            hovered = intersect.object;
             if(canvasRef.current) canvasRef.current.style.cursor = 'pointer';
-            const t = hovered.object.userData.type || hovered.object.parent?.userData?.type || 'object';
+            const t = hovered.userData.type || hovered.parent?.userData?.type || 'object';
             tooltipEl.textContent = t;
             tooltipEl.style.opacity = '1';
           } else {
@@ -721,12 +724,6 @@ export function FacilitiesManagement({ hospitalData }) {
         const exit1 = createExitSign(); exit1.position.set(40, 2.2, -16); interiors.add(exit1);
         const exit2 = createExitSign(); exit2.position.set(-70, 2.2, 26); interiors.add(exit2);
         const exit3 = createExitSign(); exit3.position.set(-32, 2.2, 50); interiors.add(exit3);
-
-        const selectionHelper = new THREE.Box3Helper(new THREE.Box3(), 0x4ea1ff);
-        selectionHelper.visible = false;
-        world.add(selectionHelper);
-        
-        let isolatedRoot = null;
 
         function highlight(obj) {
             const root = obj;
@@ -801,12 +798,16 @@ export function FacilitiesManagement({ hospitalData }) {
             window.removeEventListener('click', onClick);
             window.removeEventListener('dblclick', onDblClick);
             window.removeEventListener('keydown', handleKeyDown);
-            document.body.removeChild(labelRenderer.domElement);
-            document.body.removeChild(tooltipEl);
+            if (labelRenderer.domElement.parentNode) {
+                document.body.removeChild(labelRenderer.domElement);
+            }
+            if (tooltipEl.parentNode) {
+                document.body.removeChild(tooltipEl);
+            }
             renderer.dispose();
         };
 
-    }, []);
+    }, [toggles]);
 
     const handleToggle = (e) => {
         const { id, checked } = e.target;
