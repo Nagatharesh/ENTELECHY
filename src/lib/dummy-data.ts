@@ -6,6 +6,7 @@
 
 
 
+
 export const dummyAadhaarPatients = [
     { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
     { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
@@ -601,3 +602,132 @@ export const dummyDnaPatients: DnaPatient[] = [
   },
 ];
 // --- END OF DNA PATIENT INTERFACES AND DATA ---
+
+
+// --- START OF REFERRAL PATIENT DATA ---
+export const dummyReferralPatients = {
+    "P1001": {
+        id: "P1001",
+        name: "John Matthews",
+        age: 45,
+        gender: "Male",
+        bloodGroup: "O+",
+        allergies: ["None"],
+        chronicConditions: ["Type 2 Diabetes"],
+        doctorsVisited: ["Dr. S Mehra (Endocrinologist)", "Dr. K Reddy (General Physician)"],
+        medicines: { current: "Metformin", suggestion: "Dapagliflozin" },
+        records: [
+            { type: "Lab Test", name: "HbA1c", result: "6.9%", date: "2024-08-01" },
+            { type: "Lab Test", name: "Fasting Sugar", result: "130 mg/dL", date: "2024-08-01" },
+            { type: "Lab Test", name: "Cholesterol", result: "190 mg/dL", date: "2024-08-01" },
+            { type: "Consultation", name: "Follow-up", doctor: "Dr. S Mehra", date: "2024-08-02" },
+        ],
+        graphs: {
+            hba1cTrend: [{ name: 'Feb', value: 7.5 }, { name: 'May', value: 7.2 }, { name: 'Aug', value: 6.9 }],
+            medicationAdherence: 85
+        },
+        aiInsights: {
+            risk: "Moderate risk of cardiovascular issues due to diabetes. HbA1c trend is positive.",
+            treatment: "Suggest switching to a combination therapy of Metformin and Dapagliflozin for better glycemic control.",
+            prevention: "Recommend incorporating 30 minutes of daily cardio exercise."
+        }
+    },
+    "P1002": {
+        id: "P1002",
+        name: "Anita Sharma",
+        age: 32,
+        gender: "Female",
+        bloodGroup: "A+",
+        allergies: ["Penicillin"],
+        chronicConditions: ["BRCA1 Gene Positive"],
+        doctorsVisited: ["Dr. Vikram Singh (Oncologist)"],
+        medicines: { current: "Preventive Hormone Therapy", suggestion: "Consider PARP inhibitors trial" },
+        records: [
+            { type: "Genetic Test", name: "BRCA1/BRCA2", result: "Positive for BRCA1", date: "2023-11-10" },
+            { type: "Consultation", name: "Genetic Counseling", doctor: "Dr. Vikram Singh", date: "2023-11-12" },
+        ],
+        graphs: {
+            mutationProbability: { "Breast Cancer": 65, "Ovarian Cancer": 40 },
+            medicationAdherence: 98
+        },
+        aiInsights: {
+            risk: "High lifetime risk for breast (65%) and ovarian (40%) cancer.",
+            treatment: "Continue hormone therapy. Highly recommend enrolling in PARP inhibitor clinical trials for risk reduction.",
+            prevention: "Annual mammograms and transvaginal ultrasounds are crucial for early detection."
+        }
+    },
+     "P1003": {
+        id: "P1003",
+        name: "Liam Chen",
+        age: 55,
+        gender: "Male",
+        bloodGroup: "B+",
+        allergies: ["None"],
+        chronicConditions: ["Hypertension"],
+        doctorsVisited: ["Dr. A Kumar (Cardiologist)", "Dr. T Wong (Physician)"],
+        medicines: { current: "Beta Blockers", suggestion: "Switch to ARBs" },
+        records: [
+            { type: "ECG", name: "12-Lead ECG", result: "Normal Sinus Rhythm", date: "2024-01-15" },
+            { type: "Report", name: "BP Monitoring", result: "Average 135/90 mmHg", date: "2024-07-20" },
+        ],
+        graphs: {
+            bpTrend: [{ name: '2023', value: "160/100" }, { name: '2024', value: "130/85" }],
+            medicationAdherence: 92
+        },
+        aiInsights: {
+            risk: "Controlled hypertension, but still at risk for stroke. BP trend is positive.",
+            treatment: "Patient reports side effects from Beta Blockers. ARBs like Telmisartan would be better tolerated and equally effective.",
+            prevention: "Advise DASH diet and stress reduction techniques like meditation."
+        }
+    },
+    "P1004": {
+        id: "P1004",
+        name: "Sophia Rodriguez",
+        age: 28,
+        gender: "Female",
+        bloodGroup: "AB+",
+        allergies: ["Gluten"],
+        chronicConditions: ["Lupus (SLE)"],
+        doctorsVisited: ["Dr. M Jain (Immunologist)"],
+        medicines: { current: "Corticosteroids", suggestion: "Introduce Biologics" },
+        records: [
+            { type: "Lab Test", name: "ANA Panel", result: "Positive, Titer 1:640", date: "2024-05-01" },
+            { type: "Lab Test", name: "dsDNA Antibody", result: "Elevated", date: "2024-05-01" },
+        ],
+        graphs: {
+            antibodySpikes: [{ name: 'Jan', value: 200 }, { name: 'Mar', value: 450 }, { name: 'May', value: 300 }, { name: 'Jul', value: 550 }],
+            medicationAdherence: 88
+        },
+        aiInsights: {
+            risk: "Active Lupus with frequent flares. High risk of renal involvement.",
+            treatment: "Long-term corticosteroid use is problematic. Introduce Belimumab (biologic) to target the underlying mechanism and reduce steroid dose.",
+            prevention: "Strict sun protection is mandatory to prevent flares. Monitor kidney function quarterly."
+        }
+    },
+    "P1005": {
+        id: "P1005",
+        name: "Kiran Patel",
+        age: 60,
+        gender: "Male",
+        bloodGroup: "O-",
+        allergies: ["None"],
+        chronicConditions: ["Early Alzheimer's Markers"],
+        doctorsVisited: ["Dr. R Verma (Neurologist)"],
+        medicines: { current: "Donepezil", suggestion: "BACE Inhibitor Trials" },
+        records: [
+            { type: "Scan", name: "Brain MRI", result: "Mild hippocampal atrophy", date: "2024-02-20" },
+            { type: "Report", name: "Cognitive Test (MoCA)", result: "Score 24/30", date: "2024-02-20" },
+        ],
+        graphs: {
+            cognitiveDecline: [{ name: '2020', value: 85 }, { name: '2022', value: 75 }, { name: '2024', value: 65 }],
+            medicationAdherence: 95
+        },
+        aiInsights: {
+            risk: "Positive for APOE-e4 gene. Steady cognitive decline observed. High progression risk.",
+            treatment: "Donepezil provides symptomatic relief. The most promising path is enrolling in a clinical trial for a BACE inhibitor to slow disease progression.",
+            prevention: "Encourage cognitive stimulation (puzzles, reading), social engagement, and a Mediterranean diet."
+        }
+    }
+}
+
+export type ReferralPatient = typeof dummyReferralPatients.P1001;
