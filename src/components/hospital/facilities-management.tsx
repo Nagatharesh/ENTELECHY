@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -35,7 +36,7 @@ const EquipmentCard = ({ name, status, aiNote }) => (
 )
 
 export function FacilitiesManagement({ hospitalData }) {
-    const { facilities, equipment } = hospitalData;
+    const { facilities, equipment } = hospitalData.hospitalInfo;
 
     return (
         <div className="space-y-6">
