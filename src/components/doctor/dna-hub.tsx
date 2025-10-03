@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useMemo } from 'react';
@@ -12,6 +11,7 @@ import { Zap, Activity, Heart, Brain, Shield, Info, X } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { ResearchPanel } from './research-panel';
 import { BarChart, LineChart, PieChart, ResponsiveContainer, Bar, Line, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Badge } from '@/components/ui/badge';
 
 export function DnaHub() {
     const [selectedPatient, setSelectedPatient] = useState<DnaPatient | null>(null);
