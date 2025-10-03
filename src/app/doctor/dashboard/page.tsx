@@ -33,6 +33,7 @@ import { PatientReferralHub } from '@/components/doctor/patient-referral-hub';
 import { StrokePredictionHub } from '@/components/doctor/stroke-prediction-hub';
 import { CardiacDeviceHub } from '@/components/doctor/cardiac-device-hub';
 import { GuardianRxHub } from '@/components/doctor/guardian-rx-hub';
+import { PatientListDashboard } from '@/components/doctor/patient-list-dashboard';
 
 
 function DashboardContent() {
@@ -58,8 +59,8 @@ function DashboardContent() {
     switch(activeView) {
       case 'profile':
         return <DoctorProfile />;
-      case 'dashboard':
-        return <p>Patient List & Dashboard coming soon...</p>;
+      case 'patient-list':
+        return <PatientListDashboard />;
       case 'communication':
         return <DoctorCommunication doctor={doctor} />;
       case 'blood':
@@ -79,7 +80,7 @@ function DashboardContent() {
 
   const navItems = [
     { id: 'profile', icon: User, label: 'Profile' },
-    { id: 'dashboard', icon: List, label: 'Patient Dashboard' },
+    { id: 'patient-list', icon: List, label: 'Patient Dashboard' },
     { id: 'communication', icon: MessageSquare, label: 'Communication' },
     { id: 'blood', icon: Droplets, label: 'Blood Bank' },
     { id: 'referral', icon: Search, label: 'Referral Hub'},

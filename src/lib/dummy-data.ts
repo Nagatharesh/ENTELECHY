@@ -1,6 +1,8 @@
 
 
 
+
+
 export const dummyAadhaarPatients = [
     { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
     { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
@@ -1227,5 +1229,202 @@ export const dummyDnaAiResponses = {
   P1005: "Simulations based on genetic markers and cognitive decline rate predict a 70% probability of accelerated decline. A clinical trial for the experimental BACE inhibitor 'CNP520' has shown promise in this specific patient cohort."
 };
 // --- END of DNA AIResponses ---
+
+
+export const doctorPatientDashboardData = {
+    "doctorInfo": {
+      "doctorId": "DOC-001",
+      "fullName": "Dr. A Kumar",
+      "specialty": "Cardiology",
+      "workingHours": {
+        "startTime": "09:00",
+        "endTime": "17:00"
+      },
+      "averageConsultTimeMinutes": 15,
+      "totalDailySlots": 32
+    },
+    "patients": [
+      {
+        "patientId": "P-001",
+        "fullName": "Sanjay Sharma",
+        "age": 45,
+        "gender": "Male",
+        "contact": { "phone": "9876543210", "email": "sanjay.s@example.com" },
+        "tokenNumber": 1,
+        "appointmentDate": "2024-10-03T00:00:00.000Z",
+        "appointmentTime": { "start": "09:00", "end": "09:15" },
+        "symptomsText": "Complaint of mild chest pain and shortness of breath.",
+        "status": "completed",
+        "messagesCount": 2,
+        "callsCount": 0,
+        "lastVisit": "2024-08-15T00:00:00.000Z",
+        "notes": "ECG normal. Prescribed rest and follow-up if symptoms persist."
+      },
+      {
+        "patientId": "P-002",
+        "fullName": "Priya Verma",
+        "age": 32,
+        "gender": "Female",
+        "contact": { "phone": "9876543211", "email": "priya.v@example.com" },
+        "tokenNumber": 2,
+        "appointmentDate": "2024-10-03T00:00:00.000Z",
+        "appointmentTime": { "start": "09:15", "end": "09:30" },
+        "symptomsText": "Routine diabetes check-up. Reports occasional dizziness.",
+        "status": "booked",
+        "messagesCount": 5,
+        "callsCount": 1,
+        "lastVisit": "2024-07-20T00:00:00.000Z",
+        "notes": "HbA1c levels are slightly elevated. Needs diet counseling."
+      },
+      {
+        "patientId": "P-003",
+        "fullName": "Rohit Kumar",
+        "age": 60,
+        "gender": "Male",
+        "contact": { "phone": "9876543212", "email": "rohit.k@example.com" },
+        "tokenNumber": 3,
+        "appointmentDate": "2024-10-03T00:00:00.000Z",
+        "appointmentTime": { "start": "09:30", "end": "09:45" },
+        "symptomsText": "Follow-up after angioplasty. Feeling well.",
+        "status": "booked",
+        "messagesCount": 1,
+        "callsCount": 0,
+        "lastVisit": "2024-09-01T00:00:00.000Z",
+        "notes": "Recovery is on track. Continue medication as prescribed."
+      },
+      {
+        "patientId": "P-004",
+        "fullName": "Ananya Singh",
+        "age": 28,
+        "gender": "Female",
+        "contact": { "phone": "9876543213", "email": "ananya.s@example.com" },
+        "tokenNumber": 4,
+        "appointmentDate": "2024-10-03T00:00:00.000Z",
+        "appointmentTime": { "start": "09:45", "end": "10:00" },
+        "symptomsText": "Persistent cough and cold for a week.",
+        "status": "cancelled",
+        "messagesCount": 3,
+        "callsCount": 2,
+        "lastVisit": "2023-12-10T00:00:00.000Z",
+        "notes": "Patient cancelled due to personal reasons. Asked to reschedule."
+      },
+      {
+        "patientId": "P-005",
+        "fullName": "Vikram Joshi",
+        "age": 50,
+        "gender": "Male",
+        "contact": { "phone": "9876543214", "email": "vikram.j@example.com" },
+        "tokenNumber": 5,
+        "appointmentDate": "2024-10-03T00:00:00.000Z",
+        "appointmentTime": { "start": "10:00", "end": "10:15" },
+        "symptomsText": "Needs prescription renewal for cholesterol medication.",
+        "status": "booked",
+        "messagesCount": 0,
+        "callsCount": 0,
+        "lastVisit": "2024-04-05T00:00:00.000Z",
+        "notes": "Check lipid profile before renewing."
+      },
+      {
+        "patientId": "P-006",
+        "fullName": "Meera Iyer",
+        "age": 38,
+        "gender": "Female",
+        "contact": { "phone": "9876543215", "email": "meera.i@example.com" },
+        "tokenNumber": 6,
+        "appointmentDate": "2024-10-03T00:00:00.000Z",
+        "appointmentTime": { "start": "10:15", "end": "10:30" },
+        "symptomsText": "Discussion about recent lab reports.",
+        "status": "booked",
+        "messagesCount": 1,
+        "callsCount": 0,
+        "lastVisit": "2024-09-25T00:00:00.000Z",
+        "notes": "Reports indicate low Vitamin D levels."
+      },
+      {
+        "patientId": "P-007",
+        "fullName": "Alok Verma",
+        "age": 55,
+        "gender": "Male",
+        "contact": { "phone": "9876543216", "email": "alok.v@example.com" },
+        "tokenNumber": 7,
+        "appointmentDate": "2024-10-03T00:00:00.000Z",
+        "appointmentTime": { "start": "10:30", "end": "10:45" },
+        "symptomsText": "High blood pressure readings at home.",
+        "status": "booked",
+        "messagesCount": 4,
+        "callsCount": 1,
+        "lastVisit": "2024-01-30T00:00:00.000Z",
+        "notes": "Patient seems anxious. Needs BP monitoring and possibly medication adjustment."
+      },
+      {
+        "patientId": "P-008",
+        "fullName": "Sneha Gupta",
+        "age": 41,
+        "gender": "Female",
+        "contact": { "phone": "9876543217", "email": "sneha.g@example.com" },
+        "tokenNumber": 8,
+        "appointmentDate": "2024-10-03T00:00:00.000Z",
+        "appointmentTime": { "start": "10:45", "end": "11:00" },
+        "symptomsText": "General weakness and fatigue.",
+        "status": "booked",
+        "messagesCount": 2,
+        "callsCount": 0,
+        "lastVisit": "2023-11-11T00:00:00.000Z",
+        "notes": "Advised complete blood count and iron studies."
+      },
+      {
+        "patientId": "P-009",
+        "fullName": "Ravi Desai",
+        "age": 68,
+        "gender": "Male",
+        "contact": { "phone": "9876543218", "email": "ravi.d@example.com" },
+        "tokenNumber": 9,
+        "appointmentDate": "2024-10-03T00:00:00.000Z",
+        "appointmentTime": { "start": "11:00", "end": "11:15" },
+        "symptomsText": "Follow-up for joint pain.",
+        "status": "booked",
+        "messagesCount": 0,
+        "callsCount": 0,
+        "lastVisit": "2024-09-18T00:00:00.000Z",
+        "notes": "Pain has reduced with physiotherapy."
+      },
+      {
+        "patientId": "P-010",
+        "fullName": "Nisha Patel",
+        "age": 29,
+        "gender": "Female",
+        "contact": { "phone": "9876543219", "email": "nisha.p@example.com" },
+        "tokenNumber": 10,
+        "appointmentDate": "2024-10-03T00:00:00.000Z",
+        "appointmentTime": { "start": "11:15", "end": "11:30" },
+        "symptomsText": "Skin rash on arms.",
+        "status": "booked",
+        "messagesCount": 3,
+        "callsCount": 0,
+        "lastVisit": "2024-09-28T00:00:00.000Z",
+        "notes": "Possible allergic reaction. Sent referral to Dermatology."
+      }
+    ],
+    "analyticsSummary": {
+      "totalPatientsToday": 10,
+      "totalAppointments": 10,
+      "totalMessages": 20,
+      "totalCalls": 4,
+      "averageWaitingTimeMinutes": 12,
+      "busiestHour": "10:00-11:00"
+    },
+    "uiHints": {
+      "showTokenOrder": true,
+      "colorCodeByStatus": true,
+      "showCallAndMessageButtons": true,
+      "displayDoctorWorkingHours": true,
+      "highlightNextAppointment": true
+    },
+    "flags": {
+      "demo": true,
+      "restrictDownload": true,
+      "placeholderPhotos": true
+    }
+  }
 
     
