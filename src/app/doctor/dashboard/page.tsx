@@ -8,7 +8,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
-import { User, Bell, PanelLeft, MessageSquare, Droplets, Microscope } from 'lucide-react';
+import { User, Bell, PanelLeft, MessageSquare, Droplets, Dna } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -30,6 +30,7 @@ import { dummyDoctors, Doctor } from '@/lib/dummy-data';
 import { DoctorProfile } from '@/components/doctor/doctor-profile';
 import { DoctorCommunication } from '@/components/doctor/doctor-communication';
 import { BloodBank } from '@/components/doctor/blood-bank';
+import { DnaHub } from '@/components/doctor/dna-hub';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -58,6 +59,8 @@ function DashboardContent() {
         return <DoctorCommunication doctor={doctor} />;
       case 'blood':
         return <BloodBank />;
+      case 'dna':
+        return <DnaHub />;
       default:
         return <DoctorProfile doctor={doctor} />;
     }
@@ -67,6 +70,7 @@ function DashboardContent() {
     { id: 'profile', icon: User, label: 'Profile' },
     { id: 'communication', icon: MessageSquare, label: 'Communication' },
     { id: 'blood', icon: Droplets, label: 'Blood Bank' },
+    { id: 'dna', icon: Dna, label: 'DNA Hub' },
   ];
 
   const NavMenu = () => (

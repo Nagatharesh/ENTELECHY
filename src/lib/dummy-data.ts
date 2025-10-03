@@ -1,6 +1,7 @@
 
 
 
+
 export const dummyAadhaarPatients = [
     { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
     { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
@@ -435,3 +436,191 @@ export const dummyPatients: Patient[] = [
   },
 ];
 // --- END OF PATIENT INTERFACES AND DATA ---
+
+// --- START OF DNA PATIENT INTERFACES AND DATA ---
+export interface DnaPatient {
+  id: string;
+  name: string;
+  age: number;
+  gender: 'Male' | 'Female';
+  condition: string;
+  geneticRisk: {
+    familyHistory: string[];
+    markers: { gene: string; risk: 'Low' | 'Moderate' | 'High' }[];
+  };
+  medication: {
+    current: string;
+    aiSuggestion: string;
+  };
+  advanced: {
+    predictedDiseases: string[];
+    preventiveMeasures: string[];
+  };
+  graphs: {
+    riskProgression: { year: string; risk: number }[];
+    diseaseDistribution: { name: string; value: number }[];
+  };
+}
+
+export const dummyDnaPatients: DnaPatient[] = [
+  {
+    id: 'P1001',
+    name: 'John Matthews',
+    age: 45,
+    gender: 'Male',
+    condition: 'Diabetes Type 2',
+    geneticRisk: {
+      familyHistory: ['Father - Diabetes Type 2', 'Grandmother - Diabetes Type 2'],
+      markers: [
+        { gene: 'TCF7L2', risk: 'High' },
+        { gene: 'FTO', risk: 'Moderate' },
+      ],
+    },
+    medication: {
+      current: 'Metformin',
+      aiSuggestion: 'Consider Dapagliflozin trial based on renal function.',
+    },
+    advanced: {
+      predictedDiseases: ['Diabetic Nephropathy', 'Cardiovascular Complications'],
+      preventiveMeasures: ['Strict glycemic control', 'Annual kidney function tests'],
+    },
+    graphs: {
+      riskProgression: [
+        { year: '2020', risk: 30 },
+        { year: '2022', risk: 45 },
+        { year: '2024', risk: 60 },
+      ],
+      diseaseDistribution: [
+        { name: 'Diabetes', value: 60 },
+        { name: 'Cardiac', value: 25 },
+        { name: 'Renal', value: 15 },
+      ],
+    },
+  },
+  {
+    id: 'P1002',
+    name: 'Anita Sharma',
+    age: 32,
+    gender: 'Female',
+    condition: 'Breast Cancer Risk',
+    geneticRisk: {
+      familyHistory: ['Mother - Breast Cancer'],
+      markers: [{ gene: 'BRCA1', risk: 'High' }],
+    },
+    medication: {
+      current: 'None',
+      aiSuggestion: 'Preventive hormone therapy (e.g., Tamoxifen).',
+    },
+    advanced: {
+      predictedDiseases: ['Ovarian Cancer'],
+      preventiveMeasures: ['Annual mammograms', 'BRCA-related cancer screening'],
+    },
+    graphs: {
+      riskProgression: [
+        { year: '2021', risk: 50 },
+        { year: '2023', risk: 70 },
+        { year: '2025', risk: 85 },
+      ],
+      diseaseDistribution: [
+        { name: 'Breast Cancer', value: 70 },
+        { name: 'Ovarian Cancer', value: 30 },
+      ],
+    },
+  },
+  {
+    id: 'P1003',
+    name: 'Liam Chen',
+    age: 55,
+    gender: 'Male',
+    condition: 'Hypertension',
+    geneticRisk: {
+      familyHistory: ['Father - Hypertension', 'Mother - Hypertension'],
+      markers: [
+        { gene: 'ACE', risk: 'High' },
+        { gene: 'AGT', risk: 'Moderate' },
+      ],
+    },
+    medication: {
+      current: 'Beta blockers',
+      aiSuggestion: 'Consider ARB alternative (e.g., Losartan) for better side-effect profile.',
+    },
+    advanced: {
+      predictedDiseases: ['Stroke', 'Coronary Artery Disease'],
+      preventiveMeasures: ['Low-sodium diet', 'Regular exercise', 'Stress management'],
+    },
+    graphs: {
+      riskProgression: [
+        { year: '2019', risk: 40 },
+        { year: '2021', risk: 55 },
+        { year: '2023', risk: 65 },
+      ],
+      diseaseDistribution: [
+        { name: 'Hypertension', value: 50 },
+        { name: 'Stroke', value: 30 },
+        { name: 'CAD', value: 20 },
+      ],
+    },
+  },
+  {
+    id: 'P1004',
+    name: 'Sophia Rodriguez',
+    age: 28,
+    gender: 'Female',
+    condition: 'Autoimmune (Lupus)',
+    geneticRisk: {
+      familyHistory: ['Maternal aunt - Lupus'],
+      markers: [{ gene: 'HLA-DR3', risk: 'High' }],
+    },
+    medication: {
+      current: 'Corticosteroids',
+      aiSuggestion: 'Recommend biologics (e.g., Belimumab) to reduce steroid dependency.',
+    },
+    advanced: {
+      predictedDiseases: ['Lupus Nephritis', 'Arthritis'],
+      preventiveMeasures: ['UV protection', 'Regular renal and antibody tests'],
+    },
+    graphs: {
+      riskProgression: [
+        { year: '2022', risk: 60 },
+        { year: '2023', risk: 75 },
+        { year: '2024', risk: 70 },
+      ],
+      diseaseDistribution: [
+        { name: 'Lupus', value: 80 },
+        { name: 'Nephritis', value: 15 },
+        { name: 'Arthritis', value: 5 },
+      ],
+    },
+  },
+  {
+    id: 'P1005',
+    name: 'Kiran Patel',
+    age: 60,
+    gender: 'Male',
+    condition: 'Alzheimer’s early markers',
+    geneticRisk: {
+      familyHistory: ['Family history of dementia'],
+      markers: [{ gene: 'APOE-e4', risk: 'High' }],
+    },
+    medication: {
+      current: 'Donepezil',
+      aiSuggestion: 'Recommend clinical trial for BACE inhibitors.',
+    },
+    advanced: {
+      predictedDiseases: ['Rapid cognitive decline'],
+      preventiveMeasures: ['Cognitive exercises', 'Mediterranean diet', 'Social engagement'],
+    },
+    graphs: {
+      riskProgression: [
+        { year: '2020', risk: 20 },
+        { year: '2022', risk: 40 },
+        { year: '2024', risk: 55 },
+      ],
+      diseaseDistribution: [
+        { name: 'Alzheimer\'s', value: 85 },
+        { name: 'Cognitive Decline', value: 15 },
+      ],
+    },
+  },
+];
+// --- END OF DNA PATIENT INTERFACES AND DATA ---
