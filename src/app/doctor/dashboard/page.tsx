@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
-import { User, Bell, PanelLeft, MessageSquare, Droplets, Dna, Search, BrainCircuit, HeartPulse, List } from 'lucide-react';
+import { User, Bell, PanelLeft, MessageSquare, Droplets, Dna, Search, BrainCircuit, HeartPulse, List, Pencil } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -34,6 +34,7 @@ import { StrokePredictionHub } from '@/components/doctor/stroke-prediction-hub';
 import { CardiacDeviceHub } from '@/components/doctor/cardiac-device-hub';
 import { GuardianRxHub } from '@/components/doctor/guardian-rx-hub';
 import { PatientListDashboard } from '@/components/doctor/patient-list-dashboard';
+import { OnlinePrescriptionHub } from '@/components/doctor/online-prescription-hub';
 
 
 function DashboardContent() {
@@ -73,6 +74,8 @@ function DashboardContent() {
         return <CardiacDeviceHub />;
       case 'guardian-rx':
         return <GuardianRxHub />;
+      case 'prescription':
+        return <OnlinePrescriptionHub />;
       default:
         return <DoctorProfile />;
     }
@@ -87,6 +90,7 @@ function DashboardContent() {
     { id: 'stroke', icon: BrainCircuit, label: 'Stroke Prediction' },
     { id: 'cardiac', icon: HeartPulse, label: 'Cardiac ASI' },
     { id: 'guardian-rx', icon: Dna, label: 'GuardianRx' },
+    { id: 'prescription', icon: Pencil, label: 'Online Prescription' },
   ];
 
   const NavMenu = () => (

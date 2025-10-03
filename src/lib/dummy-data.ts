@@ -3,6 +3,8 @@
 
 
 
+
+
 export const dummyAadhaarPatients = [
     { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
     { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
@@ -1427,4 +1429,99 @@ export const doctorPatientDashboardData = {
     }
   }
 
+export const onlinePrescriptionData = {
+  "doctorId": "dr-arjun-singh-demo",
+  "subHubId": "online-prescription-ai-assist",
+  "flags": { "demo": true, "restrictDownload": true },
+  "aiHints": {
+    "mappings": [
+      { "symptomKeywords": ["fever","temperature"], "suggest": ["paracetamol-500"] },
+      { "symptomKeywords": ["cough","phlegm"], "suggest": ["amoxy-500","dextromethorphan-30"] },
+      { "symptomKeywords": ["chest pain","angina"], "suggest": ["isosorbide-20","aspirin-75"] },
+      { "symptomKeywords": ["infection","sore throat"], "suggest": ["azithro-500"] }
+    ],
+    "note": "SAMPLE - Demo suggestions only. Not clinical advice."
+  },
+  "medicines": [
+    { "medId": "paracetamol-500", "name": "Paracetamol", "form": "Tablet", "strength": "500 mg", "description": "Analgesic/antipyretic (demo).", "pricePerUnit": 1.5, "stockDemo": 200, "tags": ["analgesic","antipyretic"], "pharmacySuggested": "DemoCare Pharmacy" },
+    { "medId": "amoxy-500", "name": "Amoxicillin", "form": "Capsule", "strength": "500 mg", "description": "Broad-spectrum antibiotic (demo).", "pricePerUnit": 3.0, "stockDemo": 120, "tags": ["antibiotic"], "pharmacySuggested": "HealthFirst Pharmacy" },
+    { "medId": "dextromethorphan-30", "name": "Dextromethorphan", "form": "Syrup", "strength": "30 mg/5ml", "description": "Cough suppressant (demo).", "pricePerUnit": 25.0, "stockDemo": 50, "tags": ["cough"], "pharmacySuggested": "DemoCare Pharmacy" },
+    { "medId": "isosorbide-20", "name": "Isosorbide Mononitrate", "form": "Tablet", "strength": "20 mg", "description": "Anti-anginal (demo).", "pricePerUnit": 4.5, "stockDemo": 60, "tags": ["cardiac"], "pharmacySuggested": "HeartLine Pharmacy" },
+    { "medId": "aspirin-75", "name": "Aspirin", "form": "Tablet", "strength": "75 mg", "description": "Antiplatelet (demo).", "pricePerUnit": 2.0, "stockDemo": 300, "tags": ["cardiac","antiplatelet"], "pharmacySuggested": "HeartLine Pharmacy" },
+    { "medId": "azithro-500", "name": "Azithromycin", "form": "Tablet", "strength": "500 mg", "description": "Antibiotic (demo).", "pricePerUnit": 12.0, "stockDemo": 80, "tags": ["antibiotic"], "pharmacySuggested": "HealthFirst Pharmacy" },
+    { "medId": "atorva-10", "name": "Atorvastatin", "form": "Tablet", "strength": "10 mg", "description": "Cholesterol-lowering (demo).", "pricePerUnit": 6.0, "stockDemo": 140, "tags": ["cardiac","statin"], "pharmacySuggested": "Central Pharmacy" },
+    { "medId": "omeprazole-20", "name": "Omeprazole", "form": "Capsule", "strength": "20 mg", "description": "PPI for acidity (demo).", "pricePerUnit": 3.5, "stockDemo": 200, "tags": ["gastric"], "pharmacySuggested": "Central Pharmacy" },
+    { "medId": "saline-100", "name": "Normal Saline (100ml)", "form": "IV", "strength": "100 ml", "description": "IV fluid (demo).", "pricePerUnit": 40.0, "stockDemo": 30, "tags": ["iv"], "pharmacySuggested": "Hospital Pharmacy" },
+    { "medId": "multivit-30", "name": "Multivitamin", "form": "Tablet", "strength": "Standard", "description": "Vitamin supplement (demo).", "pricePerUnit": 1.0, "stockDemo": 500, "tags": ["supplement"], "pharmacySuggested": "DemoCare Pharmacy" }
+  ],
+  "samplePrescription": {
+    "prescriptionId": "presc-demo-0001",
+    "doctorId": "dr-arjun-singh-demo",
+    "patientId": "pt-demo-1001",
+    "dateCreated": "2025-10-03T09:30:00Z",
+    "symptomsText": "Patient reports fever and cough for 2 days with mild chest discomfort.",
+    "aiSuggestedMeds": [
+      { "medId": "paracetamol-500", "name": "Paracetamol", "suggestedDose": "500 mg", "suggestedFrequency": "SOS up to 3x/day", "rationale": "Reduce fever - demo suggestion" },
+      { "medId": "amoxy-500", "name": "Amoxicillin", "suggestedDose": "500 mg", "suggestedFrequency": "3x/day", "rationale": "Cover bacterial infection - demo suggestion" },
+      { "medId": "dextromethorphan-30", "name": "Dextromethorphan", "suggestedDose": "10 ml", "suggestedFrequency": "3x/day", "rationale": "Symptomatic cough relief - demo suggestion" }
+    ],
+    "finalizedMeds": [
+      {
+        "medId": "paracetamol-500",
+        "name": "Paracetamol",
+        "dose": "500 mg",
+        "frequencyPerDay": 3,
+        "tabletsPerDose": 1,
+        "days": 5,
+        "totalTablets": 15,
+        "pricePerUnit": 1.5,
+        "lineCost": 22.5
+      },
+      {
+        "medId": "amoxy-500",
+        "name": "Amoxicillin",
+        "dose": "500 mg",
+        "frequencyPerDay": 3,
+        "tabletsPerDose": 1,
+        "days": 5,
+        "totalTablets": 15,
+        "pricePerUnit": 3.0,
+        "lineCost": 45.0
+      },
+      {
+        "medId": "dextromethorphan-30",
+        "name": "Dextromethorphan",
+        "dose": "10 ml",
+        "frequencyPerDay": 3,
+        "tabletsPerDose": null,
+        "days": 5,
+        "totalTablets": 15,
+        "pricePerUnit": 25.0,
+        "lineCost": 375.0
+      }
+    ],
+    "totalCost": 442.5,
+    "eSignature": {
+      "doctorSigned": true,
+      "signatureImageUrl": "https://via.placeholder.com/400x120?text=DEMO+SIGNATURE+Dr+Arjun+Singh",
+      "signedAt": "2025-10-03T09:33:00Z"
+    },
+    "delivery": {
+      "notifyPatientPhone": "+91-9999900001 (demo)",
+      "deliveryStatus": "sent",
+      "pushedToPharmacyName": "DemoCare Pharmacy",
+      "pharmacyContact": "+91-9999900100 (demo)"
+    },
+    "notificationsLog": [
+      { "to": "patient", "channel": "sms", "status": "sent", "timestamp": "2025-10-03T09:33:05Z" },
+      { "to": "pharmacy", "channel": "fcm", "status": "sent", "timestamp": "2025-10-03T09:33:10Z" }
+    ],
+    "uiHints": { "showEReceipt": true, "showPharmacyMap": true, "disableDownload": true }
+  },
+  "uiHints": {
+    "prescriptionFlowOrder": ["symptomsInput","aiSuggestions","finalizeMeds","eSign","sendToPatient","pushToPharmacy"],
+    "searchMedsButtonLabel": "Search medicines & add",
+    "pharmacyAutoFill": true
+  }
+}
     
