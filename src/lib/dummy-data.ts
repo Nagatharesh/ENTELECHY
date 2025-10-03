@@ -1538,6 +1538,12 @@ export const dummyHospitalData = {
             generator: { status: 'Active', fuelHoursLeft: 8, capacityHours: 24 },
             solar: { status: 'Active', currentProductionKw: 150, capacityKw: 200 },
         },
+        equipment: [
+            { name: 'Ventilators', status: 'Operational', aiNote: 'AI predicts 2 more needed in next 24h.' },
+            { name: 'MRI Machine', status: 'Operational', aiNote: 'Coil #3 showing signs of wear.' },
+            { name: 'CT Scanner', status: 'Under Maintenance', aiNote: 'Service due in 2 days.' },
+            { name: 'X-Ray Machine 1', status: 'Operational', aiNote: 'Optimal performance.' },
+        ],
     },
     analytics: {
         livePatientCount: 124,
@@ -1584,12 +1590,6 @@ export const dummyHospitalData = {
         security: { title: 'Security Alert', description: 'Unauthorized access attempt at main entrance.', level: 'medium', timestamp: '2024-10-03T09:15:00Z' },
         facility: { title: 'Facility Alert', description: 'Generator fuel level at 15%. Refill required.', level: 'low', timestamp: '2024-10-03T11:00:00Z' },
     },
-    equipment: [
-        { name: 'Ventilators', status: 'Operational', aiNote: 'AI predicts 2 more needed in next 24h.' },
-        { name: 'MRI Machine', status: 'Operational', aiNote: 'Coil #3 showing signs of wear.' },
-        { name: 'CT Scanner', status: 'Under Maintenance', aiNote: 'Service due in 2 days.' },
-        { name: 'X-Ray Machine 1', status: 'Operational', aiNote: 'Optimal performance.' },
-    ],
     aiInsights: {
         predictivePatientLoad: 'AI predicts a 15% increase in patient load tomorrow due to local events.',
         facilityHealthCheck: 'Oxygen supply levels are dropping faster than usual. Check for potential leaks.',
