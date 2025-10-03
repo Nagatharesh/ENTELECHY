@@ -62,7 +62,7 @@ const StressLevelCard = ({ staff }) => {
 };
 
 export function StaffManagement({ hospitalData }) {
-    const { staff } = hospitalData;
+    const { staff: { members: staff, departmentAnalytics } } = hospitalData;
 
     const departmentHoursChartConfig = {
       hours: {
@@ -93,7 +93,7 @@ export function StaffManagement({ hospitalData }) {
                 <CardContent className="h-80">
                      <ChartContainer config={departmentHoursChartConfig} className="w-full h-full">
                         <ResponsiveContainer width="100%" height="100%">
-                            <RechartsBarChart data={staff.departmentAnalytics}>
+                            <RechartsBarChart data={departmentAnalytics}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
                                 <XAxis dataKey="department" tickLine={false} axisLine={false} stroke="hsl(var(--foreground))" fontSize={12} />
                                 <YAxis tickLine={false} axisLine={false} stroke="hsl(var(--foreground))" fontSize={12} />
