@@ -4,7 +4,7 @@ import React from 'react';
 
 // Assuming you have a way to get the list of icon names.
 // This could be from a file, a script that generates this file, etc.
-type IconName = "User" | "Bell" | "PanelLeft" | "MessageSquare" | "Droplets" | "Dna" | "X" | "Search";
+type IconName = "User" | "Bell" | "PanelLeft" | "MessageSquare" | "Droplets" | "Dna" | "X" | "Search" | "BrainCircuit" | "Siren";
 
 // This creates a type for the dynamic component.
 type Icon = React.FC<LucideProps>;
@@ -19,6 +19,8 @@ declare module "lucide-react" {
   export const Dna: Icon;
   export const X: Icon;
   export const Search: Icon;
+  export const BrainCircuit: Icon;
+  export const Siren: Icon;
 
   // Add all other icons you use here...
   // You can script this part to avoid manual work.

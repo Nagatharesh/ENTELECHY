@@ -7,6 +7,7 @@
 
 
 
+
 export const dummyAadhaarPatients = [
     { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
     { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
@@ -197,7 +198,7 @@ export const dummyMedicines = [
 export type Medicine = typeof dummyMedicines[0];
 
 export const dummyInsurancePlans = [
-    { planId: 'INS-001', planName: 'Suraksha Health', insurerName: 'LIC', hospitalName: 'City Hospital', city: 'Delhi', coverageLimit: 500000, premiumAnnual: 10000, premiumMonthly: 850, copayPercent: 10, waitingPeriodMonths: 24, rating: 4.5, inclusions: ['Hospitalization', 'Day Care', 'Pre & Post Hospitalization'], exclusions: ['Cosmetic Surgery', 'Dental'], policyText: 'Standard policy terms apply. Pre-existing diseases covered after 2 years.' },
+    { planId: 'INS-001', planName: 'Suraksha Health', insurerName: 'LIC', hospitalName: 'City Hospital', city: 'Delhi', coverageLimit: 500000, premiumAnnual: 10000, premiumMonthly: 850, copayPercent: 10, waitingPeriodMonths: 24, rating: 4.5, inclusions: ['Hospitalization', 'Day Care', 'Pre &amp; Post Hospitalization'], exclusions: ['Cosmetic Surgery', 'Dental'], policyText: 'Standard policy terms apply. Pre-existing diseases covered after 2 years.' },
     { planId: 'INS-002', planName: 'Arogya Sanjeevani', insurerName: 'HDFC Ergo', hospitalName: 'Green Hospital', city: 'Mumbai', coverageLimit: 300000, premiumAnnual: 8000, premiumMonthly: 680, copayPercent: 5, waitingPeriodMonths: 36, rating: 4.7, inclusions: ['Room Rent Capped', 'ICU Charges', 'Ambulance'], exclusions: ['Maternity', 'Alternative Treatments'], policyText: 'Government-mandated standard policy. Co-pay is 5%.' },
     { planId: 'INS-003', planName: 'Optima Restore', insurerName: 'Apollo Munich', hospitalName: 'Blue Hospital', city: 'Bangalore', coverageLimit: 1000000, premiumAnnual: 15000, premiumMonthly: 1275, copayPercent: 0, waitingPeriodMonths: 36, opdCoverage: 20000, rating: 4.9, inclusions: ['Restore Benefit', 'OPD cover', 'Health Checkups'], exclusions: ['Self-inflicted injuries', 'War-related injuries'], policyText: 'Restore benefit refills sum insured if exhausted.' },
     { planId: 'INS-004', planName: 'Family Floater', insurerName: 'Star Health', hospitalName: 'AIIMS', city: 'New Delhi', coverageLimit: 750000, premiumAnnual: 12000, premiumMonthly: 1020, copayPercent: 15, waitingPeriodMonths: 24, rating: 4.6, inclusions: ['Family Cover', 'Maternity', 'Newborn Baby Cover'], exclusions: ['Adventure Sports', 'Mental Disorders'], policyText: 'Covers up to 2 adults and 2 children. Co-pay of 15% on all claims.' },
@@ -603,7 +604,6 @@ export const dummyDnaPatients: DnaPatient[] = [
 ];
 // --- END OF DNA PATIENT INTERFACES AND DATA ---
 
-
 // --- START OF REFERRAL PATIENT DATA ---
 export const dummyReferralPatients = {
     "P1001": {
@@ -731,3 +731,126 @@ export const dummyReferralPatients = {
 }
 
 export type ReferralPatient = typeof dummyReferralPatients.P1001;
+// --- END OF REFERRAL PATIENT DATA ---
+
+// --- START OF STROKE PATIENT DATA ---
+export interface StrokePatient {
+    id: string;
+    name: string;
+    age: number;
+    gender: 'Male' | 'Female';
+    surgery: string;
+    vitals: {
+        bp: string;
+        heartRate: number;
+        oxygen: number;
+        brainActivity: string;
+    };
+    prediction: {
+        chance: number;
+        explanation: string;
+        suggestion: string;
+    };
+    graphs: {
+        riskCurve: { hour: number; risk: number }[];
+    };
+}
+
+export const dummyStrokePatients: StrokePatient[] = [
+    {
+        id: 'P2001',
+        name: 'Rajesh Kumar',
+        age: 50,
+        gender: 'Male',
+        surgery: 'Bypass Surgery',
+        vitals: { bp: '160/100', heartRate: 110, oxygen: 92, brainActivity: 'Arrhythmia' },
+        prediction: {
+            chance: 78,
+            explanation: 'Family history of strokes, high BP, and post-surgery stress are significant contributing factors.',
+            suggestion: 'Start anticoagulants immediately and maintain close ICU monitoring.'
+        },
+        graphs: {
+            riskCurve: [
+                { hour: 0, risk: 15 }, { hour: 1, risk: 25 }, { hour: 2, risk: 40 }, 
+                { hour: 3, risk: 65 }, { hour: 4, risk: 78 }, { hour: 5, risk: 78 }, { hour: 6, risk: 78 }
+            ]
+        }
+    },
+    {
+        id: 'P2002',
+        name: 'Emily Johnson',
+        age: 38,
+        gender: 'Female',
+        surgery: 'C-section',
+        vitals: { bp: '120/80', heartRate: 75, oxygen: 98, brainActivity: 'Normal' },
+        prediction: {
+            chance: 12,
+            explanation: 'No genetic risk factors and stable vitals indicate a low probability of stroke.',
+            suggestion: 'Continue with regular post-operative monitoring.'
+        },
+        graphs: {
+            riskCurve: [
+                { hour: 0, risk: 10 }, { hour: 1, risk: 11 }, { hour: 2, risk: 12 }, 
+                { hour: 3, risk: 12 }, { hour: 4, risk: 11 }, { hour: 5, risk: 12 }, { hour: 6, risk: 12 }
+            ]
+        }
+    },
+    {
+        id: 'P2003',
+        name: 'Hassan Ali',
+        age: 65,
+        gender: 'Male',
+        surgery: 'Hip Replacement',
+        vitals: { bp: '170/110', heartRate: 95, oxygen: 89, brainActivity: 'Normal' },
+        prediction: {
+            chance: 91,
+            explanation: 'Severe hypertension, low oxygen saturation, and abnormal clotting factors present a critical risk.',
+            suggestion: 'Immediate administration of blood thinners and transfer to a high-risk monitoring unit.'
+        },
+        graphs: {
+            riskCurve: [
+                { hour: 0, risk: 30 }, { hour: 1, risk: 50 }, { hour: 2, risk: 75 }, 
+                { hour: 3, risk: 88 }, { hour: 4, risk: 91 }, { hour: 5, risk: 91 }, { hour: 6, risk: 91 }
+            ]
+        }
+    },
+    {
+        id: 'P2004',
+        name: 'Maria Lopez',
+        age: 47,
+        gender: 'Female',
+        surgery: 'Gallbladder Removal',
+        vitals: { bp: '145/95', heartRate: 88, oxygen: 94, brainActivity: 'Mild Arrhythmia' },
+        prediction: {
+            chance: 48,
+            explanation: 'Irregular heart rhythm combined with borderline hypertension elevates the stroke risk.',
+            suggestion: 'Keep patient under close observation and consider prescribing beta-blockers to regulate heart rhythm.'
+        },
+        graphs: {
+            riskCurve: [
+                { hour: 0, risk: 20 }, { hour: 1, risk: 28 }, { hour: 2, risk: 35 }, 
+                { hour: 3, risk: 42 }, { hour: 4, risk: 48 }, { hour: 5, risk: 47 }, { hour: 6, risk: 48 }
+            ]
+        }
+    },
+    {
+        id: 'P2005',
+        name: 'Daniel Smith',
+        age: 72,
+        gender: 'Male',
+        surgery: 'Brain Tumor Removal',
+        vitals: { bp: '180/115', heartRate: 120, oxygen: 87, brainActivity: 'Severe Arrhythmia' },
+        prediction: {
+            chance: 97,
+            explanation: 'Critically high blood pressure, significant oxygen drop, severe arrhythmia, and a history of strokes indicate an almost certain stroke event.',
+            suggestion: 'Emergency medication protocol initiated. Immediate brain scan and transfer to Stroke ICU are mandatory.'
+        },
+        graphs: {
+            riskCurve: [
+                { hour: 0, risk: 60 }, { hour: 1, risk: 80 }, { hour: 2, risk: 92 }, 
+                { hour: 3, risk: 95 }, { hour: 4, risk: 97 }, { hour: 5, risk: 97 }, { hour: 6, risk: 97 }
+            ]
+        }
+    }
+];
+// --- END OF STROKE PATIENT DATA ---
