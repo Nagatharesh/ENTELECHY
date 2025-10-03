@@ -1,4 +1,3 @@
-
 export const dummyAadhaarPatients = [
     { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
     { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
@@ -248,6 +247,39 @@ export const dummyBloodBank = [
     { bloodType: "A+", units: 60, hospitalId: "HOS-003" },
     { bloodType: "O-", units: 40, hospitalId: "HOS-003" }
 ];
+
+export const doctorDashboardData = {
+    overview: {
+        totalPatients: 125,
+        resolved: 85,
+        waiting: 40,
+        onlineBookings: 70,
+        offlineBookings: 55,
+    },
+    dailyActivity: [
+        { hour: '08:00', patientsSeen: 1, resolved: 1 },
+        { hour: '09:00', patientsSeen: 2, resolved: 1 },
+        { hour: '10:00', patientsSeen: 3, resolved: 2 },
+        { hour: '11:00', patientsSeen: 4, resolved: 3 },
+        { hour: '12:00', patientsSeen: 2, resolved: 2 },
+    ],
+    feedback: [
+        { name: '5★', value: 280 },
+        { name: '4★', value: 30 },
+        { name: '3★', value: 5 },
+        { name: '2★', value: 3 },
+        { name: '1★', value: 2 },
+    ],
+    mentalState: [
+        { day: 'Mon', patientsSeen: 20, resolved: 15, stressLevel: 7 },
+        { day: 'Tue', patientsSeen: 25, resolved: 18, stressLevel: 8 },
+        { day: 'Wed', patientsSeen: 15, resolved: 10, stressLevel: 6 },
+        { day: 'Thu', patientsSeen: 22, resolved: 17, stressLevel: 7 },
+        { day: 'Fri', patientsSeen: 18, resolved: 14, stressLevel: 6 },
+        { day: 'Sat', patientsSeen: 10, resolved: 8, stressLevel: 5 },
+        { day: 'Sun', patientsSeen: 10, resolved: 8, stressLevel: 4 },
+    ]
+};
 
 
 // --- START OF PATIENT INTERFACES AND DATA ---

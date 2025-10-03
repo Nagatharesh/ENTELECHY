@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Suspense, useState, useEffect } from 'react';
@@ -38,7 +37,7 @@ import { GuardianRxHub } from '@/components/doctor/guardian-rx-hub';
 function DashboardContent() {
   const searchParams = useSearchParams();
   const doctorId = searchParams.get('id') || 'DOC-001'; // Default for demo
-  const [activeView, setActiveView] = useState('profile');
+  const [activeView, setActiveView] = useState('dashboard');
 
   const doctor = dummyDoctors.find(d => d.doctorId === doctorId);
 
@@ -56,7 +55,7 @@ function DashboardContent() {
   
   const renderContent = () => {
     switch(activeView) {
-      case 'profile':
+      case 'dashboard':
         return <DoctorProfile doctor={doctor} />;
       case 'communication':
         return <DoctorCommunication doctor={doctor} />;
@@ -76,7 +75,7 @@ function DashboardContent() {
   }
 
   const navItems = [
-    { id: 'profile', icon: User, label: 'Profile' },
+    { id: 'dashboard', icon: User, label: 'Dashboard' },
     { id: 'communication', icon: MessageSquare, label: 'Communication' },
     { id: 'blood', icon: Droplets, label: 'Blood Bank' },
     { id: 'referral', icon: Search, label: 'Referral Hub'},
