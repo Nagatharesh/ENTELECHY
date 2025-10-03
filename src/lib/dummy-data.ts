@@ -1,3 +1,6 @@
+
+
+
 export const dummyAadhaarPatients = [
     { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
     { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
@@ -158,6 +161,93 @@ export type Prescription = typeof dummyPrescriptions[0];
 export type AadhaarPatient = typeof dummyAadhaarPatients[0];
 
 export type Doctor = typeof dummyDoctors[0];
+
+export const singleDemoDoctor = {
+  "doctor": {
+    "id": "dr-arjun-singh-demo",
+    "fullName": "Dr. Arjun Singh (Demo)",
+    "displayName": "Dr. Arjun",
+    "age": 42,
+    "gender": "Male",
+    "photo_url": "https://via.placeholder.com/400x400?text=Dr+Arjun+Singh+Demo+PHOTO",
+    "title": "Senior Cardiologist (Demo)",
+    "bio": "Senior Cardiologist with 12+ years of clinical experience in interventional cardiology. THIS PROFILE IS A DEMO — credentials are SAMPLE ONLY for UI/testing.",
+    "hospital": {
+      "name": "Apex Heart Institute (Demo)",
+      "department": "Cardiology",
+      "location": { "city": "Bengaluru", "state": "Karnataka", "country": "India" },
+      "workingSince": "2012-06-15"
+    },
+    "contact": {
+      "email": "arjun.singh.demo@example.test",
+      "phone": "+91-9876500011",
+      "officeHours": "Mon-Fri 09:00-16:00 IST (Demo)"
+    },
+    "certificates": [
+      {
+        "certId": "cert-as-demo-1",
+        "title": "MD Cardiology - SAMPLE (Demo)",
+        "issuedBy": "Mock Medical University (Demo)",
+        "year": 2010,
+        "image_url": "https://via.placeholder.com/800x600?text=SAMPLE+CERTIFICATE+dr-arjun-singh-demo+1+SAMPLE+-+NOT+FOR+OFFICIAL+USE",
+        "note": "SAMPLE - NOT FOR OFFICIAL USE — mock credential for UI/testing"
+      },
+      {
+        "certId": "cert-as-demo-2",
+        "title": "Advanced Cardiac Life Support (ACLS) - SAMPLE (Demo)",
+        "issuedBy": "Mock ACLS Institute (Demo)",
+        "year": 2015,
+        "image_url": "https://via.placeholder.com/800x600?text=SAMPLE+CERTIFICATE+dr-arjun-singh-demo+2+SAMPLE+-+NOT+FOR+OFFICIAL+USE",
+        "note": "SAMPLE - NOT FOR OFFICIAL USE — mock credential for UI/testing"
+      }
+    ],
+    "records": [
+      {
+        "recordId": "rec-as-demo-1",
+        "date": "2025-09-30",
+        "patientSummary": "Mr. R — acute chest discomfort; angiography performed, 1 stent placed (demo).",
+        "diagnosisTags": ["IHD", "Stent"],
+        "notes": "Post-op stable; discharge with dual antiplatelet therapy. Follow-up in 2 weeks (demo).",
+        "linkedPatientId": "pt-demo-1001"
+      },
+      {
+        "recordId": "rec-as-demo-2",
+        "date": "2025-08-12",
+        "patientSummary": "Mrs. K — palpitations; ECG & Holter normal (demo).",
+        "diagnosisTags": ["Palpitations"],
+        "notes": "Reassurance and lifestyle advice. Consider advanced testing if symptoms recur (demo).",
+        "linkedPatientId": "pt-demo-1002"
+      },
+      {
+        "recordId": "rec-as-demo-3",
+        "date": "2025-06-05",
+        "patientSummary": "Annual cardiac check-up — stable (demo).",
+        "diagnosisTags": ["Routine"],
+        "notes": "Continue statin and exercise regimen. Next review in 12 months (demo).",
+        "linkedPatientId": "pt-demo-1003"
+      }
+    ],
+    "analytics": {
+      "totalPatients": 2348,
+      "lastShift": "2025-10-02T08:00:00Z",
+      "avgResponseMins": 18,
+      "riskScore": 0.12
+    },
+    "flags": {
+      "demo": true,
+      "sealedCertificateDownload": true
+    },
+    "uiHints": {
+      "profileCardOrder": ["photo", "fullName", "title", "age", "hospital", "bio", "contact"],
+      "certificatesWatermarkText": "SAMPLE - NOT FOR OFFICIAL USE",
+      "showDownloadButton": false
+    },
+    "createdAt": "2025-10-03T08:00:00Z",
+    "updatedAt": "2025-10-03T08:00:00Z"
+  }
+};
+export type DoctorProfileData = typeof singleDemoDoctor.doctor;
+
 
 export const dummyAmbulances = [
   { id: "AMB-001", vehicle_no: "MH-01-AB-1234", driver_name: "Ramesh Kumar", driver_phone: "+919000000001", type: "ICU", speed_kmph: 60, status: "available", current_coords: { lat: 19.08, lng: 72.88 }, driver: {name: 'Ramesh Kumar', experience: 5, completedRides: 320, rating: 4.9, contact: '9000000001'}, facilities: { oxygenLevel: 95, ventilator: true, emergencyKit: true }, oxygenLevel: 95 },
@@ -1116,7 +1206,6 @@ export const dummyAlerts = [
   { alert_id: 'A001', patient_id: 'P003', message: "Rohit Kumar missed 3 doses → 25% risk of hospitalization.", risk_percentage: 25 },
   { alert_id: 'A002', patient_id: 'P002', message: "Priya Verma missed 2 doses this week. Risk of hyperglycemia 15%. Suggest follow-up call.", risk_percentage: 15 }
 ];
-
 // --- END of GuardianRx PATIENT DATA ---
 
 // --- START of Cardiac AI Responses ---
@@ -1137,4 +1226,6 @@ export const dummyDnaAiResponses = {
   P1004: "Recent clinical trials for Anifrolumab, a type I interferon receptor antagonist, show superior efficacy in reducing disease activity in HLA-DR3 positive lupus patients compared to standard biologics.",
   P1005: "Simulations based on genetic markers and cognitive decline rate predict a 70% probability of accelerated decline. A clinical trial for the experimental BACE inhibitor 'CNP520' has shown promise in this specific patient cohort."
 };
-// --- END of DNA AI Responses ---
+// --- END of DNA AIResponses ---
+
+    

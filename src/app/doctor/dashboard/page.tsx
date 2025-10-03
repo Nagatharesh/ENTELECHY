@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
-import { User, Bell, PanelLeft, MessageSquare, Droplets, Dna, Search, BrainCircuit, HeartPulse } from 'lucide-react';
+import { User, Bell, PanelLeft, MessageSquare, Droplets, Dna, Search, BrainCircuit, HeartPulse, List } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -24,7 +24,7 @@ import {
   SidebarTrigger as SidebarTriggerButton
 } from "@/components/ui/sidebar"
 
-import { dummyDoctors, Doctor } from '@/lib/dummy-data';
+import { dummyDoctors, Doctor, singleDemoDoctor, DoctorProfileData } from '@/lib/dummy-data';
 import { DoctorProfile } from '@/components/doctor/doctor-profile';
 import { DoctorCommunication } from '@/components/doctor/doctor-communication';
 import { BloodBank } from '@/components/doctor/blood-bank';
@@ -37,7 +37,7 @@ import { GuardianRxHub } from '@/components/doctor/guardian-rx-hub';
 function DashboardContent() {
   const searchParams = useSearchParams();
   const doctorId = searchParams.get('id') || 'DOC-001'; // Default for demo
-  const [activeView, setActiveView] = useState('dashboard');
+  const [activeView, setActiveView] = useState('profile');
 
   const doctor = dummyDoctors.find(d => d.doctorId === doctorId);
 
@@ -55,8 +55,10 @@ function DashboardContent() {
   
   const renderContent = () => {
     switch(activeView) {
+      case 'profile':
+        return <DoctorProfile doctor={singleDemoDoctor} />;
       case 'dashboard':
-        return <DoctorProfile doctor={doctor} />;
+        return <p>Patient List & Dashboard coming soon...</p>;
       case 'communication':
         return <DoctorCommunication doctor={doctor} />;
       case 'blood':
@@ -75,7 +77,8 @@ function DashboardContent() {
   }
 
   const navItems = [
-    { id: 'dashboard', icon: User, label: 'Dashboard' },
+    { id: 'profile', icon: User, label: 'Profile' },
+    { id: 'dashboard', icon: List, label: 'Patient Dashboard' },
     { id: 'communication', icon: MessageSquare, label: 'Communication' },
     { id: 'blood', icon: Droplets, label: 'Blood Bank' },
     { id: 'referral', icon: Search, label: 'Referral Hub'},
