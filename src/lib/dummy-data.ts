@@ -5,6 +5,7 @@
 
 
 
+
 export const dummyAadhaarPatients = [
     { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
     { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
@@ -167,90 +168,90 @@ export type AadhaarPatient = typeof dummyAadhaarPatients[0];
 export type Doctor = typeof dummyDoctors[0];
 
 export const singleDemoDoctor = {
-  "doctor": {
-    "id": "dr-arjun-singh-demo",
-    "fullName": "Dr. Arjun Singh (Demo)",
-    "displayName": "Dr. Arjun",
-    "age": 42,
-    "gender": "Male",
-    "photo_url": "https://via.placeholder.com/400x400?text=Dr+Arjun+Singh+Demo+PHOTO",
-    "title": "Senior Cardiologist (Demo)",
-    "bio": "Senior Cardiologist with 12+ years of clinical experience in interventional cardiology. THIS PROFILE IS A DEMO — credentials are SAMPLE ONLY for UI/testing.",
-    "hospital": {
-      "name": "Apex Heart Institute (Demo)",
-      "department": "Cardiology",
-      "location": { "city": "Bengaluru", "state": "Karnataka", "country": "India" },
-      "workingSince": "2012-06-15"
-    },
-    "contact": {
-      "email": "arjun.singh.demo@example.test",
-      "phone": "+91-9876500011",
-      "officeHours": "Mon-Fri 09:00-16:00 IST (Demo)"
-    },
-    "certificates": [
-      {
-        "certId": "cert-as-demo-1",
-        "title": "MD Cardiology - SAMPLE (Demo)",
-        "issuedBy": "Mock Medical University (Demo)",
-        "year": 2010,
-        "image_url": "https://via.placeholder.com/800x600?text=SAMPLE+CERTIFICATE+dr-arjun-singh-demo+1+SAMPLE+-+NOT+FOR+OFFICIAL+USE",
-        "note": "SAMPLE - NOT FOR OFFICIAL USE — mock credential for UI/testing"
+    "doctor": {
+      "id": "dr-arjun-singh-demo",
+      "fullName": "Dr. Arjun Singh (Demo)",
+      "displayName": "Dr. Arjun",
+      "age": 42,
+      "gender": "Male",
+      "photo_url": "https://via.placeholder.com/400x400?text=Dr+Arjun+Singh+Demo+PHOTO",
+      "title": "Senior Cardiologist (Demo)",
+      "bio": "Senior Cardiologist with 12+ years of clinical experience in interventional cardiology. THIS PROFILE IS A DEMO — credentials are SAMPLE ONLY for UI/testing.",
+      "hospital": {
+        "name": "Apex Heart Institute (Demo)",
+        "department": "Cardiology",
+        "location": { "city": "Bengaluru", "state": "Karnataka", "country": "India" },
+        "workingSince": "2012-06-15"
       },
-      {
-        "certId": "cert-as-demo-2",
-        "title": "Advanced Cardiac Life Support (ACLS) - SAMPLE (Demo)",
-        "issuedBy": "Mock ACLS Institute (Demo)",
-        "year": 2015,
-        "image_url": "https://via.placeholder.com/800x600?text=SAMPLE+CERTIFICATE+dr-arjun-singh-demo+2+SAMPLE+-+NOT+FOR+OFFICIAL+USE",
-        "note": "SAMPLE - NOT FOR OFFICIAL USE — mock credential for UI/testing"
-      }
-    ],
-    "records": [
-      {
-        "recordId": "rec-as-demo-1",
-        "date": "2025-09-30",
-        "patientSummary": "Mr. R — acute chest discomfort; angiography performed, 1 stent placed (demo).",
-        "diagnosisTags": ["IHD", "Stent"],
-        "notes": "Post-op stable; discharge with dual antiplatelet therapy. Follow-up in 2 weeks (demo).",
-        "linkedPatientId": "pt-demo-1001"
+      "contact": {
+        "email": "arjun.singh.demo@example.test",
+        "phone": "+91-9876500011",
+        "officeHours": "Mon-Fri 09:00-16:00 IST (Demo)"
       },
-      {
-        "recordId": "rec-as-demo-2",
-        "date": "2025-08-12",
-        "patientSummary": "Mrs. K — palpitations; ECG & Holter normal (demo).",
-        "diagnosisTags": ["Palpitations"],
-        "notes": "Reassurance and lifestyle advice. Consider advanced testing if symptoms recur (demo).",
-        "linkedPatientId": "pt-demo-1002"
+      "certificates": [
+        {
+          "certId": "cert-as-demo-1",
+          "title": "MD Cardiology - SAMPLE (Demo)",
+          "issuedBy": "Mock Medical University (Demo)",
+          "year": 2010,
+          "image_url": "https://via.placeholder.com/800x600?text=SAMPLE+CERTIFICATE+dr-arjun-singh-demo+1+SAMPLE+-+NOT+FOR+OFFICIAL+USE",
+          "note": "SAMPLE - NOT FOR OFFICIAL USE — mock credential for UI/testing"
+        },
+        {
+          "certId": "cert-as-demo-2",
+          "title": "Advanced Cardiac Life Support (ACLS) - SAMPLE (Demo)",
+          "issuedBy": "Mock ACLS Institute (Demo)",
+          "year": 2015,
+          "image_url": "https://via.placeholder.com/800x600?text=SAMPLE+CERTIFICATE+dr-arjun-singh-demo+2+SAMPLE+-+NOT+FOR+OFFICIAL+USE",
+          "note": "SAMPLE - NOT FOR OFFICIAL USE — mock credential for UI/testing"
+        }
+      ],
+      "records": [
+        {
+          "recordId": "rec-as-demo-1",
+          "date": "2025-09-30",
+          "patientSummary": "Mr. R — acute chest discomfort; angiography performed, 1 stent placed (demo).",
+          "diagnosisTags": ["IHD", "Stent"],
+          "notes": "Post-op stable; discharge with dual antiplatelet therapy. Follow-up in 2 weeks (demo).",
+          "linkedPatientId": "pt-demo-1001"
+        },
+        {
+          "recordId": "rec-as-demo-2",
+          "date": "2025-08-12",
+          "patientSummary": "Mrs. K — palpitations; ECG & Holter normal (demo).",
+          "diagnosisTags": ["Palpitations"],
+          "notes": "Reassurance and lifestyle advice. Consider advanced testing if symptoms recur (demo).",
+          "linkedPatientId": "pt-demo-1002"
+        },
+        {
+          "recordId": "rec-as-demo-3",
+          "date": "2025-06-05",
+          "patientSummary": "Annual cardiac check-up — stable (demo).",
+          "diagnosisTags": ["Routine"],
+          "notes": "Continue statin and exercise regimen. Next review in 12 months (demo).",
+          "linkedPatientId": "pt-demo-1003"
+        }
+      ],
+      "analytics": {
+        "totalPatients": 2348,
+        "lastShift": "2025-10-02T08:00:00Z",
+        "avgResponseMins": 18,
+        "riskScore": 0.12
       },
-      {
-        "recordId": "rec-as-demo-3",
-        "date": "2025-06-05",
-        "patientSummary": "Annual cardiac check-up — stable (demo).",
-        "diagnosisTags": ["Routine"],
-        "notes": "Continue statin and exercise regimen. Next review in 12 months (demo).",
-        "linkedPatientId": "pt-demo-1003"
-      }
-    ],
-    "analytics": {
-      "totalPatients": 2348,
-      "lastShift": "2025-10-02T08:00:00Z",
-      "avgResponseMins": 18,
-      "riskScore": 0.12
-    },
-    "flags": {
-      "demo": true,
-      "sealedCertificateDownload": true
-    },
-    "uiHints": {
-      "profileCardOrder": ["photo", "fullName", "title", "age", "hospital", "bio", "contact"],
-      "certificatesWatermarkText": "SAMPLE - NOT FOR OFFICIAL USE",
-      "showDownloadButton": false
-    },
-    "createdAt": "2025-10-03T08:00:00Z",
-    "updatedAt": "2025-10-03T08:00:00Z"
-  }
-};
-export type DoctorProfileData = typeof singleDemoDoctor.doctor;
+      "flags": {
+        "demo": true,
+        "sealedCertificateDownload": true
+      },
+      "uiHints": {
+        "profileCardOrder": ["photo", "fullName", "title", "age", "hospital", "bio", "contact"],
+        "certificatesWatermarkText": "SAMPLE - NOT FOR OFFICIAL USE",
+        "showDownloadButton": false
+      },
+      "createdAt": "2025-10-03T08:00:00Z",
+      "updatedAt": "2025-10-03T08:00:00Z"
+    }
+  };
+export type DoctorProfileData = typeof singleDemoDoctor;
 
 
 export const dummyAmbulances = [
@@ -1524,4 +1525,23 @@ export const onlinePrescriptionData = {
     "pharmacyAutoFill": true
   }
 }
+
+export const dummyPatientsForPrescription = [
+    { id: "P10001", name: "Ravi Sharma", age: 45, gender: "M", contact: "+91-9876500010", allergies: "Penicillin", conditions: "Type 2 Diabetes", lastVisit: "2024-09-15", location: "Delhi" },
+    { id: "P10002", name: "Meera Iyer", age: 32, gender: "F", contact: "+91-9876500020", allergies: "None", conditions: "Asthma", lastVisit: "2024-08-20", location: "Mumbai" },
+    { id: "P10003", name: "Arjun Patel", age: 67, gender: "M", contact: "+91-9876500030", allergies: "Sulfa drugs", conditions: "Hypertension", lastVisit: "2024-09-01", location: "Bangalore" }
+];
+
+export const dummyDoctorsForPrescription = [
+    { id: "3001", name: "Dr. Anil Verma", registration: "REG-AP-120", contact: "+91-7000003001", clinic: "Apollo Care" },
+    { id: "3002", name: "Dr. Sneha Rao", registration: "REG-SR-221", contact: "+91-7000003002", clinic: "City Health" }
+];
+
+export const dummyMedicinesForPrescription = [
+    { id: "M001", name: "Paracetamol 500mg Tablet", strength: "500mg", form: "Tablet", route: "Oral", defaultQty: 10 },
+    { id: "M002", name: "Azithromycin 250mg Tablet", strength: "250mg", form: "Tablet", route: "Oral", defaultQty: 6 },
+    { id: "M003", name: "Salbutamol Inhaler 100mcg", strength: "100mcg", form: "Inhaler", route: "Inhalation", defaultQty: 1 },
+    { id: "M004", name: "Amlodipine 5mg Tablet", strength: "5mg", form: "Tablet", route: "Oral", defaultQty: 30 },
+    { id: "M005", name: "Metformin XR 500mg Tablet", strength: "500mg", form: "Tablet", route: "Oral", defaultQty: 30 }
+];
     
