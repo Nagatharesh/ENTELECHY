@@ -1563,15 +1563,15 @@ export const dummyHospitalData = {
         facilities: {
             beds: { general: { total: 300, occupied: 250 }, icu: { total: 50, occupied: 45 } },
             opdSlots: { total: 500, used: 410 },
-            oxygen: { levelPercentage: 70, status: 'Active' },
+            oxygen: { levelPercentage: 70, status: 'Active', predictive: 'AI predicts shortage in 8 hours' },
             generator: { status: 'Active', fuelHoursLeft: 8, capacityHours: 24 },
             solar: { status: 'Active', currentProductionKw: 150, capacityKw: 200 },
         },
         equipment: [
-            { name: 'Ventilators', status: 'Operational', aiNote: 'AI predicts 2 more needed in next 24h.' },
-            { name: 'MRI Machine', status: 'Operational', aiNote: 'Coil #3 showing signs of wear.' },
-            { name: 'CT Scanner', status: 'Under Maintenance', aiNote: 'Service due in 2 days.' },
-            { name: 'X-Ray Machine 1', status: 'Operational', aiNote: 'Optimal performance.' },
+            { id: 'VENT-01', name: 'Ventilator', status: 'Operational', aiNote: 'AI predicts 2 more needed in next 24h.' },
+            { id: 'MRI-01', name: 'MRI Machine', status: 'Operational', aiNote: 'Coil #3 showing signs of wear.' },
+            { id: 'CT-01', name: 'CT Scanner', status: 'Under Maintenance', aiNote: 'Service due in 2 days.' },
+            { id: 'XRAY-01', name: 'X-Ray Machine 1', status: 'Operational', aiNote: 'Optimal performance.' },
         ],
         beds: [
             { bedId: 'GW-101', wing: 'General', room: '101', status: 'occupied', triage: 'Minor', patient: 'Ravi Kumar', occupiedSince: '2024-10-02T14:00Z', assignedStaff: 'NRS-002' },
@@ -1610,7 +1610,12 @@ export const dummyHospitalData = {
             { department: 'Neurology', patients: 150, revenue: 2100000, satisfaction: 4.7 },
             { department: 'Oncology', patients: 80, revenue: 3500000, satisfaction: 4.9 },
             { department: 'General Medicine', patients: 485, revenue: 1200000, satisfaction: 4.5 },
-        ]
+        ],
+        aiInsights: {
+            predictivePatientLoad: "AI predicts a 15% increase in patient load next week due to seasonal changes.",
+            facilityHealthCheck: "AI health check indicates MRI coil #3 is at 80% wear and may fail in 60-90 days.",
+            doctorStressPrediction: "AI predicts Dr. Kumar has a 75% probability of burnout in the next 3 weeks based on workload."
+        }
     },
     staff: {
         members: [
@@ -1631,18 +1636,18 @@ export const dummyHospitalData = {
         { reportId: 'LAB-503', patientName: 'Amit Singh', testName: 'Thyroid Function Test', date: '2024-10-03', status: 'pending' },
     ],
     safety: {
-        checks: [
-            { name: 'Fire Alarms', status: 'OK' },
-            { name: 'Sprinkler System', status: 'OK' },
-            { name: 'Emergency Exits', status: 'OK' },
-            { name: 'Oxygen Lines', status: 'Maintenance Required' },
-        ],
+        systems: {
+            fireAlarms: 'OK',
+            sprinklers: 'OK',
+            exits: 'OK',
+            oxygen: 'Maintenance',
+        },
     },
-    alerts: {
-        fire: { title: 'Fire Alert', description: 'Smoke detector activated in Ward B, Floor 3. Evacuation protocol initiated.', level: 'high', timestamp: '2024-10-03T10:30:00Z' },
-        security: { title: 'Security Alert', description: 'Unauthorized access attempt at main entrance.', level: 'medium', timestamp: '2024-10-03T09:15:00Z' },
-        facility: { title: 'Facility Alert', description: 'Generator fuel level at 15%. Refill required.', level: 'low', timestamp: '2024-10-03T11:00:00Z' },
-    },
+     alerts: [
+        { id: "a1", type: "Fire", severity: "critical", message: "Smoke detector activated in Ward B", location: "Ward B, Floor 3", timestamp: "2024-10-03T16:00:00" },
+        { id: "a2", type: "Security", severity: "warning", message: "Unauthorized access attempt", location: "Main Entrance", timestamp: "2024-10-03T14:45:00" },
+        { id: "a3", type: "Facility", severity: "info", message: "Generator fuel is at 20%", location: "Utility Room", timestamp: "2024-10-03T15:30:00" }
+    ],
     schedules: [
       { id: 'sch-1', staffName: 'Dr. Sarah Johnson', department: 'Emergency', date: '2025-09-21', shift: 'morning', startTime: '06:00', endTime: '14:00', hours: 8.0, color: 'bg-green-500/20' },
       { id: 'sch-2', staffName: 'Emily Davis', department: 'ICU', date: '2025-09-21', shift: 'morning', startTime: '06:00', endTime: '14:00', hours: 8.0, color: 'bg-blue-500/20' },
@@ -1655,6 +1660,7 @@ export const dummyHospitalData = {
     ]
 };
     
+
 
 
 
