@@ -70,3 +70,4 @@ export const ResearchPanel = ({ patient }: { patient: DnaPatient }) => {
     </Card>
   );
 };
+

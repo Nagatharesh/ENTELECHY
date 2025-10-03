@@ -85,3 +85,4 @@ export const DnaVisualization = ({ onClick, position, color1, color2 }: { onClic
     </group>
   );
 };
+
