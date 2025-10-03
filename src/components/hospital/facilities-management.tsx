@@ -287,7 +287,6 @@ export function FacilitiesManagement({ hospitalData }) {
             
             setInfo(infoText);
         }
-        updateInfo(null);
         
         const onPointerMove = (e) => {
             const rect = renderer.domElement.getBoundingClientRect();
@@ -296,7 +295,10 @@ export function FacilitiesManagement({ hospitalData }) {
         };
 
         const onClick = () => {
-            if (hovered) updateInfo(hovered.object.parent.userData.type ? hovered.object.parent : hovered.object);
+            if (hovered) {
+                const target = hovered.object.parent.userData.type ? hovered.object.parent : hovered.object;
+                updateInfo(target);
+            }
         };
         
         window.addEventListener('pointermove', onPointerMove);
