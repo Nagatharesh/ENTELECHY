@@ -21,7 +21,7 @@ export const dummyTriagePatients: TriagePatient[] = [
     { patientId: 'TP-008', name: 'Kavita Iyer', age: 50, gender: 'Female', symptoms: 'Deep laceration on arm', triageLevel: 'Moderate', status: 'waiting' },
     { patientId: 'TP-009', name: 'Sandeep Kumar', age: 30, gender: 'Male', symptoms: 'Mild allergic reaction, skin rash', triageLevel: 'Minor', status: 'waiting' },
     { patientId: 'TP-010', name: 'Nisha Gupta', age: 41, gender: 'Female', symptoms: 'Possible broken arm after fall', triageLevel: 'Moderate', status: 'waiting' },
-    { patientId: 'TP-011', name: 'Arjun Das', age: 68, gender: 'Male', symptoms: 'Uncontrolled bleeding from nose', triageLevel: 'Critical', status:waiting: 'waiting' },
+    { patientId: 'TP-011', name: 'Arjun Das', age: 68, gender: 'Male', symptoms: 'Uncontrolled bleeding from nose', triageLevel: 'Critical', status: 'waiting' },
     { patientId: 'TP-012', name: 'Meera Chowdhury', age: 25, gender: 'Female', symptoms: 'Vomiting and diarrhea for 24 hours', triageLevel: 'Moderate', status: 'waiting' },
     { patientId: 'TP-013', name: 'Imran Khan', age: 38, gender: 'Male', symptoms: 'Burn on hand from hot water', triageLevel: 'Minor', status: 'waiting' },
     { patientId: 'TP-014', name: 'Pooja Reddy', age: 58, gender: 'Female', symptoms: 'Symptoms of a stroke, facial drooping', triageLevel: 'Critical', status: 'waiting' },
@@ -1655,6 +1655,7 @@ export const dummyHospitalData = {
     ]
 };
     
+
 
 
 
