@@ -1,0 +1,151 @@
+
+{
+  "entities": {
+    "Patient": {
+      "title": "Patient",
+      "description": "Represents a patient in the system.",
+      "type": "object",
+      "properties": {
+        "patient_id": {
+          "type": "string",
+          "description": "Unique identifier for the patient."
+        },
+        "name": {
+          "type": "string",
+          "description": "Patient's full name."
+        },
+        "age": {
+          "type": "number",
+          "description": "Patient's age."
+        },
+        "condition": {
+          "type": "string",
+          "description": "Primary medical condition of the patient."
+        },
+        "contact_info": {
+          "type": "string",
+          "description": "Patient's contact information (email or phone)."
+        },
+        "assigned_doctor_id": {
+          "type": "string",
+          "description": "ID of the doctor assigned to the patient."
+        },
+        "caregiver_contact": {
+          "type": "string",
+          "description": "Contact information for the patient's caregiver (optional)."
+        }
+      },
+      "required": [
+        "patient_id",
+        "name",
+        "age",
+        "condition",
+        "assigned_doctor_id"
+      ]
+    },
+    "MedicineSchedule": {
+      "title": "Medicine Schedule",
+      "description": "Defines the medication schedule for a patient.",
+      "type": "object",
+      "properties": {
+        "schedule_id": {
+          "type": "string",
+          "description": "Unique identifier for the schedule entry."
+        },
+        "patient_id": {
+          "type": "string",
+          "description": "ID of the patient this schedule belongs to."
+        },
+        "medicine_name": {
+          "type": "string",
+          "description": "Name of the medicine."
+        },
+        "dose_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Scheduled time for the dose."
+        },
+        "dose_quantity": {
+          "type": "string",
+          "description": "Quantity and unit of the dose (e.g., '50mg')."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "taken",
+            "missed",
+            "late"
+          ],
+          "description": "Current status of the scheduled dose."
+        }
+      },
+      "required": [
+        "schedule_id",
+        "patient_id",
+        "medicine_name",
+        "dose_time",
+        "status"
+      ]
+    },
+    "DoctorAlert": {
+      "title": "Doctor Alert",
+      "description": "Represents an AI-generated alert for a doctor.",
+      "type": "object",
+      "properties": {
+        "alert_id": {
+          "type": "string",
+          "description": "Unique identifier for the alert."
+        },
+        "patient_id": {
+          "type": "string",
+          "description": "ID of the patient the alert is for."
+        },
+        "alert_type": {
+          "type": "string",
+          "enum": [
+            "missed dose",
+            "high risk"
+          ],
+          "description": "The type of alert."
+        },
+        "risk_percentage": {
+          "type": "number",
+          "description": "The AI-calculated risk percentage."
+        },
+        "timestamp_alerted": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the alert was generated."
+        }
+      },
+      "required": [
+        "alert_id",
+        "patient_id",
+        "alert_type"
+      ]
+    }
+  },
+  "auth": {
+    "providers": []
+  },
+  "firestore": {
+    "/patients/{patientId}": {
+      "schema": {
+        "$ref": "#/entities/Patient"
+      },
+      "description": "Stores individual patient profiles."
+    },
+    "/medicineSchedules/{scheduleId}": {
+      "schema": {
+        "$ref": "#/entities/MedicineSchedule"
+      },
+      "description": "Stores all medication schedules for all patients."
+    },
+    "/doctorAlerts/{alertId}": {
+      "schema": {
+        "$ref": "#/entities/DoctorAlert"
+      },
+      "description": "Stores AI-generated alerts for doctors."
+    }
+  }
+}
