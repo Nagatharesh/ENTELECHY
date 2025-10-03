@@ -795,8 +795,8 @@ export const dummyStrokePatients: StrokePatient[] = [
         vitals: { bp: '170/110', heartRate: 95, oxygen: 89, brainActivity: 'Normal' },
         prediction: {
             chance: 91,
-            explanation: 'Severe hypertension, low oxygen saturation, and abnormal clotting factors present a critical risk.',
-            suggestion: 'Immediate administration of blood thinners and transfer to a high-risk monitoring unit.'
+            explanation: 'Hypertension, poor oxygen, and clotting issues present a critical risk.',
+            suggestion: 'Immediate blood thinners, high-risk monitoring.'
         },
         graphs: {
             riskCurve: [
@@ -814,8 +814,8 @@ export const dummyStrokePatients: StrokePatient[] = [
         vitals: { bp: '145/95', heartRate: 88, oxygen: 94, brainActivity: 'Mild Arrhythmia' },
         prediction: {
             chance: 48,
-            explanation: 'Irregular heart rhythm combined with borderline hypertension elevates the stroke risk.',
-            suggestion: 'Keep patient under close observation and consider prescribing beta-blockers to regulate heart rhythm.'
+            explanation: 'Irregular heart rhythm + borderline hypertension elevates the stroke risk.',
+            suggestion: 'Keep under watch, prescribe beta blockers.'
         },
         graphs: {
             riskCurve: [
@@ -833,8 +833,8 @@ export const dummyStrokePatients: StrokePatient[] = [
         vitals: { bp: '180/115', heartRate: 120, oxygen: 87, brainActivity: 'Severe Arrhythmia' },
         prediction: {
             chance: 97,
-            explanation: 'Critically high blood pressure, significant oxygen drop, severe arrhythmia, and a history of strokes indicate an almost certain stroke event.',
-            suggestion: 'Emergency medication protocol initiated. Immediate brain scan and transfer to Stroke ICU are mandatory.'
+            explanation: 'Critically high BP, oxygen drop, history of strokes indicate an almost certain stroke event.',
+            suggestion: 'Emergency medication, brain scan, ICU transfer.'
         },
         graphs: {
             riskCurve: [
