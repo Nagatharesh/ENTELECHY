@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useMemo } from 'react';
@@ -111,7 +112,7 @@ const PatientDetailPanel = ({ patient, onClose }: { patient: DnaPatient, onClose
                             <p><strong>ID:</strong> {patient.id}</p>
                             <p><strong>Age:</strong> {patient.age}</p>
                             <p><strong>Gender:</strong> {patient.gender}</p>
-                            <p><strong>Condition:</strong> <Badge variant="destructive">{patient.condition}</Badge></p>
+                            <div className="flex items-center gap-2"><strong>Condition:</strong> <Badge variant="destructive">{patient.condition}</Badge></div>
                         </CardContent>
                     </Card>
                 </div>
@@ -195,3 +196,4 @@ const ChartTooltipContent = ({ active, payload, label }: any) => {
   
     return null;
   };
+
