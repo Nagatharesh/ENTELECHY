@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Suspense, useState, useEffect } from 'react';
@@ -6,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
-import { User, Bell, PanelLeft, MessageSquare, Droplets } from 'lucide-react';
+import { User, Bell, PanelLeft, MessageSquare, Droplets, Search, BrainCircuit, Siren, HeartPulse } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -28,6 +29,10 @@ import { dummyDoctors, Doctor } from '@/lib/dummy-data';
 import { DoctorProfile } from '@/components/doctor/doctor-profile';
 import { DoctorCommunication } from '@/components/doctor/doctor-communication';
 import { BloodBank } from '@/components/doctor/blood-bank';
+import { PatientReferralHub } from './patient-referral-hub';
+import { StrokePredictionHub } from './stroke-prediction-hub';
+import { CardiacDeviceHub } from './cardiac-device-hub';
+import { GuardianRxHub } from './guardian-rx-hub';
 
 
 function DashboardContent() {
@@ -57,6 +62,14 @@ function DashboardContent() {
         return <DoctorCommunication doctor={doctor} />;
       case 'blood':
         return <BloodBank />;
+      case 'referral':
+        return <PatientReferralHub />;
+      case 'stroke':
+        return <StrokePredictionHub />;
+      case 'cardiac':
+        return <CardiacDeviceHub />;
+      case 'guardian':
+        return <GuardianRxHub />;
       default:
         return <DoctorProfile doctor={doctor} />;
     }
@@ -66,6 +79,10 @@ function DashboardContent() {
     { id: 'profile', icon: User, label: 'Profile' },
     { id: 'communication', icon: MessageSquare, label: 'Communication' },
     { id: 'blood', icon: Droplets, label: 'Blood Bank' },
+    { id: 'referral', icon: Search, label: 'Referral Hub'},
+    { id: 'stroke', icon: BrainCircuit, label: 'Stroke Prediction' },
+    { id: 'cardiac', icon: HeartPulse, label: 'Cardiac ASI' },
+    { id: 'guardian', icon: Siren, label: 'GuardianRx' },
   ];
 
   const NavMenu = () => (

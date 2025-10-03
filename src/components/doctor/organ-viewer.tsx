@@ -62,7 +62,7 @@ function Model({ organName, annotations }: { organName: string, annotations: { t
 
 export function OrganViewer({ organName, annotations }: { organName: string, annotations: any[] }) {
     useEffect(() => {
-        // Preload models on the client side
+        // Preload models on the client side once
         Object.values(organModels).forEach(model => {
             if(model.path) useGLTF.preload(model.path)
         });

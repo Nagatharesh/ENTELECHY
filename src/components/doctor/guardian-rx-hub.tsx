@@ -9,11 +9,8 @@ import { dummyGuardianRxPatients, GuardianRxPatient } from '@/lib/dummy-data';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { Zap, Activity, Heart, Brain, Shield, Info, X, Search, Bot, FileText, User, BarChart, GitBranch, Pill, Hospital, HeartPulse, Map, Battery, AlertTriangle, Phone, ChevronRight, CheckCircle, Ambulance, Bell, Send, UserCheck, PhoneCall, MessageSquare } from 'lucide-react';
-import { LineChart, ResponsiveContainer, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Bot, UserCheck, PhoneCall, MessageSquare } from 'lucide-react';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import { Progress } from '../ui/progress';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Text, Float } from '@react-three/drei';
 import { OrganViewer } from './organ-viewer';
@@ -62,7 +59,7 @@ export function GuardianRxHub() {
     );
 }
 
-const PatientAdherenceDashboard = ({ onSelectPatient }) => {
+const PatientAdherenceDashboard = ({ onSelectPatient }: { onSelectPatient: (patient: GuardianRxPatient) => void }) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 p-4">
             {dummyGuardianRxPatients.map(patient => (
@@ -100,7 +97,7 @@ const PatientAdherenceDashboard = ({ onSelectPatient }) => {
     );
 };
 
-const Pill3D = ({ adherence }) => {
+const Pill3D = ({ adherence }: { adherence: number }) => {
     const getColor = () => {
         if (adherence < 75) return '#FF4136'; // Red
         if (adherence < 90) return '#FFDC00'; // Yellow
@@ -174,7 +171,7 @@ const PatientDetailView = ({ patient, onBack }: { patient: GuardianRxPatient, on
                         <CardHeader><CardTitle className="text-gradient-glow flex items-center gap-2"><Bot /> AI Insights</CardTitle></CardHeader>
                          <CardContent>
                             <Alert variant={patient.risk.level === 'Critical' ? 'destructive' : 'default'} className={cn(riskConfig[patient.risk.level].bg)}>
-                                <AlertTriangle />
+                                <Bot className="h-4 w-4" />
                                 <AlertTitle>{patient.risk.level} Risk Detected</AlertTitle>
                                 <AlertDescription>{patient.risk.details}</AlertDescription>
                             </Alert>
