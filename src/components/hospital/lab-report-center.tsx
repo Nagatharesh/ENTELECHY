@@ -22,13 +22,13 @@ import {
 } from "@/components/ui/dialog"
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { Separator } from "../ui/separator";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Separator } from "@/components/ui/separator";
 
 
 const statusConfig = {
     pending: { label: "Pending", color: "bg-yellow-500/20 text-yellow-400" },
-    processing: { label: "Processing", color: "bg-blue-500/20 text-blue-400 animate-pulse" },
+    processing: { label: "Processing", color: "bg-blue-500/20 text-blue-400" },
     completed: { label: "Completed", color: "bg-green-500/20 text-green-400" },
     critical: { label: "Critical", color: "bg-red-500/20 text-red-500 animate-pulse" }
 };
