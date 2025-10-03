@@ -1583,11 +1583,19 @@ export const dummyHospitalData = {
             { department: 'General Medicine', patients: 485, revenue: 1200000, satisfaction: 4.5 },
         ]
     },
-    staff: [
-        { staffId: 'DOC-001', name: 'Dr. A Kumar', role: 'Cardiologist', department: 'Cardiology', stressLevel: 8, hoursThisWeek: 55, consecutiveDaysWorked: 6 },
-        { staffId: 'DOC-002', name: 'Dr. S Mehra', role: 'Dermatologist', department: 'Dermatology', stressLevel: 4, hoursThisWeek: 42, consecutiveDaysWorked: 4 },
-        { staffId: 'NRS-001', name: 'Sunita Sharma', role: 'Head Nurse', department: 'ICU', stressLevel: 7, hoursThisWeek: 60, consecutiveDaysWorked: 7 },
-    ],
+    staff: {
+        members: [
+            { staffId: 'DOC-001', name: 'Dr. A Kumar', role: 'Cardiologist', department: 'Cardiology', stressLevel: 8, hoursThisWeek: 55, consecutiveDaysWorked: 6 },
+            { staffId: 'DOC-002', name: 'Dr. S Mehra', role: 'Dermatologist', department: 'Dermatology', stressLevel: 4, hoursThisWeek: 42, consecutiveDaysWorked: 4 },
+            { staffId: 'NRS-001', name: 'Sunita Sharma', role: 'Head Nurse', department: 'ICU', stressLevel: 7, hoursThisWeek: 60, consecutiveDaysWorked: 7 },
+        ],
+        departmentAnalytics: [
+            { department: 'Cardiology', totalHours: 450 },
+            { department: 'ICU', totalHours: 600 },
+            { department: 'Surgery', totalHours: 520 },
+            { department: 'Emergency', totalHours: 710 },
+        ]
+    },
     labReports: [
         { reportId: 'LAB-501', patientName: 'Rohan Gupta', testName: 'Complete Blood Count', date: '2024-10-02', status: 'completed' },
         { reportId: 'LAB-502', patientName: 'Priya Sharma', testName: 'Lipid Profile', date: '2024-10-03', status: 'processing' },
@@ -1623,4 +1631,5 @@ export const dummyHospitalData = {
     ]
 };
     
+
 

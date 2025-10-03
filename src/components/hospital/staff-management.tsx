@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -13,8 +14,10 @@ import {
   Bar,
   XAxis,
   YAxis,
-  Tooltip
+  Tooltip,
+  CartesianGrid,
 } from 'recharts';
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
 
 const StressLevelCard = ({ staff }) => {
     const { toast } = useToast();
@@ -61,6 +64,13 @@ const StressLevelCard = ({ staff }) => {
 export function StaffManagement({ hospitalData }) {
     const { staff } = hospitalData;
 
+    const departmentHoursChartConfig = {
+      hours: {
+        label: "Hours",
+        color: "hsl(var(--primary))",
+      },
+    };
+
     return (
         <div className="space-y-6">
             <Card className="glassmorphism glowing-shadow">
@@ -75,6 +85,25 @@ export function StaffManagement({ hospitalData }) {
                     <StressLevelCard key={member.staffId} staff={member} />
                 ))}
             </div>
+
+            <Card className="glassmorphism glowing-shadow">
+                <CardHeader>
+                    <CardTitle className="text-white">Total Hours by Department</CardTitle>
+                </CardHeader>
+                <CardContent className="h-80">
+                     <ChartContainer config={departmentHoursChartConfig} className="w-full h-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <RechartsBarChart data={staff.departmentAnalytics}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border) / 0.5)" />
+                                <XAxis dataKey="department" tickLine={false} axisLine={false} stroke="hsl(var(--foreground))" fontSize={12} />
+                                <YAxis tickLine={false} axisLine={false} stroke="hsl(var(--foreground))" fontSize={12} />
+                                <Tooltip content={<ChartTooltipContent />} cursor={{ fill: 'hsl(var(--primary)/0.1)' }} />
+                                <Bar dataKey="totalHours" fill="var(--color-hours)" radius={[4, 4, 0, 0]} />
+                            </RechartsBarChart>
+                        </ResponsiveContainer>
+                    </ChartContainer>
+                </CardContent>
+            </Card>
         </div>
     );
 }
