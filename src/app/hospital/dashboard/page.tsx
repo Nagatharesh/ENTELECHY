@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
-import { User, Bell, PanelLeft, Building, Users, FlaskConical, AlertTriangle, BarChart3 } from 'lucide-react';
+import { User, Bell, PanelLeft, Building, Users, FlaskConical, AlertTriangle, BarChart3, BedDouble, DollarSign } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -30,6 +30,8 @@ import { FacilitiesManagement } from '@/components/hospital/facilities-managemen
 import { StaffManagement } from '@/components/hospital/staff-management';
 import { LabReportCenter } from '@/components/hospital/lab-report-center';
 import { SafetyAndAlerts } from '@/components/hospital/safety-and-alerts';
+import { EmergencyResourceStatus } from '@/components/hospital/emergency-resource-status';
+import { ReportsAndAnalytics } from '@/components/hospital/reports-and-analytics';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -56,12 +58,16 @@ function DashboardContent() {
         return <HospitalOverview hospitalData={hospitalData} />;
       case 'facilities':
         return <FacilitiesManagement hospitalData={hospitalData} />;
+      case 'emergency-resources':
+        return <EmergencyResourceStatus hospitalData={hospitalData} />;
       case 'staff':
         return <StaffManagement hospitalData={hospitalData} />;
       case 'labs':
         return <LabReportCenter hospitalData={hospitalData} />;
       case 'safety':
         return <SafetyAndAlerts hospitalData={hospitalData} />;
+      case 'analytics':
+        return <ReportsAndAnalytics hospitalData={hospitalData} />;
       default:
         return <HospitalOverview hospitalData={hospitalData} />;
     }
@@ -70,9 +76,11 @@ function DashboardContent() {
   const navItems = [
     { id: 'overview', icon: BarChart3, label: 'Overview' },
     { id: 'facilities', icon: Building, label: 'Facilities' },
+    { id: 'emergency-resources', icon: BedDouble, label: 'Emergency Resources' },
     { id: 'staff', icon: Users, label: 'Staff Management' },
     { id: 'labs', icon: FlaskConical, label: 'Lab Center' },
     { id: 'safety', icon: AlertTriangle, label: 'Safety & Alerts' },
+    { id: 'analytics', icon: DollarSign, label: 'Reports & Analytics' },
   ];
 
   const NavMenu = () => (

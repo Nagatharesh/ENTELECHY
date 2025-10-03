@@ -253,7 +253,7 @@ export const singleDemoDoctor = {
       {
         "recordId": "rec-as-demo-2",
         "date": "2025-08-12",
-        "patientSummary": "Mrs. K — palpitations; ECG & Holter normal (demo).",
+        "patientSummary": "Mrs. K — palpitations; ECG &amp; Holter normal (demo).",
         "diagnosisTags": ["Palpitations"],
         "notes": "Reassurance and lifestyle advice. Consider advanced testing if symptoms recur (demo).",
         "linkedPatientId": "pt-demo-1002"
@@ -1544,6 +1544,13 @@ export const dummyHospitalData = {
             { name: 'CT Scanner', status: 'Under Maintenance', aiNote: 'Service due in 2 days.' },
             { name: 'X-Ray Machine 1', status: 'Operational', aiNote: 'Optimal performance.' },
         ],
+        beds: [
+            { bedId: 'GW-101', wing: 'General', room: '101', status: 'occupied', triage: 'Minor', patient: 'Ravi Kumar', occupiedSince: '2024-10-02T14:00Z', assignedStaff: 'NRS-002' },
+            { bedId: 'ICU-01', wing: 'ICU', room: 'A', status: 'occupied', triage: 'Critical', patient: 'Sunita Devi', occupiedSince: '2024-10-03T08:30Z', assignedStaff: 'NRS-001' },
+            { bedId: 'TR-02', wing: 'Trauma', room: 'B', status: 'occupied', triage: 'Moderate', patient: 'Amit Singh', occupiedSince: '2024-10-03T11:00Z', assignedStaff: 'NRS-003' },
+            { bedId: 'GW-102', wing: 'General', room: '101', status: 'available', triage: 'none' },
+            { bedId: 'OR-01', wing: 'Surgery', room: 'OR-1', status: 'in-use', triage: 'Critical', patient: 'Unknown', occupiedSince: '2024-10-03T10:00Z', assignedStaff: 'SURG-01' },
+        ]
     },
     analytics: {
         livePatientCount: 124,
@@ -1566,6 +1573,15 @@ export const dummyHospitalData = {
             { month: 'Aug', amount: 9500000 },
             { month: 'Sep', amount: 9300000 },
         ],
+        totalAdmissions: 1245,
+        avgStayDays: 5.2,
+        departmentAnalytics: [
+            { department: 'Cardiology', patients: 320, revenue: 2500000, satisfaction: 4.8 },
+            { department: 'Orthopedics', patients: 210, revenue: 1800000, satisfaction: 4.6 },
+            { department: 'Neurology', patients: 150, revenue: 2100000, satisfaction: 4.7 },
+            { department: 'Oncology', patients: 80, revenue: 3500000, satisfaction: 4.9 },
+            { department: 'General Medicine', patients: 485, revenue: 1200000, satisfaction: 4.5 },
+        ]
     },
     staff: [
         { staffId: 'DOC-001', name: 'Dr. A Kumar', role: 'Cardiologist', department: 'Cardiology', stressLevel: 8, hoursThisWeek: 55, consecutiveDaysWorked: 6 },
