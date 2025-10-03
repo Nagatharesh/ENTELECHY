@@ -1,13 +1,4 @@
 
-
-
-
-
-
-
-
-
-
 export const dummyAadhaarPatients = [
     { aadhaar_full: '123412341234', name: 'Rahul Sharma', dob: '1993-01-05', gender: 'M', contact: '+91 9876543210', address: '45 Green Park, New Delhi', is_test: true },
     { aadhaar_full: '234523452345', name: 'Anjali Mehta', dob: '1997-08-22', gender: 'F', contact: '+91 9123456780', address: '12 Rose Street, Mumbai', is_test: true },
@@ -640,7 +631,7 @@ export const dummyReferralPatients = {
         bloodGroup: "A+",
         allergies: ["Penicillin"],
         chronicConditions: ["BRCA1 Gene Positive"],
-        doctorsVisited: ["Dr. Vikram Singh (Oncologist)"],
+        doctorsVisited: ["Dr. Priya (Oncologist)"],
         medicines: { current: "Preventive Hormone Therapy", suggestion: "Consider PARP inhibitors trial" },
         records: [
             { type: "Genetic Test", name: "BRCA1/BRCA2", result: "Positive for BRCA1", date: "2023-11-10" },
@@ -854,3 +845,218 @@ export const dummyStrokePatients: StrokePatient[] = [
     }
 ];
 // --- END OF STROKE PATIENT DATA ---
+
+// --- START OF CARDIAC PATIENT DATA ---
+
+export interface CardiacPatient {
+    patientId: string;
+    name: string;
+    age: number;
+    gender: 'Male' | 'Female';
+    device: {
+        type: 'Pacemaker' | 'ICD' | 'LVAD';
+        model: string;
+        serial: string;
+        implantedDate: string;
+    };
+    telemetry: {
+        battery: {
+            percentage: number;
+            voltage: number;
+        };
+        leadImpedance: {
+            value: number;
+            trend: number;
+        };
+        pacingThreshold: number;
+        pumpFlow?: number;
+        powerSpikes?: boolean;
+        arrhythmiaEvents: string[];
+    };
+    vitals: {
+        hr: number;
+        bp: string;
+        spo2: number;
+    };
+    aiPrediction: {
+        risk: number;
+        timeframe: string;
+        explanation: string;
+        suggestion: string;
+    };
+    location: {
+        city: string;
+        coordinates: {
+            lat: number;
+            lng: number;
+        };
+    };
+    nearbyHospitals: {
+        name: string;
+        distance: string;
+        tags: string[];
+    }[];
+    assignedDoctor: string;
+}
+
+export const dummyCardiacPatients: CardiacPatient[] = [
+    {
+        patientId: 'P3001',
+        name: 'Rajiv Menon',
+        age: 64,
+        gender: 'Male',
+        device: {
+            type: 'Pacemaker',
+            model: 'PMX-A100',
+            serial: 'PMX-A-00123',
+            implantedDate: '2019-06-12'
+        },
+        telemetry: {
+            battery: { percentage: 27, voltage: 2.65 },
+            leadImpedance: { value: 680, trend: 38 },
+            pacingThreshold: 2.4,
+            arrhythmiaEvents: ['Bradycardia episodes']
+        },
+        vitals: { hr: 48, bp: '100/60 mmHg', spo2: 93 },
+        aiPrediction: {
+            risk: 84,
+            timeframe: '2h 45m',
+            explanation: 'Lead impedance rose 38% in 48min; battery voltage fell to 2.65V; intermittent bradycardia noted.',
+            suggestion: 'Call patient to present immediately; prepare emergency pacing; consider on-site interrogation.'
+        },
+        location: { city: 'Mumbai, India', coordinates: { lat: 19.0760, lng: 72.8777 } },
+        nearbyHospitals: [
+            { name: 'Apollo Hospitals', distance: '3.2 km', tags: ['Cardiac Cath Lab', 'ICU capacity'] },
+            { name: 'Jaslok Hospital', distance: '4.7 km', tags: ['Neurointerventional available'] }
+        ],
+        assignedDoctor: 'Dr. S. Mehra (Cardiology)'
+    },
+    {
+        patientId: 'P3002',
+        name: 'Aisha Khan',
+        age: 57,
+        gender: 'Female',
+        device: {
+            type: 'ICD',
+            model: 'ICD-Z900',
+            serial: 'ICD-Z-00456',
+            implantedDate: '2021-11-02'
+        },
+        telemetry: {
+            battery: { percentage: 44, voltage: 2.8 },
+            leadImpedance: { value: 950, trend: 55 },
+            pacingThreshold: 1.8,
+            arrhythmiaEvents: ['Frequent ventricular ectopy']
+        },
+        vitals: { hr: 110, bp: '140/90 mmHg', spo2: 95 },
+        aiPrediction: {
+            risk: 71,
+            timeframe: '2h 10m',
+            explanation: 'High risk of inappropriate shocks leading to arrhythmia and collapse due to lead impedance spike and ectopy.',
+            suggestion: 'Initiate Tele-Eval to interrogate device remotely. Prepare for anti-arrhythmic medication.'
+        },
+        location: { city: 'New Delhi, India', coordinates: { lat: 28.6139, lng: 77.2090 } },
+        nearbyHospitals: [
+            { name: 'AIIMS Delhi', distance: '6.0 km', tags: ['Tertiary Cardiac Centre'] },
+            { name: 'Max Super Speciality', distance: '4.2 km', tags: ['Cardiac ICU'] }
+        ],
+        assignedDoctor: 'Dr. N. Verma (Electrophysiology)'
+    },
+    {
+        patientId: 'P3003',
+        name: 'Thomas Miller',
+        age: 72,
+        gender: 'Male',
+        device: {
+            type: 'LVAD',
+            model: 'LVAD-Pro V3',
+            serial: 'LVAD-P-0789',
+            implantedDate: '2023-02-18'
+        },
+        telemetry: {
+            battery: { percentage: 88, voltage: 14.0 },
+            leadImpedance: { value: 0, trend: 0 },
+            pacingThreshold: 0,
+            pumpFlow: 2.1,
+            powerSpikes: true,
+            arrhythmiaEvents: ['Pump flow drop detected']
+        },
+        vitals: { hr: 85, bp: '88/55 mmHg', spo2: 90 },
+        aiPrediction: {
+            risk: 93,
+            timeframe: '1h 40m',
+            explanation: 'Pump flow dropped from 4.5 to 2.1 L/min with power spikes, indicating imminent thrombosis or pump failure.',
+            suggestion: 'CRITICAL ALERT: Auto-dispatching ambulance. Prepare for emergency VAD team intervention.'
+        },
+        location: { city: 'London, UK', coordinates: { lat: 51.5074, lng: -0.1278 } },
+        nearbyHospitals: [
+            { name: 'Royal London Hospital', distance: '5.5 km', tags: ['VAD center'] },
+            { name: 'St. Thomas’ Hospital', distance: '3.8 km', tags: ['Cardiac ICU'] }
+        ],
+        assignedDoctor: 'Dr. L. Patel (Heart Failure/VAD specialist)'
+    },
+    {
+        patientId: 'P3004',
+        name: 'Maria Garcia',
+        age: 59,
+        gender: 'Female',
+        device: {
+            type: 'Pacemaker',
+            model: 'PMX-S50',
+            serial: 'PMX-S-0222',
+            implantedDate: '2018-09-05'
+        },
+        telemetry: {
+            battery: { percentage: 38, voltage: 2.75 },
+            leadImpedance: { value: 550, trend: 10 },
+            pacingThreshold: 3.2,
+            arrhythmiaEvents: ['Intermittent loss of capture']
+        },
+        vitals: { hr: 52, bp: '105/70 mmHg', spo2: 94 },
+        aiPrediction: {
+            risk: 58,
+            timeframe: '3h',
+            explanation: 'Pacing threshold has jumped to 3.2V with loss of capture events. Moderate risk of symptomatic bradycardia.',
+            suggestion: 'Schedule an in-person device check within 24 hours. Advise patient to report dizziness.'
+        },
+        location: { city: 'São Paulo, Brazil', coordinates: { lat: -23.5505, lng: -46.6333 } },
+        nearbyHospitals: [
+            { name: 'Hospital do Coração', distance: '2.9 km', tags: ['Cardiac emergency'] },
+            { name: 'São Paulo General', distance: '5.1 km', tags: ['ICU'] }
+        ],
+        assignedDoctor: 'Dr. R. Oliveira (Cardiology)'
+    },
+    {
+        patientId: 'P3005',
+        name: 'Arun Shah',
+        age: 68,
+        gender: 'Male',
+        device: {
+            type: 'ICD',
+            model: 'CRTD-Elite',
+            serial: 'CRTD-E-3344',
+            implantedDate: '2020-04-22'
+        },
+        telemetry: {
+            battery: { percentage: 65, voltage: 2.85 },
+            leadImpedance: { value: 720, trend: 5 },
+            pacingThreshold: 1.5,
+            arrhythmiaEvents: ['Rising atrial fibrillation burden']
+        },
+        vitals: { hr: 120, bp: '130/78 mmHg', spo2: 92 },
+        aiPrediction: {
+            risk: 76,
+            timeframe: '2h 30m',
+            explanation: 'High atrial fibrillation burden with borderline SpO2 and battery voltage fluctuations increases risk of arrhythmia-related collapse.',
+            suggestion: 'Consider remote device adjustment to manage AF. Patient should be on alert for symptoms.'
+        },
+        location: { city: 'Bengaluru, India', coordinates: { lat: 12.9716, lng: 77.5946 } },
+        nearbyHospitals: [
+            { name: 'Fortis Hospital', distance: '6.8 km', tags: ['Cardiac Cath Lab'] },
+            { name: 'Manipal Hospital', distance: '3.5 km', tags: ['Cardiac ICU'] }
+        ],
+        assignedDoctor: 'Dr. K. Srinivasan (Cardiac Electrophysiology)'
+    }
+];
+
+// --- END OF CARDIAC PATIENT DATA ---
