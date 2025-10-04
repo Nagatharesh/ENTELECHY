@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -153,7 +154,8 @@ export function PatientChatbot() {
                     return { author: 'bot' as const, text: `${EMOJIS.ERROR} I'm still learning. Please select from the main menu.`, quickReplies: QUICK_REPLIES.MAIN_MENU, nextState: 'main_menu' };
             }
         };
-
+        
+        // Initial flow detection
         if (state === 'main_menu' || !state) {
             if (lowerInput.startsWith('flow_')) return handleFlow(lowerInput);
             if (lowerInput.includes('appointment')) return handleFlow('flow_appointments');
@@ -163,26 +165,36 @@ export function PatientChatbot() {
             if (lowerInput.includes('profile')) return handleFlow('flow_profile');
         }
 
+        // State-based responses
         switch (state) {
             case 'appointments':
                 if (lowerInput.includes('book_new')) {
                     return { author: 'bot', text: "To book a new appointment, please navigate to the 'Doctors' or 'Appointments' tab in your dashboard.", quickReplies: QUICK_REPLIES.APPOINTMENTS, nextState: 'appointments' };
                 }
                 if (lowerInput.includes('view_upcoming')) {
-                     return { author: 'bot', text: "You can see all your upcoming appointments in the 'Appointments' tab.", quickReplies: QUICK_REPLIES.APPOINTMENTS, nextState: 'appointments' };
+                     return { author: 'bot', text: `${EMOJIS.BOOK} Upcoming:\n- Dr. Kapoor on Oct 20\n- Dr. Malhotra on Oct 25.`, quickReplies: QUICK_REPLIES.APPOINTMENTS, nextState: 'appointments' };
                 }
                 break;
             
             case 'records':
                  if (lowerInput.includes('rec_labs')) {
-                    return { author: 'bot', text: "Your lab reports are available under the 'Records' tab. I can also show you the latest one here if you'd like.", quickReplies: QUICK_REPLIES.RECORDS, nextState: 'records' };
+                    return { author: 'bot', text: `${EMOJIS.RECORDS} Latest Lab Report:\n- Hemoglobin: 12.5 g/dL (Normal)\n- WBC: 8500 /μL (Normal)`, quickReplies: QUICK_REPLIES.RECORDS, nextState: 'records' };
                 }
+                 if (lowerInput.includes('rec_rx')) {
+                    return { author: 'bot', text: "Your prescriptions are available under the 'Prescriptions' tab.", quickReplies: QUICK_REPLIES.RECORDS, nextState: 'records' };
+                 }
+                  if (lowerInput.includes('rec_history')) {
+                    return { author: 'bot', text: "Your visit history is available under the 'Records' tab.", quickReplies: QUICK_REPLIES.RECORDS, nextState: 'records' };
+                 }
                 break;
             
              case 'reminders':
                  if (lowerInput.includes('rem_medication')) {
                     return { author: 'bot', text: "Okay, a medication reminder. What is the name of the medicine?", nextState: 'reminders_med_name' };
                 }
+                 if (lowerInput.includes('rem_appointment')) {
+                    return { author: 'bot', text: "Which appointment would you like a reminder for? You can see upcoming appointments in the 'Appointments' tab.", quickReplies: QUICK_REPLIES.REMINDERS, nextState: 'reminders' };
+                 }
                 break;
 
             case 'reminders_med_name':
@@ -308,3 +320,4 @@ export function PatientChatbot() {
         </>
     );
 }
+
