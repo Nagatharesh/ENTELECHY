@@ -3,12 +3,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, X, Send, User, MessageSquare } from 'lucide-react';
+import { Bot, X, Send, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
 
 const EMOJIS = {
@@ -26,8 +25,8 @@ const QUICK_REPLIES = {
     MAIN_MENU: [
         { text: `${EMOJIS.BOOK} Appointments`, action: 'flow_appointments' },
         { text: `${EMOJIS.HEALTH} My Records`, action: 'flow_records' },
-        { text: `${EMOJIS.TIME} Reminders`, action: 'flow_reminders' },
-        { text: `${EMOJIS.INSIGHT} Health Tips`, action: 'flow_assistance' }
+        { text: `${EMOJIS.TIME} Set Reminder`, action: 'flow_reminders' },
+        { text: `${EMOJIS.INSIGHT} Health Assistance`, action: 'flow_assistance' }
     ],
     APPOINTMENTS: [
         { text: 'Book New Appointment', action: 'appt_book_new' },
@@ -43,6 +42,13 @@ const QUICK_REPLIES = {
     REMINDERS: [
         { text: 'For Medication', action: 'rem_medication' },
         { text: 'For an Appointment', action: 'rem_appointment' },
+        { text: 'Back to Main Menu', action: 'main_menu' },
+    ],
+    ASSISTANCE: [
+        { text: 'Explain BP Trend', action: 'assist_explain_bp' },
+        { text: 'Headache Severity 5', action: 'assist_symptom_mild' },
+        { text: 'Chest Pain Severity 9', action: 'assist_symptom_high' },
+        { text: 'Predict Diabetes Risk', action: 'assist_predict_diabetes' },
         { text: 'Back to Main Menu', action: 'main_menu' },
     ],
     EMERGENCY: [
@@ -119,42 +125,55 @@ export function PatientChatbot() {
             };
         }
 
-        switch (state) {
-            case 'main_menu':
-                if (lowerInput.includes('appointment')) {
+        const handleFlow = (flow: string) => {
+            switch(flow) {
+                case 'flow_appointments':
                     return {
-                        author: 'bot',
+                        author: 'bot' as const,
                         text: `${EMOJIS.BOOK} I can help with appointments! What would you like to do?`,
                         quickReplies: QUICK_REPLIES.APPOINTMENTS,
                         nextState: 'appointments'
                     };
-                }
-                if (lowerInput.includes('record')) {
+                case 'flow_records':
                     return {
-                        author: 'bot',
+                        author: 'bot' as const,
                         text: `${EMOJIS.HEALTH} Sure, I can show you your medical records. Which part are you interested in?`,
                         quickReplies: QUICK_REPLIES.RECORDS,
                         nextState: 'records'
                     };
-                }
-                if (lowerInput.includes('reminder')) {
-                    return {
-                        author: 'bot',
+                case 'flow_reminders':
+                     return {
+                        author: 'bot' as const,
                         text: `${EMOJIS.TIME} Let's set a reminder! What is this for?`,
                         quickReplies: QUICK_REPLIES.REMINDERS,
                         nextState: 'reminders'
                     };
-                }
-                if (lowerInput.includes('assistance') || lowerInput.includes('tip')) {
-                     return {
-                        author: 'bot',
-                        text: `${EMOJIS.INSIGHT} Health Tip: Staying hydrated can improve energy levels and brain function. Try to drink 8 glasses of water a day!`,
+                case 'flow_assistance':
+                    return {
+                        author: 'bot' as const,
+                        text: `${EMOJIS.INSIGHT} How can I assist you with your health today?`,
+                        quickReplies: QUICK_REPLIES.ASSISTANCE,
+                        nextState: 'assistance'
+                    };
+                default:
+                    return {
+                        author: 'bot' as const,
+                        text: `${EMOJIS.ERROR} I'm still learning. Please select from the main menu.`,
                         quickReplies: QUICK_REPLIES.MAIN_MENU,
                         nextState: 'main_menu'
                     };
-                }
-                break;
-            
+            }
+        };
+
+        if (state === 'main_menu') {
+            if (lowerInput.startsWith('flow_')) return handleFlow(lowerInput);
+            if (lowerInput.includes('appointment')) return handleFlow('flow_appointments');
+            if (lowerInput.includes('record')) return handleFlow('flow_records');
+            if (lowerInput.includes('reminder')) return handleFlow('flow_reminders');
+            if (lowerInput.includes('assist') || lowerInput.includes('help')) return handleFlow('flow_assistance');
+        }
+
+        switch (state) {
             case 'appointments':
                 if (lowerInput.includes('book_new')) {
                     return {
@@ -172,14 +191,6 @@ export function PatientChatbot() {
                         nextState: 'appointments'
                     };
                 }
-                if (lowerInput.includes('main_menu')) {
-                    return {
-                        author: 'bot',
-                        text: "Is there anything else I can help with?",
-                        quickReplies: QUICK_REPLIES.MAIN_MENU,
-                        nextState: 'main_menu'
-                    };
-                }
                 break;
             
             case 'records':
@@ -191,14 +202,6 @@ export function PatientChatbot() {
                         nextState: 'records'
                     };
                 }
-                 if (lowerInput.includes('main_menu')) {
-                    return {
-                        author: 'bot',
-                        text: "Is there anything else I can help with?",
-                        quickReplies: QUICK_REPLIES.MAIN_MENU,
-                        nextState: 'main_menu'
-                    };
-                }
                 break;
             
              case 'reminders':
@@ -207,14 +210,6 @@ export function PatientChatbot() {
                         author: 'bot',
                         text: "Okay, a medication reminder. What is the name of the medicine?",
                         nextState: 'reminders_med_name'
-                    };
-                }
-                 if (lowerInput.includes('main_menu')) {
-                    return {
-                        author: 'bot',
-                        text: "Is there anything else I can help with?",
-                        quickReplies: QUICK_REPLIES.MAIN_MENU,
-                        nextState: 'main_menu'
                     };
                 }
                 break;
@@ -233,7 +228,50 @@ export function PatientChatbot() {
                     quickReplies: QUICK_REPLIES.MAIN_MENU,
                     nextState: 'main_menu'
                 };
+            
+            case 'assistance':
+                if (lowerInput.includes('explain_bp')) {
+                     return {
+                        author: 'bot',
+                        text: `${EMOJIS.INSIGHT} Trend telescope: Your BP is steady! For a detailed graph, check the 'Vitals' tab.`,
+                        quickReplies: QUICK_REPLIES.ASSISTANCE,
+                        nextState: 'assistance'
+                    };
+                }
+                if (lowerInput.includes('symptom_mild')) {
+                     return {
+                        author: 'bot',
+                        text: `${EMOJIS.HEALTH} For a mild headache, please rest and stay hydrated. If it worsens, let me know.`,
+                        quickReplies: QUICK_REPLIES.ASSISTANCE,
+                        nextState: 'assistance'
+                    };
+                }
+                if (lowerInput.includes('symptom_high')) {
+                     return {
+                        author: 'bot',
+                        text: `${EMOJIS.EMERGENCY} High-severity symptom detected! I strongly recommend seeking immediate medical attention.`,
+                        quickReplies: QUICK_REPLIES.EMERGENCY,
+                        nextState: 'main_menu'
+                    };
+                }
+                 if (lowerInput.includes('predict_diabetes')) {
+                     return {
+                        author: 'bot',
+                        text: `${EMOJIS.INSIGHT} Risk rune read: Your simulated diabetes risk is low! To keep it that way, aim for daily walks.`,
+                        quickReplies: QUICK_REPLIES.ASSISTANCE,
+                        nextState: 'assistance'
+                    };
+                }
+                break;
+        }
 
+        if (lowerInput.includes('main_menu')) {
+            return {
+                author: 'bot',
+                text: "Is there anything else I can help with?",
+                quickReplies: QUICK_REPLIES.MAIN_MENU,
+                nextState: 'main_menu'
+            };
         }
 
         return {
