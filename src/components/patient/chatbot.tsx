@@ -19,26 +19,36 @@ const EMOJIS = {
   BOOK: '📅🔥',
   TIME: '⏰🌅',
   HEALTH: '🏥❤',
+  EMERGENCY: '🚨🆘',
 };
 
 const QUICK_REPLIES = {
-  MAIN_MENU: [
-    { text: `${EMOJIS.BOOK} Appointments`, action: 'appointments' },
-    { text: `${EMOJIS.HEALTH} My Records`, action: 'records' },
-    { text: `${EMOJIS.TIME} Reminders`, action: 'reminders' },
-    { text: `${EMOJIS.INSIGHT} Health Tips`, action: 'assistance' }
-  ],
-  APPOINTMENTS: [
-      { text: 'Book New Appointment', action: 'book_new' },
-      { text: 'View Upcoming', action: 'view_upcoming' },
-      { text: 'Back to Main Menu', action: 'main_menu' },
-  ],
-  RECORDS: [
-      { text: 'Lab Reports', action: 'records_labs' },
-      { text: 'Prescriptions', action: 'records_rx' },
-      { text: 'Visit History', action: 'records_history' },
-      { text: 'Back to Main Menu', action: 'main_menu' },
-  ]
+    MAIN_MENU: [
+        { text: `${EMOJIS.BOOK} Appointments`, action: 'flow_appointments' },
+        { text: `${EMOJIS.HEALTH} My Records`, action: 'flow_records' },
+        { text: `${EMOJIS.TIME} Reminders`, action: 'flow_reminders' },
+        { text: `${EMOJIS.INSIGHT} Health Tips`, action: 'flow_assistance' }
+    ],
+    APPOINTMENTS: [
+        { text: 'Book New Appointment', action: 'appt_book_new' },
+        { text: 'View Upcoming', action: 'appt_view_upcoming' },
+        { text: 'Back to Main Menu', action: 'main_menu' },
+    ],
+    RECORDS: [
+        { text: 'Lab Reports', action: 'rec_labs' },
+        { text: 'Prescriptions', action: 'rec_rx' },
+        { text: 'Visit History', action: 'rec_history' },
+        { text: 'Back to Main Menu', action: 'main_menu' },
+    ],
+    REMINDERS: [
+        { text: 'For Medication', action: 'rem_medication' },
+        { text: 'For an Appointment', action: 'rem_appointment' },
+        { text: 'Back to Main Menu', action: 'main_menu' },
+    ],
+    EMERGENCY: [
+      { text: `${EMOJIS.EMERGENCY} Call Ambulance`, action: 'emergency_call' },
+      { text: 'Contact Doctor', action: 'doctor_call' }
+    ]
 };
 
 
@@ -46,6 +56,7 @@ export function PatientChatbot() {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<{ author: 'bot' | 'user'; text: string; quickReplies?: any[] }[]>([]);
     const [inputValue, setInputValue] = useState('');
+    const [conversationState, setConversationState] = useState('main_menu');
     const scrollAreaRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -62,7 +73,6 @@ export function PatientChatbot() {
 
     useEffect(() => {
         if (scrollAreaRef.current) {
-            // A bit of a hack to scroll to bottom. In a real app, use the imperative handle from ScrollArea.
             setTimeout(() => {
                  const viewport = scrollAreaRef.current?.querySelector('[data-radix-scroll-area-viewport]');
                 if(viewport) viewport.scrollTop = viewport.scrollHeight;
@@ -78,10 +88,10 @@ export function PatientChatbot() {
         setMessages(prev => [...prev, userMessage]);
         setInputValue('');
 
-        // Simulate bot response
         setTimeout(() => {
-            const botResponse = getBotResponse(messageText);
+            const botResponse = getBotResponse(messageText, conversationState);
             setMessages(prev => [...prev, botResponse]);
+            setConversationState(botResponse.nextState || 'main_menu');
         }, 1000);
     };
 
@@ -90,80 +100,147 @@ export function PatientChatbot() {
         setMessages(prev => [...prev, userMessage]);
         
         setTimeout(() => {
-            const botResponse = getBotResponse(action);
+            const botResponse = getBotResponse(action, conversationState);
             setMessages(prev => [...prev, botResponse]);
+            setConversationState(botResponse.nextState || 'main_menu');
         }, 1000);
     }
 
-    const getBotResponse = (userInput: string): { author: 'bot', text: string, quickReplies?: any[] } => {
+    const getBotResponse = (userInput: string, state: string): { author: 'bot', text: string, quickReplies?: any[], nextState?: string } => {
         const lowerInput = userInput.toLowerCase();
         
-        // Main Menu Actions
-        if (lowerInput.includes('appointments')) {
+        // High-priority emergency check
+        if (lowerInput.includes('chest pain') && (lowerInput.includes('9') || lowerInput.includes('10'))) {
             return {
                 author: 'bot',
-                text: `${EMOJIS.BOOK} I can help with appointments! What would you like to do?`,
-                quickReplies: QUICK_REPLIES.APPOINTMENTS
-            };
-        }
-        if (lowerInput.includes('records')) {
-            return {
-                author: 'bot',
-                text: `${EMOJIS.HEALTH} Sure, I can show you your medical records. Which part are you interested in?`,
-                quickReplies: QUICK_REPLIES.RECORDS
-            };
-        }
-         if (lowerInput.includes('reminders')) {
-            return {
-                author: 'bot',
-                text: `${EMOJIS.TIME} Let's set a reminder! What is this reminder for? (e.g., "Take Paracetamol at 8 AM")`,
-                quickReplies: QUICK_REPLIES.MAIN_MENU,
-            };
-        }
-        if (lowerInput.includes('assistance') || lowerInput.includes('tip')) {
-             return {
-                author: 'bot',
-                text: `${EMOJIS.INSIGHT} Health Tip: Staying hydrated can improve energy levels and brain function. Try to drink 8 glasses of water a day!`,
-                quickReplies: QUICK_REPLIES.MAIN_MENU,
-            };
-        }
-        if (lowerInput.includes('main_menu')) {
-            return {
-                author: 'bot',
-                text: `Is there anything else I can help you with?`,
-                quickReplies: QUICK_REPLIES.MAIN_MENU,
+                text: `${EMOJIS.EMERGENCY} High-severity symptom detected! I strongly recommend seeking immediate medical attention.`,
+                quickReplies: QUICK_REPLIES.EMERGENCY,
+                nextState: 'main_menu'
             };
         }
 
-        // Appointment Sub-flows
-        if (lowerInput.includes('book_new')) {
-            return {
-                author: 'bot',
-                text: "To book a new appointment, please navigate to the 'Doctors' or 'Appointments' tab in your dashboard.",
-                quickReplies: QUICK_REPLIES.APPOINTMENTS,
-            };
-        }
-        if (lowerInput.includes('view_upcoming')) {
-             return {
-                author: 'bot',
-                text: "You can see all your upcoming appointments in the 'Appointments' tab.",
-                quickReplies: QUICK_REPLIES.APPOINTMENTS,
-            };
-        }
-        
-        // Records Sub-flows
-        if (lowerInput.includes('records_labs')) {
-            return {
-                author: 'bot',
-                text: "Your lab reports are available under the 'Records' tab. I can also show you the latest one here if you'd like.",
-                quickReplies: QUICK_REPLIES.RECORDS,
-            };
+        switch (state) {
+            case 'main_menu':
+                if (lowerInput.includes('appointment')) {
+                    return {
+                        author: 'bot',
+                        text: `${EMOJIS.BOOK} I can help with appointments! What would you like to do?`,
+                        quickReplies: QUICK_REPLIES.APPOINTMENTS,
+                        nextState: 'appointments'
+                    };
+                }
+                if (lowerInput.includes('record')) {
+                    return {
+                        author: 'bot',
+                        text: `${EMOJIS.HEALTH} Sure, I can show you your medical records. Which part are you interested in?`,
+                        quickReplies: QUICK_REPLIES.RECORDS,
+                        nextState: 'records'
+                    };
+                }
+                if (lowerInput.includes('reminder')) {
+                    return {
+                        author: 'bot',
+                        text: `${EMOJIS.TIME} Let's set a reminder! What is this for?`,
+                        quickReplies: QUICK_REPLIES.REMINDERS,
+                        nextState: 'reminders'
+                    };
+                }
+                if (lowerInput.includes('assistance') || lowerInput.includes('tip')) {
+                     return {
+                        author: 'bot',
+                        text: `${EMOJIS.INSIGHT} Health Tip: Staying hydrated can improve energy levels and brain function. Try to drink 8 glasses of water a day!`,
+                        quickReplies: QUICK_REPLIES.MAIN_MENU,
+                        nextState: 'main_menu'
+                    };
+                }
+                break;
+            
+            case 'appointments':
+                if (lowerInput.includes('book_new')) {
+                    return {
+                        author: 'bot',
+                        text: "To book a new appointment, please navigate to the 'Doctors' or 'Appointments' tab in your dashboard.",
+                        quickReplies: QUICK_REPLIES.APPOINTMENTS,
+                        nextState: 'appointments'
+                    };
+                }
+                if (lowerInput.includes('view_upcoming')) {
+                     return {
+                        author: 'bot',
+                        text: "You can see all your upcoming appointments in the 'Appointments' tab.",
+                        quickReplies: QUICK_REPLIES.APPOINTMENTS,
+                        nextState: 'appointments'
+                    };
+                }
+                if (lowerInput.includes('main_menu')) {
+                    return {
+                        author: 'bot',
+                        text: "Is there anything else I can help with?",
+                        quickReplies: QUICK_REPLIES.MAIN_MENU,
+                        nextState: 'main_menu'
+                    };
+                }
+                break;
+            
+            case 'records':
+                 if (lowerInput.includes('rec_labs')) {
+                    return {
+                        author: 'bot',
+                        text: "Your lab reports are available under the 'Records' tab. I can also show you the latest one here if you'd like.",
+                        quickReplies: QUICK_REPLIES.RECORDS,
+                        nextState: 'records'
+                    };
+                }
+                 if (lowerInput.includes('main_menu')) {
+                    return {
+                        author: 'bot',
+                        text: "Is there anything else I can help with?",
+                        quickReplies: QUICK_REPLIES.MAIN_MENU,
+                        nextState: 'main_menu'
+                    };
+                }
+                break;
+            
+             case 'reminders':
+                 if (lowerInput.includes('rem_medication')) {
+                    return {
+                        author: 'bot',
+                        text: "Okay, a medication reminder. What is the name of the medicine?",
+                        nextState: 'reminders_med_name'
+                    };
+                }
+                 if (lowerInput.includes('main_menu')) {
+                    return {
+                        author: 'bot',
+                        text: "Is there anything else I can help with?",
+                        quickReplies: QUICK_REPLIES.MAIN_MENU,
+                        nextState: 'main_menu'
+                    };
+                }
+                break;
+
+            case 'reminders_med_name':
+                 return {
+                    author: 'bot',
+                    text: `Great. And at what time should I remind you to take ${userInput}? (e.g., "8 AM" or "9 PM")`,
+                    nextState: 'reminders_med_time'
+                };
+            
+            case 'reminders_med_time':
+                 return {
+                    author: 'bot',
+                    text: `${EMOJIS.SUCCESS} All set! I will remind you.`,
+                    quickReplies: QUICK_REPLIES.MAIN_MENU,
+                    nextState: 'main_menu'
+                };
+
         }
 
         return {
             author: 'bot',
-            text: `${EMOJIS.ERROR} I'm still learning and my capabilities are currently limited. Please use the main menu for now.`,
+            text: `${EMOJIS.ERROR} I'm still learning and my capabilities are limited. Please use the main menu for now.`,
             quickReplies: QUICK_REPLIES.MAIN_MENU,
+            nextState: 'main_menu'
         };
     };
 
