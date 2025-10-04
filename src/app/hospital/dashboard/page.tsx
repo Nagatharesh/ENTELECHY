@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Suspense, useState } from 'react';
@@ -33,6 +34,7 @@ import { SafetyAndAlerts } from '@/components/hospital/safety-and-alerts';
 import { EmergencyResourceStatus } from '@/components/hospital/emergency-resource-status';
 import { ReportsAndAnalytics } from '@/components/hospital/reports-and-analytics';
 import { StaffScheduling } from '@/components/hospital/staff-scheduling';
+import { HospitalChatbot } from '@/components/hospital/hospital-chatbot';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
@@ -154,6 +156,7 @@ function DashboardContent() {
             {renderContent()}
           </div>
         </main>
+        <HospitalChatbot />
       </div>
     
   );
