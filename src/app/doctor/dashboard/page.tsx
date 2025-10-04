@@ -36,6 +36,7 @@ import { GuardianRxHub } from '@/components/doctor/guardian-rx-hub';
 import { PatientListDashboard } from '@/components/doctor/patient-list-dashboard';
 import { OnlinePrescriptionHub } from '@/components/doctor/online-prescription-hub';
 import { MedicalCertificateHub } from '@/components/doctor/medical-certificate-hub';
+import { DoctorChatbot } from '@/components/doctor/doctor-chatbot';
 
 
 function DashboardContent() {
@@ -164,6 +165,7 @@ function DashboardContent() {
             {renderContent()}
           </div>
         </main>
+        <DoctorChatbot />
       </div>
     
   );
