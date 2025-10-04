@@ -74,6 +74,24 @@ export function AmbulanceDashboard() {
             });
         }
     };
+    
+    const handleDeclineDispatch = (dispatchId: string) => {
+        toast({
+            variant: "destructive",
+            title: "Dispatch Declined",
+            description: "The dispatch request has been declined and will be reassigned.",
+        });
+        // In a real app, you'd also update the dispatch request status on the backend.
+    }
+
+    const handlePanic = () => {
+        toast({
+            variant: "destructive",
+            title: "PANIC BUTTON ACTIVATED",
+            description: "Emergency signal sent to command center. Your location is being tracked.",
+            duration: 10000,
+        });
+    }
 
     const handleCompleteTrip = () => {
         if (currentDispatch) {
@@ -124,7 +142,7 @@ export function AmbulanceDashboard() {
                 </div>
                  <div className="flex items-center gap-4">
                     {currentDispatch && <Badge variant="secondary" className="text-lg">ETA: {Math.ceil(eta)} min</Badge>}
-                    <Button variant="destructive" className="glowing-shadow-interactive"><Siren className="mr-2"/>PANIC</Button>
+                    <Button variant="destructive" className="glowing-shadow-interactive" onClick={handlePanic}><Siren className="mr-2"/>PANIC</Button>
                     <Button variant="outline" onClick={() => router.push('/login?role=ambulance')}><LogOut className="mr-2"/>Logout</Button>
                 </div>
             </header>
@@ -134,7 +152,12 @@ export function AmbulanceDashboard() {
                     {currentDispatch ? (
                         <LiveNavigation dispatch={currentDispatch} onComplete={handleCompleteTrip} />
                     ) : (
-                        <DispatchAlert dispatch={dummyDispatchRequests.find(d => d.ambulanceId === ambulance.id && d.status === 'pending')} onAccept={handleAcceptDispatch} isReady={isReady}/>
+                        <DispatchAlert 
+                            dispatch={dummyDispatchRequests.find(d => d.ambulanceId === ambulance.id && d.status === 'pending')} 
+                            onAccept={handleAcceptDispatch} 
+                            onDecline={handleDeclineDispatch}
+                            isReady={isReady}
+                        />
                     )}
                 </div>
                 <div className="space-y-6">

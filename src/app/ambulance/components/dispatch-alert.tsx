@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { User, MapPin, Clock, Siren, Check, X, FileText, HeartPulse } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-export function DispatchAlert({ dispatch, onAccept, isReady }) {
+export function DispatchAlert({ dispatch, onAccept, onDecline, isReady }) {
     if (!dispatch) {
         return (
             <Card className="glassmorphism h-full flex flex-col items-center justify-center text-center glowing-shadow perspective-1000">
@@ -42,7 +42,7 @@ export function DispatchAlert({ dispatch, onAccept, isReady }) {
                 </div>
             </CardContent>
             <CardFooter className="flex gap-4">
-                <Button variant="destructive" className="flex-1"><X className="mr-2"/>Decline</Button>
+                <Button variant="destructive" className="flex-1" onClick={() => onDecline(dispatch.id)}><X className="mr-2"/>Decline</Button>
                 <Button className="flex-1 glowing-shadow-interactive" onClick={() => onAccept(dispatch.id)} disabled={!isReady}>
                     <Check className="mr-2"/>Accept Dispatch
                 </Button>

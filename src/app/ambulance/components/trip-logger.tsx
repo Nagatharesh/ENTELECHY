@@ -6,8 +6,18 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { format, formatDistanceToNow } from 'date-fns';
 import { History, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 export function TripLogger({ logs }) {
+    const { toast } = useToast();
+
+    const handleViewReport = (logId: string) => {
+        toast({
+            title: "Loading Full Report...",
+            description: `This would open the detailed trip report for log ID: ${logId}`,
+        });
+    }
+
     return (
         <Card className="glassmorphism">
             <CardHeader>
@@ -25,7 +35,9 @@ export function TripLogger({ logs }) {
                                 </div>
                                 <p className="text-sm text-muted-foreground">From: {log.from}</p>
                                 <p className="text-sm text-muted-foreground">To: {log.to}</p>
-                                <Button variant="link" className="p-0 h-auto text-primary mt-1"><FileText className="mr-1 w-4 h-4"/>View Full Report</Button>
+                                <Button variant="link" className="p-0 h-auto text-primary mt-1" onClick={() => handleViewReport(log.id)}>
+                                    <FileText className="mr-1 w-4 h-4"/>View Full Report
+                                </Button>
                             </div>
                         )) : (
                             <p className="text-center text-muted-foreground py-10">No trip history.</p>
