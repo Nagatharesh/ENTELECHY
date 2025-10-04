@@ -4,7 +4,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Shield, CheckCircle, Siren, Flame, Bot, Building, Search, Bell, Phone, Droplet, Wind, Gauge, Wrench, ShieldCheck, Power, Droplets as WaterDroplets } from "lucide-react";
+import { AlertTriangle, Shield, CheckCircle, Siren, Flame, Bot, Building, Search, Bell, Phone, Droplet, Wind, Gauge, Wrench, ShieldCheck, Power, Droplets as WaterDroplets, AirVent, Ambulance, UserCog, BrainCircuit } from "lucide-react";
 import Image from "next/image";
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -21,6 +21,11 @@ const SystemStatusWidget = ({ title, status, icon: Icon }) => {
         Maintenance: { color: "text-yellow-400", bg: "bg-yellow-400/10", label: "Maint." },
         Alert: { color: "text-destructive", bg: "bg-destructive/10", label: "ALERT" },
         Overload: { color: "text-yellow-400", bg: "bg-yellow-400/10", label: "Overload" },
+        Contaminated: { color: "text-destructive", bg: "bg-destructive/10", label: "Contaminated" },
+        Enroute: { color: "text-blue-400", bg: "bg-blue-400/10", label: "En-Route" },
+        Predicted: { color: "text-yellow-400", bg: "bg-yellow-400/10", label: "Predicted" },
+        Blocked: { color: "text-destructive", bg: "bg-destructive/10", label: "Blocked" },
+        Drill: { color: "text-blue-400", bg: "bg-blue-400/10", label: "Drill Active" }
     };
     const config = statusConfig[status] || { color: "text-gray-400", bg: "bg-gray-500/10", label: "Unknown" };
 
@@ -28,7 +33,7 @@ const SystemStatusWidget = ({ title, status, icon: Icon }) => {
         <div className={`p-3 rounded-lg flex items-center justify-between border ${config.bg}`}>
             <div className="flex items-center gap-3">
                 <Icon className={`w-6 h-6 ${config.color}`} />
-                <span className="font-semibold text-white">{title}</span>
+                <span className="font-semibold text-white text-sm">{title}</span>
             </div>
             <Badge className={cn('text-white', config.bg, `border-${config.color.replace('text-', '')}`)}>{config.label}</Badge>
         </div>
@@ -48,6 +53,11 @@ const AlertCard = ({ alert, onAcknowledge, isAcknowledged }) => {
         case 'fire': Icon = Flame; break;
         case 'water': Icon = WaterDroplets; break;
         case 'power': Icon = Power; break;
+        case 'air': Icon = AirVent; break;
+        case 'ambulance': Icon = Ambulance; break;
+        case 'distress': Icon = UserCog; break;
+        case 'equipment': Icon = Wrench; break;
+        case 'cyber': Icon = ShieldCheck; break;
         default: Icon = Siren;
     }
     
@@ -162,7 +172,16 @@ const InfoBox = ({ icon: Icon, label, value, status }) => {
 
 export function SafetyAndAlerts({ hospitalData }) {
     const [alerts, setAlerts] = useState(hospitalData.alerts);
-    const [systemStatus, setSystemStatus] = useState(hospitalData.safety.systems);
+    const [systemStatus, setSystemStatus] = useState({
+      ...hospitalData.safety.systems,
+      airQuality: 'OK',
+      ambulanceLink: 'Active',
+      distressDetection: 'Active',
+      pipeScanner: 'Active',
+      equipmentPredictor: 'Active',
+      cyberSafety: 'OK',
+      emergencyDrill: 'OK'
+    });
     const [alertFilter, setAlertFilter] = useState('all');
     const [severityFilter, setSeverityFilter] = useState('all');
     const [acknowledgedAlerts, setAcknowledgedAlerts] = useState<string[]>([]);
@@ -178,76 +197,30 @@ export function SafetyAndAlerts({ hospitalData }) {
             description: `${action} protocol has been initiated.`,
         });
     };
-    
-    const handleSimulateFire = () => {
-        const newAlert = {
-            id: `a${Date.now()}`,
-            type: "Fire",
-            severity: "critical",
-            message: "AI detected smoke pattern in Canteen kitchen camera feed.",
-            location: "Canteen Kitchen",
-            timestamp: new Date().toISOString()
-        };
-        setAlerts(prev => [newAlert, ...prev]);
-        setSystemStatus(prev => ({ ...prev, fireAlarms: 'Alert', sprinklers: 'Alert' }));
-        toast({
-            variant: "destructive",
-            title: "🔥 Fire Alert Simulated!",
-            description: "Automated response systems activated. Notifying security.",
-        });
-        
-        // Reset after 15 seconds
-        setTimeout(() => {
-            setSystemStatus(hospitalData.safety.systems);
-            toast({ title: 'Simulation Ended', description: 'Fire alert cleared. Systems returning to normal.'})
-        }, 15000);
-    };
 
-    const handleSimulateLeak = () => {
+    const simulateEvent = (config) => {
         const newAlert = {
             id: `a${Date.now()}`,
-            type: "Water",
-            severity: "critical",
-            message: "AquaSense AI detected water accumulation near MRI Room.",
-            location: "MRI Room",
+            type: config.type,
+            severity: config.severity,
+            message: config.message,
+            location: config.location,
             timestamp: new Date().toISOString()
         };
         setAlerts(prev => [newAlert, ...prev]);
-        setSystemStatus(prev => ({ ...prev, plumbing: 'Alert' }));
+        setSystemStatus(prev => ({ ...prev, ...config.statusChange }));
         toast({
-            variant: "destructive",
-            title: "💧 Water Leak Detected!",
-            description: "Auto power shutdown initiated for MRI Room. Maintenance team notified.",
+            variant: config.severity === 'critical' ? 'destructive' : 'default',
+            title: `🚨 ${config.type} Alert Simulated!`,
+            description: config.toastDescription,
         });
         
         setTimeout(() => {
-            setSystemStatus(prev => ({...prev, plumbing: 'OK'}));
-            toast({ title: 'Leak Simulation Ended', description: 'Water leak issue resolved.'})
-        }, 15000);
-    };
-    
-    const handleSimulateOverload = () => {
-         const newAlert = {
-            id: `a${Date.now()}`,
-            type: "Power",
-            severity: "warning",
-            message: "PowerBalancer AI predicts imminent overload in Ward B (91% load).",
-            location: "Ward B",
-            timestamp: new Date().toISOString()
-        };
-        setAlerts(prev => [newAlert, ...prev]);
-        setSystemStatus(prev => ({ ...prev, electrical: 'Overload', backupGenerator: 'Active' }));
-        toast({
-            title: "⚠️ Power Overload Warning!",
-            description: "Switching to backup generator for Ward B in 5 seconds.",
-        });
-        
-        setTimeout(() => {
-            setSystemStatus(prev => ({...prev, electrical: 'OK', backupGenerator: 'OK'}));
-             toast({ title: 'Power Restored', description: 'Load stabilized. Switched back to main grid.'})
-        }, 10000);
+            setSystemStatus(prev => ({...prev, ...config.statusReset}));
+            toast({ title: 'Simulation Ended', description: `${config.type} simulation cleared. Systems returning to normal.`})
+        }, config.duration || 15000);
     }
-
+    
     const filteredAlerts = useMemo(() => {
         return alerts.filter(alert => {
             const typeMatch = alertFilter === 'all' || alert.type.toLowerCase() === alertFilter.toLowerCase();
@@ -273,13 +246,19 @@ export function SafetyAndAlerts({ hospitalData }) {
                     <CardHeader>
                         <CardTitle className="text-white flex items-center gap-2"><Building /> System Health</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-3 flex-grow">
+                    <CardContent className="space-y-2 flex-grow overflow-y-auto">
                         <SystemStatusWidget title="Fire Alarms" status={systemStatus.fireAlarms} icon={Flame} />
                         <SystemStatusWidget title="Sprinklers" status={systemStatus.sprinklers} icon={Shield} />
                         <SystemStatusWidget title="Electrical Grid" status={systemStatus.electrical} icon={Power} />
                         <SystemStatusWidget title="Backup Generator" status={systemStatus.backupGenerator} icon={Power} />
                         <SystemStatusWidget title="Water & Plumbing" status={systemStatus.plumbing} icon={WaterDroplets} />
-                        <SystemStatusWidget title="Emergency Exits" status={systemStatus.exits} icon={CheckCircle} />
+                        <SystemStatusWidget title="Air Quality" status={systemStatus.airQuality} icon={AirVent} />
+                        <SystemStatusWidget title="Ambulance Link" status={systemStatus.ambulanceLink} icon={Ambulance} />
+                        <SystemStatusWidget title="Distress Detection" status={systemStatus.distressDetection} icon={UserCog} />
+                        <SystemStatusWidget title="Pipe Scanner" status={systemStatus.pipeScanner} icon={BrainCircuit} />
+                        <SystemStatusWidget title="Equipment Predictor" status={systemStatus.equipmentPredictor} icon={Wrench} />
+                        <SystemStatusWidget title="Cyber Safety AI" status={systemStatus.cyberSafety} icon={ShieldCheck} />
+                        <SystemStatusWidget title="Emergency Drills" status={systemStatus.emergencyDrill} icon={Siren} />
                     </CardContent>
                 </Card>
 
@@ -297,6 +276,10 @@ export function SafetyAndAlerts({ hospitalData }) {
                                     <SelectItem value="Water">Water</SelectItem>
                                     <SelectItem value="Security">Security</SelectItem>
                                     <SelectItem value="Facility">Facility</SelectItem>
+                                    <SelectItem value="Air">Air Quality</SelectItem>
+                                    <SelectItem value="Ambulance">Ambulance</SelectItem>
+                                    <SelectItem value="Distress">Distress</SelectItem>
+                                    <SelectItem value="Equipment">Equipment</SelectItem>
                                 </SelectContent>
                             </Select>
                              <Select value={severityFilter} onValueChange={setSeverityFilter}>
@@ -326,15 +309,22 @@ export function SafetyAndAlerts({ hospitalData }) {
                     <CardTitle className="text-white">Emergency Actions &amp; Simulations</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <div className="flex flex-wrap gap-4">
-                        <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={handleSimulateFire}><Flame className="mr-2"/>Simulate Fire</Button>
-                        <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={handleSimulateLeak}><WaterDroplets className="mr-2"/>Simulate Water Leak</Button>
-                        <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={handleSimulateOverload}><Power className="mr-2"/>Simulate Power Overload</Button>
+                     <div className="flex flex-wrap gap-4">
+                        <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={() => simulateEvent({ type: 'Fire', severity: 'critical', message: 'AI detected smoke pattern in Canteen kitchen.', location: 'Canteen Kitchen', toastDescription: 'Fire alert simulated! Automated response systems activated.', statusChange: { fireAlarms: 'Alert', sprinklers: 'Alert' }, statusReset: { fireAlarms: 'OK', sprinklers: 'OK' }})}><Flame className="mr-2"/>Simulate Fire</Button>
+                        <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={() => simulateEvent({ type: 'Water', severity: 'critical', message: 'AquaSense AI detected water accumulation near MRI Room.', location: 'MRI Room', toastDescription: 'Water leak simulated! Auto power shutdown initiated for MRI Room.', statusChange: { plumbing: 'Alert' }, statusReset: { plumbing: 'OK' }})}><WaterDroplets className="mr-2"/>Simulate Leak</Button>
+                        <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={() => simulateEvent({ type: 'Power', severity: 'warning', message: 'PowerBalancer AI predicts imminent overload in Ward B (91% load).', location: 'Ward B', toastDescription: 'Power overload simulated! Switching to backup generator.', statusChange: { electrical: 'Overload', backupGenerator: 'Active' }, statusReset: { electrical: 'OK', backupGenerator: 'OK' }})}><Power className="mr-2"/>Simulate Overload</Button>
+                        <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={() => simulateEvent({ type: 'Air', severity: 'critical', message: 'Bio-Hazard Analyzer detected virus-level contamination.', location: 'ICU-3', toastDescription: 'Air contamination simulated! Isolation protocol activated.', statusChange: { airQuality: 'Contaminated' }, statusReset: { airQuality: 'OK' }})}><AirVent className="mr-2"/>Simulate Air Contamination</Button>
                     </div>
                     <Separator />
                     <div className="flex flex-wrap gap-4">
-                        <Button variant="secondary" className="flex-1" onClick={() => handleEmergencyAction('All Staff Notification')}><Bell className="mr-2"/> Notify All Staff</Button>
-                        <Button variant="secondary" className="flex-1" onClick={() => handleEmergencyAction('Fire Department Call')}><Phone className="mr-2"/> Call Fire Dept.</Button>
+                        <Button variant="secondary" className="flex-1" onClick={() => simulateEvent({ type: 'Distress', severity: 'warning', message: 'Patient in Room 307 showing signs of distress.', location: 'Room 307', toastDescription: 'Distress detected! Nurse team notified.', statusChange: { distressDetection: 'Alert' }, statusReset: { distressDetection: 'Active' }, duration: 8000 })}><UserCog className="mr-2"/>Simulate Patient Distress</Button>
+                        <Button variant="secondary" className="flex-1" onClick={() => simulateEvent({ type: 'Equipment', severity: 'warning', message: 'Ventilator 04 may fail in 2 days.', location: 'ICU-2', toastDescription: 'Predictive failure alert! Maintenance scheduled.', statusChange: { equipmentPredictor: 'Predicted' }, statusReset: { equipmentPredictor: 'Active' }, duration: 8000 })}><Wrench className="mr-2"/>Simulate Equipment Failure</Button>
+                        <Button variant="secondary" className="flex-1" onClick={() => simulateEvent({ type: 'Ambulance', severity: 'info', message: 'Ambulance 104 - ETA 5 mins.', location: 'Main Entrance', toastDescription: 'Ambulance inbound! ER team on standby.', statusChange: { ambulanceLink: 'Enroute' }, statusReset: { ambulanceLink: 'Active' }, duration: 8000 })}><Ambulance className="mr-2"/>Simulate Ambulance Link</Button>
+                    </div>
+                    <Separator />
+                    <div className="flex flex-wrap gap-4">
+                        <Button variant="outline" className="flex-1" onClick={() => handleEmergencyAction('All Staff Notification')}><Bell className="mr-2"/> Notify All Staff</Button>
+                        <Button variant="outline" className="flex-1" onClick={() => handleEmergencyAction('Fire Department Call')}><Phone className="mr-2"/> Call Fire Dept.</Button>
                     </div>
                 </CardContent>
             </Card>
