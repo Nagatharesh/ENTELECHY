@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Fuel, Droplets, ShieldCheck, Wrench, Bot } from "lucide-react";
+import { Fuel, Droplets, ShieldCheck, Wrench, Bot, Gauge } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const getStatusConfig = (value: number) => {
@@ -23,18 +23,18 @@ const getKitStatusConfig = (isStocked: boolean) => {
     return { color: "text-destructive", label: "Needs Refill" };
 };
 
-export function VehicleStatus({ ambulance }) {
+export function VehicleStatus({ ambulance, readinessScore }) {
     const fuelStatus = getStatusConfig(ambulance.fuelLevel);
     const oxygenStatus = getStatusConfig(ambulance.oxygenLevel);
     const engineStatus = getEngineStatusConfig("Healthy"); // Assuming healthy for demo
     const kitStatus = getKitStatusConfig(ambulance.facilities.emergencyKit);
 
-    const isReadyForDispatch = ambulance.fuelLevel > 20 && ambulance.oxygenLevel > 40 && ambulance.facilities.emergencyKit;
+    const isReady = readinessScore > 70;
 
     return (
         <Card className="glassmorphism glowing-shadow">
             <CardHeader>
-                <CardTitle className="text-white">Vehicle Diagnostics</CardTitle>
+                <CardTitle className="text-white flex items-center gap-2"><Gauge/>Vehicle Diagnostics</CardTitle>
                 <CardDescription>Live status of all critical systems.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
@@ -67,10 +67,10 @@ export function VehicleStatus({ ambulance }) {
 
                 <div className={cn(
                     "p-3 rounded-lg text-center font-bold text-lg border",
-                    isReadyForDispatch ? "bg-green-500/10 text-green-400 border-green-500/30" : "bg-destructive/10 text-destructive border-destructive/30"
+                    isReady ? "bg-green-500/10 text-green-400 border-green-500/30" : "bg-destructive/10 text-destructive border-destructive/30"
                 )}>
                     <Bot className="inline-block w-5 h-5 mr-2"/>
-                    AI Status: {isReadyForDispatch ? "Ready for Dispatch" : "Not Ready"}
+                    AI Readiness: {readinessScore.toFixed(0)}%
                 </div>
             </CardContent>
         </Card>

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Map, Bot, Route, AlertCircle, CheckCircle, User, Star, TrendingUp, HelpCircle, Phone, WifiOff, XCircle, Car, Ambulance } from "lucide-react";
+import { Map, Bot, Route, AlertCircle, CheckCircle, User, Star, TrendingUp, HelpCircle, Phone, WifiOff, XCircle, Car, Ambulance, Heart, Droplet, Wind } from "lucide-react";
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -29,21 +29,21 @@ const DriverInfoCard = ({ driver }) => {
     );
 };
 
-const FacilityStatusCard = ({ ambulance, oxygenLevel }) => {
-    if (!ambulance || !ambulance.facilities) return null;
+const PatientVitalsCard = ({ vitals }) => {
     return (
         <Card className="glassmorphism p-4">
             <CardHeader className="p-0 mb-4">
-                <CardTitle className="text-white text-lg">Ambulance Status</CardTitle>
+                <CardTitle className="text-white text-lg">Live Patient Vitals</CardTitle>
             </CardHeader>
             <CardContent className="p-0 space-y-3">
-                <ProgressBar label="Oxygen Level" value={oxygenLevel} unit="%" color="hsl(var(--secondary))" />
-                <FacilityItem label="Ventilator" available={ambulance.facilities.ventilator} />
-                <FacilityItem label="Emergency Kit" available={ambulance.facilities.emergencyKit} />
+                 <StatBar icon={Heart} label="Heart Rate" value={`${vitals.hr} bpm`} />
+                 <StatBar icon={Droplet} label="Blood Pressure" value={`${vitals.bp}`} />
+                 <StatBar icon={Wind} label="SpO2" value={`${vitals.spo2}%`} />
             </CardContent>
         </Card>
     );
 };
+
 
 const StatBar = ({ icon: Icon, label, value, isRating=false }) => (
     <div>
@@ -60,30 +60,10 @@ const StatBar = ({ icon: Icon, label, value, isRating=false }) => (
     </div>
 );
 
-const ProgressBar = ({ label, value, unit, color }) => (
-    <div>
-        <div className="flex justify-between items-center text-sm mb-1">
-            <p className="text-muted-foreground">{label}</p>
-            <p className="font-semibold text-white">{Math.round(value)}{unit}</p>
-        </div>
-        <Progress value={value} indicatorColor={color} />
-    </div>
-);
-
-const FacilityItem = ({ label, available }) => (
-    <div className="flex justify-between items-center text-sm">
-        <p className="text-muted-foreground flex items-center gap-2"><HelpCircle className="w-4 h-4"/>{label}</p>
-        <Badge variant={available ? "default" : "destructive"} className="bg-opacity-70">
-            {available ? "Available" : "Unavailable"}
-        </Badge>
-    </div>
-);
-
 
 export function LiveNavigation({ dispatch, onComplete }) {
     const [eta, setEta] = useState(dispatch.etaToPatient);
     const [progress, setProgress] = useState(0);
-    const [oxygenLevel, setOxygenLevel] = useState(dispatch.ambulance?.oxygenLevel || 95);
 
     useEffect(() => {
         const totalDuration = dispatch.etaToPatient * 60; // in seconds
@@ -96,9 +76,6 @@ export function LiveNavigation({ dispatch, onComplete }) {
             const newProgress = Math.min((elapsedTime / totalDuration) * 100, 100);
             setProgress(newProgress);
             
-            // Simulate oxygen level fluctuation
-            setOxygenLevel(prev => Math.max(85, Math.min(100, prev + (Math.random() - 0.5) * 0.2)));
-
             if(newProgress >= 100){
                 clearInterval(interval);
             }
@@ -116,9 +93,8 @@ export function LiveNavigation({ dispatch, onComplete }) {
     return (
         <Card className="glassmorphism glowing-shadow">
             <CardHeader>
-                <CardTitle className="text-gradient-glow text-2xl">Live Navigation</CardTitle>
-                <CardDescription>Navigating to: <span className="text-white font-bold">{dispatch.destination}</span></CardDescription>
-                 <p className="text-sm text-muted-foreground italic">“Your ambulance is en route to {dispatch.pickupLocation}, arriving in approximately {Math.ceil(eta)} minutes.”</p>
+                <CardTitle className="text-gradient-glow text-2xl">Live Navigation & Patient Monitoring</CardTitle>
+                <CardDescription>Navigating to: <span className="text-white font-bold">{dispatch.destination}</span> for patient <span className="text-white font-bold">{dispatch.patientName}</span></CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="relative h-96 bg-background/50 rounded-lg overflow-hidden border border-primary/20 perspective-1000">
@@ -129,6 +105,12 @@ export function LiveNavigation({ dispatch, onComplete }) {
                         <p className="text-sm text-muted-foreground">ETA</p>
                         <p className="text-2xl font-bold text-white">{formatTime(eta)}</p>
                     </div>
+
+                     <div className="absolute top-4 right-4 glassmorphism p-2 rounded-lg z-10 text-right">
+                        <p className="text-sm text-muted-foreground">AI Suggestion</p>
+                        <p className="text-md font-bold text-primary">Traffic moderate, stay on route</p>
+                    </div>
+
 
                     <div className="absolute bottom-4 left-4 right-4 z-10">
                         <Progress value={progress} />
@@ -166,14 +148,14 @@ export function LiveNavigation({ dispatch, onComplete }) {
                     </div>
 
 
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-primary font-bold bg-background/50 px-4 py-1 rounded-full text-sm z-10">
+                    <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center text-primary font-bold bg-background/50 px-4 py-1 rounded-full text-sm z-10">
                         Live 3D Tracking Simulation
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                     <DriverInfoCard driver={dispatch.driver} />
-                    <FacilityStatusCard ambulance={dispatch.facilities ? { facilities: dispatch.facilities } : undefined} oxygenLevel={oxygenLevel} />
+                    <PatientVitalsCard vitals={dispatch.patientVitals} />
                 </div>
             </CardContent>
             <CardFooter>
@@ -196,5 +178,3 @@ export function LiveNavigation({ dispatch, onComplete }) {
         </Card>
     );
 }
-
-    

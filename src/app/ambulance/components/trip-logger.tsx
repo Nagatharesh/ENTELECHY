@@ -17,7 +17,7 @@ export function TripLogger({ logs }) {
             <CardContent>
                 <ScrollArea className="h-64">
                     <div className="space-y-4">
-                        {logs.length > 0 ? logs.map(log => (
+                        {logs && logs.length > 0 ? logs.map(log => (
                             <div key={log.id} className="p-3 bg-background/50 rounded-lg">
                                 <div className="flex justify-between items-center">
                                     <p className="font-semibold text-white">{log.patientName}</p>
