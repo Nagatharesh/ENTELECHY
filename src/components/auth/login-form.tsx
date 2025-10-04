@@ -170,7 +170,10 @@ export function LoginForm() {
   }
   function onAmbulanceSubmit(values: z.infer<typeof ambulanceSchema>) {
     const { driverPhone, password, vehicleNumber } = values;
-    const ambulance = dummyAmbulances.find(a => a.vehicle_no.toUpperCase() === vehicleNumber.toUpperCase() && a.driver_phone === driverPhone);
+    const ambulance = dummyAmbulances.find(a => 
+        a.vehicle_no.toUpperCase() === vehicleNumber.toUpperCase() && 
+        a.driver_phone.endsWith(driverPhone)
+    );
 
     // Dummy password check
     if (ambulance && password === "password123") {
