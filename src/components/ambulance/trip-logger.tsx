@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { format, formatDistanceToNow } from 'date-fns';
 import { History, FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function TripLogger({ logs }) {
     return (
