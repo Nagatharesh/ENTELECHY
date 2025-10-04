@@ -13,6 +13,18 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 
 const PatientVitalsCard = ({ vitals }) => {
+    if (!vitals) {
+        return (
+            <Card className="glassmorphism p-4">
+                <CardHeader className="p-0 mb-4">
+                    <CardTitle className="text-white text-lg">Live Patient Vitals</CardTitle>
+                </CardHeader>
+                <CardContent className="p-0 space-y-3">
+                    <p className="text-muted-foreground text-sm">No vitals data available.</p>
+                </CardContent>
+            </Card>
+        );
+    }
     return (
         <Card className="glassmorphism p-4">
             <CardHeader className="p-0 mb-4">
@@ -42,6 +54,24 @@ const StatBar = ({ icon: Icon, label, value, isRating=false }) => (
         </div>
     </div>
 );
+
+const DriverInfoCard = ({ driver }) => {
+    if (!driver) return null;
+    return (
+        <Card className="glassmorphism p-4">
+            <CardHeader className="p-0 mb-4 flex-row items-center justify-between">
+                <CardTitle className="text-white text-lg">Driver Profile</CardTitle>
+                <Button size="sm" variant="outline" asChild><a href={`tel:${driver.contact}`}><Phone/></a></Button>
+            </CardHeader>
+            <CardContent className="p-0 space-y-3">
+                <StatBar icon={User} label="Name" value={driver.name} />
+                <StatBar icon={TrendingUp} label="Experience" value={`${driver.experience} years`} />
+                <StatBar icon={Car} label="Completed Rides" value={driver.completedRides} />
+                <StatBar icon={Star} label="Rating" value={`${driver.rating}/5`} isRating />
+            </CardContent>
+        </Card>
+    );
+};
 
 
 export function LiveNavigation({ dispatch, onComplete }) {
@@ -102,20 +132,7 @@ export function LiveNavigation({ dispatch, onComplete }) {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-                    {dispatch.driver && (
-                        <Card className="glassmorphism p-4">
-                            <CardHeader className="p-0 mb-4 flex-row items-center justify-between">
-                                <CardTitle className="text-white text-lg">Driver Profile</CardTitle>
-                                <Button size="sm" variant="outline" asChild><a href={`tel:${dispatch.driver.contact}`}><Phone/></a></Button>
-                            </CardHeader>
-                            <CardContent className="p-0 space-y-3">
-                                <StatBar icon={User} label="Name" value={dispatch.driver.name} />
-                                <StatBar icon={TrendingUp} label="Experience" value={`${dispatch.driver.experience} years`} />
-                                <StatBar icon={Car} label="Completed Rides" value={dispatch.driver.completedRides} />
-                                <StatBar icon={Star} label="Rating" value={`${dispatch.driver.rating}/5`} isRating />
-                            </CardContent>
-                        </Card>
-                    )}
+                    <DriverInfoCard driver={dispatch.driver} />
                     <PatientVitalsCard vitals={dispatch.patientVitals} />
                 </div>
             </CardContent>
