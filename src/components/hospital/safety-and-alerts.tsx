@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 import { Input } from '../ui/input';
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from '../ui/progress';
+import { Separator } from '../ui/separator';
 
 const SystemStatusWidget = ({ title, status, icon: Icon }) => {
     const statusConfig = {
@@ -322,14 +323,19 @@ export function SafetyAndAlerts({ hospitalData }) {
             </div>
              <Card className="glassmorphism glowing-shadow">
                 <CardHeader>
-                    <CardTitle className="text-white">Emergency Actions & Simulations</CardTitle>
+                    <CardTitle className="text-white">Emergency Actions &amp; Simulations</CardTitle>
                 </CardHeader>
-                <CardContent className="flex flex-wrap gap-4">
-                    <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={handleSimulateFire}><Flame className="mr-2"/>Simulate Fire</Button>
-                    <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={handleSimulateLeak}><WaterDroplets className="mr-2"/>Simulate Water Leak</Button>
-                    <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={handleSimulateOverload}><Power className="mr-2"/>Simulate Power Overload</Button>
-                    <Button variant="secondary" className="flex-1" onClick={() => handleEmergencyAction('All Staff Notification')}><Bell className="mr-2"/> Notify All Staff</Button>
-                    <Button variant="secondary" className="flex-1" onClick={() => handleEmergencyAction('Fire Department Call')}><Phone className="mr-2"/> Call Fire Dept.</Button>
+                <CardContent className="space-y-4">
+                    <div className="flex flex-wrap gap-4">
+                        <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={handleSimulateFire}><Flame className="mr-2"/>Simulate Fire</Button>
+                        <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={handleSimulateLeak}><WaterDroplets className="mr-2"/>Simulate Water Leak</Button>
+                        <Button variant="destructive" className="flex-1 glowing-shadow-interactive" onClick={handleSimulateOverload}><Power className="mr-2"/>Simulate Power Overload</Button>
+                    </div>
+                    <Separator />
+                    <div className="flex flex-wrap gap-4">
+                        <Button variant="secondary" className="flex-1" onClick={() => handleEmergencyAction('All Staff Notification')}><Bell className="mr-2"/> Notify All Staff</Button>
+                        <Button variant="secondary" className="flex-1" onClick={() => handleEmergencyAction('Fire Department Call')}><Phone className="mr-2"/> Call Fire Dept.</Button>
+                    </div>
                 </CardContent>
             </Card>
         </div>
