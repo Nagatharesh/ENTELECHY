@@ -10,46 +10,52 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { 
-    Video, 
-    Focus, 
     AlertTriangle, 
-    ChevronRight, 
     Droplets, 
     BedDouble, 
     Trash2, 
     ChefHat, 
     User, 
     Siren,
-    Cpu,
-    CheckCircle,
-    XCircle,
     Play,
     Pause,
     Bot,
     Volume2,
     VolumeX,
-    Image as ImageIcon
+    UserPlus,
+    X,
+    Check
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import Image from 'next/image';
+import { dummyTriagePatients, TriagePatient } from '@/lib/dummy-data';
 
 // --- Main Component ---
 export function EmergencyResourceStatus({ hospitalData }) {
-    const { toast } = useToast();
+    const { facilities } = hospitalData.hospitalInfo;
+    const mountRef = useRef<HTMLDivElement>(null);
+    const [infoBox, setInfoBox] = useState<{ visible: boolean, content: string, x: number, y: number }>({ visible: false, content: '', x: 0, y: 0 });
+    const [isTriageModalOpen, setIsTriageModalOpen] = useState(false);
     const [log, setLog] = useState<string[]>(['[System] AI Monitoring Initialized.']);
     const [alerts, setAlerts] = useState<any[]>([]);
     const [isAiActive, setIsAiActive] = useState(true);
     const [resources, setResources] = useState({
         oxygen: 85,
-        beds: { total: 100, available: 12 },
-        food: { served: 85, total: 100, aiStatus: '✅ Staff wearing masks' },
-        waste: 'Medium'
+        beds: { general: facilities.beds.general, icu: facilities.beds.icu, trauma: { total: 20, occupied: 10 } },
     });
     const [aiConfidence, setAiConfidence] = useState(95);
     const [isSoundOn, setIsSoundOn] = useState(true);
     const [isDemoRunning, setIsDemoRunning] = useState(false);
+    const [triageList, setTriageList] = useState<TriagePatient[]>(dummyTriagePatients);
     
     const [currentTime, setCurrentTime] = useState(new Date());
+
+    const speak = useCallback((text: string) => {
+        if (!isSoundOn || typeof window === 'undefined' || !window.speechSynthesis) return;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 1.1;
+        window.speechSynthesis.speak(utterance);
+    }, [isSoundOn]);
 
     const addLog = useCallback((message: string) => {
         setLog(prev => [`[${new Date().toLocaleTimeString()}] ${message}`, ...prev].slice(0, 50));
@@ -60,12 +66,11 @@ export function EmergencyResourceStatus({ hospitalData }) {
         const newAlert = { id: Date.now(), ...alert };
         setAlerts(prev => [newAlert, ...prev]);
         addLog(`[AI Alert] ${alert.message}`);
-        if(isSoundOn) {
-           // In a real app, you'd play a sound here.
-           console.log("Beep!");
+        if(alert.level === 'critical') {
+            speak(`Critical Alert: ${alert.message}`);
         }
         setAiConfidence(prev => Math.max(70, prev - 2));
-    }, [addLog, isAiActive, isSoundOn]);
+    }, [addLog, isAiActive, speak]);
 
     const resolveAlert = useCallback((id: number) => {
         const alert = alerts.find(a => a.id === id);
@@ -75,6 +80,27 @@ export function EmergencyResourceStatus({ hospitalData }) {
         }
     }, [alerts, addLog]);
 
+    const assignBed = (patient: TriagePatient) => {
+        let bedType: 'general' | 'icu' | 'trauma' | null = null;
+        if(patient.triageLevel === 'Critical') bedType = 'icu';
+        else if (patient.triageLevel === 'Moderate') bedType = 'trauma';
+        else bedType = 'general';
+
+        if(bedType && resources.beds[bedType].occupied < resources.beds[bedType].total) {
+            setResources(prev => ({
+                ...prev,
+                beds: {
+                    ...prev.beds,
+                    [bedType!]: { ...prev.beds[bedType!], occupied: prev.beds[bedType!].occupied + 1 }
+                }
+            }));
+            setTriageList(prev => prev.filter(p => p.patientId !== patient.patientId));
+            addLog(`[Bed Mgmt] Assigned ${patient.name} to ${bedType.toUpperCase()} bed.`);
+        } else {
+             addLog(`[Bed Mgmt] No ${bedType} beds available for ${patient.name}.`);
+        }
+    };
+
 
     useEffect(() => {
         const clockInterval = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -83,14 +109,12 @@ export function EmergencyResourceStatus({ hospitalData }) {
             if (!isAiActive) return;
             setResources(prev => {
                 const newOxygen = Math.max(60, prev.oxygen - 0.1);
-                const newBeds = prev.beds.available < 5 ? prev.beds.available + 1 : prev.beds.available;
                  if (newOxygen < 70 && !alerts.some(a => a.type === 'oxygen')) {
                     addAlert({ type: 'oxygen', message: `Oxygen level critical at ${newOxygen.toFixed(1)}%`, level: 'critical', icon: Droplets });
                 }
                 return {
                     ...prev,
                     oxygen: newOxygen,
-                    beds: {...prev.beds, available: newBeds}
                 };
             });
             setAiConfidence(prev => Math.min(100, prev + 0.1));
@@ -106,9 +130,8 @@ export function EmergencyResourceStatus({ hospitalData }) {
         setIsDemoRunning(true);
         addLog("[Demo] Starting scripted sequence...");
         
-        setTimeout(() => addAlert({ type: 'patient', message: "Patient distress in ICU - CAM-01", level: 'critical', icon: User }), 2000);
+        setTimeout(() => addAlert({ type: 'patient', message: "Patient distress in ICU Bed 01", level: 'critical', icon: User }), 2000);
         setTimeout(() => setResources(prev => ({...prev, oxygen: 68})), 5000);
-        setTimeout(() => setResources(prev => ({...prev, food: {...prev.food, aiStatus: '⚠️ Glove violation detected'}})), 8000);
         
         setTimeout(() => {
             setAlerts([]);
@@ -118,12 +141,6 @@ export function EmergencyResourceStatus({ hospitalData }) {
         }, 12000);
     };
 
-    const cameraFeeds = [
-        { id: 'CAM-01', title: 'ICU', location: 'Room 304', image: 'https://picsum.photos/seed/cam1/600/400' },
-        { id: 'CAM-02', title: 'Main Ward', location: 'Floor 2', image: 'https://picsum.photos/seed/cam2/600/400' },
-        { id: 'CAM-03', title: 'Canteen', location: 'Ground Floor', image: 'https://picsum.photos/seed/cam3/600/400' },
-    ];
-    
     const globalStatus = useMemo(() => {
         if (alerts.some(a => a.level === 'critical')) return { text: 'Critical', color: 'bg-red-500' };
         if (alerts.length > 0) return { text: 'Attention', color: 'bg-yellow-500' };
@@ -151,9 +168,13 @@ export function EmergencyResourceStatus({ hospitalData }) {
 
             {/* Main Content */}
             <main className="flex-grow grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 overflow-y-auto">
-                <CameraFeedsPanel feeds={cameraFeeds} alerts={alerts} isAiActive={isAiActive} />
-                <ResourceManagementPanel resources={resources} setResources={setResources} addLog={addLog} />
-                <AlertsAndLogsPanel alerts={alerts} log={log} addAlert={addAlert} resolveAlert={resolveAlert} />
+                <div className="space-y-4">
+                    <ResourceCard icon={Droplets} title="Oxygen Supply (ICU)" value={`${resources.oxygen.toFixed(1)}%`} progress={resources.oxygen} />
+                    <TriagePanel patients={triageList} onAssign={assignBed} />
+                </div>
+                <div className="lg:col-span-2">
+                    <Facility3DView resources={resources} infoBox={infoBox} setInfoBox={setInfoBox} />
+                </div>
             </main>
 
             {/* Footer */}
@@ -173,41 +194,7 @@ export function EmergencyResourceStatus({ hospitalData }) {
     );
 }
 
-
 // --- Sub-components ---
-
-const CameraFeedsPanel = ({ feeds, alerts, isAiActive }) => (
-    <div className="space-y-4">
-        {feeds.map(feed => (
-            <Card key={feed.id} className="glassmorphism overflow-hidden">
-                <CardHeader className="p-3">
-                    <div className="flex justify-between items-center">
-                        <CardTitle className="text-base text-white">{feed.title} - {feed.id}</CardTitle>
-                        <Badge variant={isAiActive ? "default" : "destructive"}>{isAiActive ? 'AI Active' : 'AI Paused'}</Badge>
-                    </div>
-                    <CardDescription>{feed.location}</CardDescription>
-                </CardHeader>
-                <CardContent className="p-0 relative">
-                    <Image src={feed.image} width={600} height={400} alt={feed.title} className="w-full h-auto" />
-                    {alerts.some(a => a.message.includes(feed.id)) && <div className="absolute top-2 right-2 w-3 h-3 bg-red-500 rounded-full animate-ping" />}
-                </CardContent>
-            </Card>
-        ))}
-    </div>
-);
-
-const ResourceManagementPanel = ({ resources, setResources, addLog }) => {
-    const bedStatusColor = resources.beds.available > 20 ? 'text-green-400' : resources.beds.available > 5 ? 'text-yellow-400' : 'text-red-400';
-    
-    return (
-        <div className="space-y-4">
-            <ResourceCard icon={Droplets} title="Oxygen Supply (ICU)" value={`${resources.oxygen.toFixed(1)}%`} progress={resources.oxygen} />
-            <ResourceCard icon={BedDouble} title="Bed Availability" value={`${resources.beds.available} / ${resources.beds.total}`} progress={(resources.beds.available / resources.beds.total) * 100} valueColor={bedStatusColor} />
-            <ResourceCard icon={ChefHat} title="Food Service (Canteen)" value={`${resources.food.served} / ${resources.food.total} Served`} subtext={resources.food.aiStatus} />
-            <ResourceCard icon={Trash2} title="Waste Management" value={resources.waste} />
-        </div>
-    );
-};
 
 const ResourceCard = ({ icon: Icon, title, value, subtext, progress, valueColor }) => (
     <Card className="glassmorphism">
@@ -219,83 +206,100 @@ const ResourceCard = ({ icon: Icon, title, value, subtext, progress, valueColor 
                     <p className={cn("text-2xl font-bold text-white", valueColor)}>{value}</p>
                     {subtext && <p className="text-xs text-muted-foreground">{subtext}</p>}
                 </div>
-                <Button variant="ghost" size="icon"><ChevronRight /></Button>
             </div>
             {progress !== undefined && <Progress value={progress} className="mt-2 h-2" />}
         </CardContent>
     </Card>
 );
 
-
-const AlertsAndLogsPanel = ({ alerts, log, addAlert, resolveAlert }) => {
-    
-    const handleTriggerAlert = (type: string) => {
-        switch(type) {
-            case 'icu':
-                addAlert({type: 'patient', message: 'Patient distress in ICU - CAM-01', level: 'critical', icon: User });
-                break;
-            case 'canteen':
-                addAlert({type: 'hygiene', message: 'Hygiene protocol breach in Canteen - CAM-03', level: 'warning', icon: ChefHat });
-                break;
-            case 'oxygen':
-                 addAlert({ type: 'oxygen', message: `Oxygen level low`, level: 'critical', icon: Droplets });
-                break;
-        }
-    }
-    
+const TriagePatientCard = ({ patient, onAssign }) => {
+    const levelColors = {
+        Critical: 'border-destructive text-destructive',
+        Moderate: 'border-yellow-400 text-yellow-400',
+        Minor: 'border-green-400 text-green-400',
+    };
     return (
-        <div className="flex flex-col gap-4 h-full">
-            <Card className="glassmorphism">
-                <CardHeader className="p-3">
-                    <CardTitle className="text-base text-white flex items-center gap-2"><Siren className="text-red-500"/>Active Alerts ({alerts.length})</CardTitle>
-                     <div className="flex gap-2 pt-2">
-                        <Button size="sm" variant="outline" onClick={() => handleTriggerAlert('icu')}>Trigger ICU Alert</Button>
-                        <Button size="sm" variant="outline" onClick={() => handleTriggerAlert('canteen')}>Simulate Violation</Button>
-                        <Button size="sm" variant="outline" onClick={() => handleTriggerAlert('oxygen')}>Low O2 Event</Button>
-                    </div>
-                </CardHeader>
-                <CardContent className="p-3 pt-0 max-h-48 overflow-y-auto space-y-2">
-                    {alerts.length === 0 ? <p className="text-sm text-center text-muted-foreground py-4">No active alerts.</p> :
-                        alerts.map(alert => <AlertCard key={alert.id} alert={alert} onResolve={resolveAlert} />)
-                    }
-                </CardContent>
-            </Card>
-            <Card className="glassmorphism flex-grow flex flex-col">
-                <CardHeader className="p-3">
-                    <CardTitle className="text-base text-white">System Activity Log</CardTitle>
-                </CardHeader>
-                <CardContent className="p-3 pt-0 flex-grow overflow-hidden">
-                    <ScrollArea className="h-full">
-                        <div className="space-y-1 text-xs font-mono">
-                            {log.map((entry, i) => (
-                                <p key={i} className="animate-fade-in-up text-muted-foreground">
-                                    <span className="text-primary/70">{entry.split(']')[0]}]</span>{entry.split(']')[1]}
-                                </p>
-                            ))}
-                        </div>
-                    </ScrollArea>
-                </CardContent>
-            </Card>
+        <div className={cn("p-2 rounded-lg border-l-4 flex justify-between items-center bg-background/30", levelColors[patient.triageLevel])}>
+            <div>
+                <p className="font-bold text-white">{patient.name}, {patient.age}</p>
+                <p className="text-xs text-muted-foreground">{patient.symptoms}</p>
+            </div>
+            <Button size="sm" variant="outline" onClick={() => onAssign(patient)}>Assign Bed</Button>
         </div>
     );
 };
 
-const AlertCard = ({ alert, onResolve }) => {
-    const alertConfig = {
-        critical: { bg: 'bg-red-500/10', border: 'border-red-500/50', iconColor: 'text-red-500' },
-        warning: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/50', iconColor: 'text-yellow-500' },
-        info: { bg: 'bg-blue-500/10', border: 'border-blue-500/50', iconColor: 'text-blue-500' }
+const TriagePanel = ({ patients, onAssign }) => (
+    <Card className="glassmorphism">
+        <CardHeader className="p-3">
+            <CardTitle className="text-base text-white flex items-center gap-2"><UserPlus /> Triage Queue ({patients.length})</CardTitle>
+        </CardHeader>
+        <CardContent className="p-3 pt-0 max-h-96 overflow-y-auto space-y-2">
+             {patients.length === 0 ? <p className="text-sm text-center text-muted-foreground py-4">No patients in triage.</p> :
+                patients.map(p => <TriagePatientCard key={p.patientId} patient={p} onAssign={onAssign} />)
+            }
+        </CardContent>
+    </Card>
+);
+
+
+const Facility3DView = ({ resources, infoBox, setInfoBox }) => {
+    const bedLayout = {
+        general: { rows: 5, cols: 10, position: { x: -150, z: -100 } },
+        icu: { rows: 2, cols: 5, position: { x: 50, z: -100 } },
+        trauma: { rows: 2, cols: 5, position: { x: 50, z: 20 } },
     };
-    const config = alertConfig[alert.level] || alertConfig.info;
-    const Icon = alert.icon;
+
+    const handleBedClick = (wing: string, index: number, isOccupied: boolean) => {
+        setInfoBox(prev => ({
+            ...prev,
+            visible: true,
+            content: `${wing.toUpperCase()} Bed ${index + 1} - ${isOccupied ? 'Occupied' : 'Available'}`,
+        }));
+    };
+    
+     const handleMouseMove = (e: React.MouseEvent) => {
+        if(infoBox.visible) {
+            setInfoBox(prev => ({ ...prev, x: e.clientX, y: e.clientY }));
+        }
+    };
+
 
     return (
-        <div className={cn('p-2.5 rounded-lg border flex justify-between items-center', config.bg, config.border)}>
-            <div className="flex items-center gap-2">
-                {Icon && <Icon className={cn('w-5 h-5', config.iconColor)} />}
-                <p className="text-sm text-white">{alert.message}</p>
+         <Card className="glassmorphism h-full p-4 perspective-1000" onMouseMove={handleMouseMove} onMouseLeave={() => setInfoBox(prev => ({ ...prev, visible: false }))}>
+            <CardTitle className="text-gradient-glow">Live Facility View</CardTitle>
+             {infoBox.visible && (
+                <div className="absolute z-20 p-2 text-xs rounded-md pointer-events-none bg-background/80 border border-border" style={{ left: infoBox.x + 15, top: infoBox.y }}>
+                    {infoBox.content}
+                </div>
+            )}
+            <div className="w-full h-full transform-style-3d flex items-center justify-center" style={{ transform: 'rotateX(60deg) scale(1.2)'}}>
+                <div className="w-[400px] h-[300px] relative border-2 border-dashed border-primary/20 bg-background/20 rounded-lg p-4">
+                     {Object.entries(bedLayout).map(([wing, layout]) => (
+                        <div key={wing} className="absolute" style={{ top: `${50 + layout.position.z / 4}%`, left: `${50 + layout.position.x / 4}%` }}>
+                            <p className="text-xs text-muted-foreground absolute -top-4">{wing.toUpperCase()}</p>
+                            <div className="grid gap-1" style={{ gridTemplateColumns: `repeat(${layout.cols}, 1fr)` }}>
+                                {Array.from({ length: resources.beds[wing].total }).map((_, i) => {
+                                    const isOccupied = i < resources.beds[wing].occupied;
+                                    let color = 'bg-green-500/50';
+                                    if(isOccupied) {
+                                       if(wing === 'icu') color = 'bg-red-500/50';
+                                       else if(wing === 'trauma') color = 'bg-yellow-500/50';
+                                       else color = 'bg-blue-500/50';
+                                    }
+                                    return (
+                                        <div 
+                                            key={`${wing}-${i}`} 
+                                            className={cn("w-3 h-4 rounded-sm cursor-pointer hover:scale-150 transition-transform", color)}
+                                            onClick={() => handleBedClick(wing, i, isOccupied)}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
-            <Button size="sm" variant="ghost" onClick={() => onResolve(alert.id)}>Resolve</Button>
-        </div>
+        </Card>
     );
 };

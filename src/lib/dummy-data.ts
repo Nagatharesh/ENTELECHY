@@ -1669,7 +1669,6 @@ export const dummyHospitalData = {
             testName: 'Thyroid Function Test',
             date: '2024-10-03',
             status: 'pending',
-            critical: false,
             specimenType: 'Blood (Serum)',
             collectionDate: '2024-10-03T10:15:00Z',
             doctor: 'Dr. K Reddy',
@@ -1716,15 +1715,14 @@ export const dummyHospitalData = {
       { id: 'sch-6', staffName: 'Dr. Ben Carter', department: 'Emergency', date: '2025-09-24', shift: 'afternoon', startTime: '14:00', endTime: '22:00', hours: 8.0, color: 'bg-green-500/20' },
       { id: 'sch-7', staffName: 'Dr. A Kumar', department: 'Cardiology', date: '2025-09-23', shift: 'morning', startTime: '06:00', endTime: '14:00', hours: 8.0, color: 'bg-purple-500/20' },
       { id: 'sch-8', staffName: 'Dr. S Mehra', department: 'Dermatology', date: '2025-09-25', shift: 'night', startTime: '22:00', endTime: '06:00', hours: 8.0, color: 'bg-pink-500/20' },
-      { id: 'sch-9', staffName: 'Dr. R Verma', department: 'Neurology', date: '2025-09-21', shift: 'afternoon', startTime: '14:00', endTime: '22:00', hours: 8.0, color: 'bg-indigo-500/20' },
-      { id: 'sch-10', staffName: 'Sunita Sharma', department: 'ICU', date: '2025-09-22', shift: 'night', startTime: '22:00', endTime: '06:00', hours: 8.0, color: 'bg-blue-500/20' },
-      { id: 'sch-11', staffName: 'Rajesh Kumar', department: 'Emergency', date: '2025-09-25', shift: 'morning', startTime: '06:00', endTime: '14:00', hours: 8.0, color: 'bg-green-500/20' },
-      { id: 'sch-12', staffName: 'Dr. T Khanna', department: 'Ophthalmology', date: '2025-09-21', shift: 'afternoon', startTime: '14:00', endTime: '22:00', hours: 8.0, color: 'bg-cyan-500/20' },
-      { id: 'sch-13', staffName: 'Dr. P Singh', department: 'Pediatrics', date: '2025-09-22', shift: 'morning', startTime: '06:00', endTime: '14:00', hours: 8.0, color: 'bg-yellow-500/20' },
-      { id: 'sch-14', staffName: 'Dr. M Jain', department: 'Gynecology', date: '2025-09-26', shift: 'morning', startTime: '06:00', endTime: '14:00', hours: 8.0, color: 'bg-rose-500/20' },
-      { id: 'sch-15', staffName: 'Dr. L Kapoor', department: 'ENT', date: '2025-09-26', shift: 'afternoon', startTime: '14:00', endTime: '22:00', hours: 8.0, color: 'bg-teal-500/20' }
+      { id: 'sch-9', name: 'Dr. R Verma', department: 'Neurology', date: '2025-09-21', shift: 'afternoon', startTime: '14:00', endTime: '22:00', hours: 8.0, color: 'bg-indigo-500/20' },
+      { id: 'sch-10', name: 'Sunita Sharma', department: 'ICU', date: '2025-09-22', shift: 'night', startTime: '22:00', endTime: '06:00', hours: 8.0, color: 'bg-blue-500/20' },
+      { id: 'sch-11', name: 'Rajesh Kumar', department: 'Emergency', date: '2025-09-25', shift: 'morning', startTime: '06:00', endTime: '14:00', hours: 8.0, color: 'bg-green-500/20' },
+      { id: 'sch-12', name: 'Dr. T Khanna', department: 'Ophthalmology', date: '2025-09-21', shift: 'afternoon', startTime: '14:00', endTime: '22:00', hours: 8.0, color: 'bg-cyan-500/20' },
+      { id: 'sch-13', name: 'Dr. P Singh', department: 'Pediatrics', date: '2025-09-22', shift: 'morning', startTime: '06:00', endTime: '14:00', hours: 8.0, color: 'bg-yellow-500/20' },
+      { id: 'sch-14', name: 'Dr. M Jain', department: 'Gynecology', date: '2025-09-26', shift: 'morning', startTime: '06:00', endTime: '14:00', hours: 8.0, color: 'bg-rose-500/20' },
+      { id: 'sch-15', name: 'Dr. L Kapoor', department: 'ENT', date: '2025-09-26', shift: 'afternoon', startTime: '14:00', endTime: '22:00', hours: 8.0, color: 'bg-teal-500/20' }
     ]
 };
     
-
 
