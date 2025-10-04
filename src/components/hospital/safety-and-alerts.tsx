@@ -1,16 +1,17 @@
 
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Shield, CheckCircle, Siren, Flame, Bot, Building, Search, Bell, Phone } from "lucide-react";
+import { AlertTriangle, Shield, CheckCircle, Siren, Flame, Bot, Building, Search, Bell, Phone, Droplet, Wind, Gauge, Wrench } from "lucide-react";
 import Image from "next/image";
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { Input } from '../ui/input';
 import { useToast } from "@/hooks/use-toast";
+import { Progress } from '../ui/progress';
 
 const SystemStatusWidget = ({ title, status, icon: Icon }) => {
     const statusConfig = {
@@ -71,6 +72,82 @@ const AlertCard = ({ alert, onAcknowledge, isAcknowledged }) => {
     );
 };
 
+const OxygenPipelineWidget = () => {
+    const [pressure, setPressure] = useState(98);
+    const [flowRate, setFlowRate] = useState(4.2);
+    const [pipeCondition, setPipeCondition] = useState(92);
+    const [nextMaintenance, setNextMaintenance] = useState(18);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setPressure(p => Math.max(90, Math.min(100, p + (Math.random() - 0.5) * 0.5)));
+            setFlowRate(f => Math.max(4.0, Math.min(4.5, f + (Math.random() - 0.5) * 0.1)));
+        }, 2000);
+        return () => clearInterval(interval);
+    }, []);
+    
+    const pressureStatus = pressure < 95 ? 'warning' : 'normal';
+    
+    return (
+        <Card className="glassmorphism p-4">
+            <CardTitle className="text-white flex items-center gap-2 mb-4"><Droplet/>Oxygen Infrastructure Health</CardTitle>
+            <div className="space-y-4">
+                <div className="relative h-20 w-full bg-background/50 rounded-lg p-2 border border-border/50 overflow-hidden">
+                    <div className="absolute inset-0 bg-grid-primary/[0.1]"/>
+                    <div className="absolute h-10 w-10 bg-primary/20 rounded-full top-1/2 -translate-y-1/2 -left-5 animate-pulse"/>
+                    <div className="absolute h-full w-4 bg-gradient-to-r from-primary/30 to-transparent left-0 top-0"/>
+                    <div className="absolute h-full w-4 bg-gradient-to-l from-primary/30 to-transparent right-0 top-0"/>
+
+                    <div className="absolute top-2 right-4 text-right">
+                        <p className="text-xs text-muted-foreground">Flow</p>
+                        <p className="text-sm font-bold text-white">{flowRate.toFixed(1)} L/min</p>
+                    </div>
+
+                    <div className="absolute h-8 top-1/2 -translate-y-1/2 left-10 right-10 border-2 border-primary/30 rounded-full flex items-center p-1">
+                        <div className="h-full w-full bg-primary/20 rounded-full relative overflow-hidden">
+                             <div 
+                                className="absolute top-0 left-0 h-full w-1/4 bg-white/50 rounded-full animate-flow"
+                                style={{
+                                    animation: 'flow 3s linear infinite',
+                                    filter: 'blur(4px)'
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                </div>
+                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <InfoBox icon={Gauge} label="Pressure" value={`${pressure.toFixed(1)} psi`} status={pressureStatus} />
+                    <InfoBox icon={Shield} label="Leak Detection" value="None" status="normal" />
+                    <InfoBox icon={ShieldCheck} label="Pipe Condition" value={`${pipeCondition}%`} status={pipeCondition < 90 ? 'warning' : 'normal'} />
+                    <InfoBox icon={Wrench} label="Next Maint." value={`${nextMaintenance} days`} status={nextMaintenance < 10 ? 'warning' : 'normal'} />
+                </div>
+                 <div className="text-sm text-muted-foreground flex items-center gap-2 p-2 bg-background/30 rounded-md">
+                    <Bot className="w-5 h-5 text-primary"/>
+                    <span>AI predicts pipe integrity is stable. No anomalies detected in pressure-flow correlation.</span>
+                </div>
+            </div>
+             <style jsx>{`
+                @keyframes flow {
+                    0% { transform: translateX(-100%); }
+                    100% { transform: translateX(400%); }
+                }
+            `}</style>
+        </Card>
+    );
+};
+
+const InfoBox = ({ icon: Icon, label, value, status }) => {
+    const colorClass = status === 'warning' ? 'text-yellow-400' : 'text-primary';
+    return (
+        <div className="glassmorphism p-3 rounded-lg">
+            <Icon className={`w-6 h-6 mx-auto mb-1 ${colorClass}`} />
+            <p className="text-xs text-muted-foreground">{label}</p>
+            <p className="font-bold text-white">{value}</p>
+        </div>
+    );
+};
+
 export function SafetyAndAlerts({ hospitalData }) {
     const { safety, alerts } = hospitalData;
     const [alertFilter, setAlertFilter] = useState('all');
@@ -106,6 +183,8 @@ export function SafetyAndAlerts({ hospitalData }) {
                 </CardHeader>
             </Card>
 
+            <OxygenPipelineWidget />
+
             <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 h-[75vh]">
                 {/* Left Column: System Status */}
                 <Card className="xl:col-span-3 glassmorphism flex flex-col">
@@ -116,14 +195,6 @@ export function SafetyAndAlerts({ hospitalData }) {
                         <SystemStatusWidget title="Fire Alarms" status={safety.systems.fireAlarms} icon={Flame} />
                         <SystemStatusWidget title="Sprinklers" status={safety.systems.sprinklers} icon={Shield} />
                         <SystemStatusWidget title="Emergency Exits" status={safety.systems.exits} icon={CheckCircle} />
-                        <SystemStatusWidget title="Oxygen Supply" status={safety.systems.oxygen} icon={Siren} />
-                         <div className="pt-4 mt-4 border-t border-border/50">
-                            <h3 className="font-semibold text-white mb-2">Predictive Analytics</h3>
-                            <div className="text-sm text-muted-foreground space-y-2">
-                                <p><Bot className="inline w-4 h-4 mr-1 text-primary"/> Generator fuel predicted to run out in 3h 25m.</p>
-                                <p><Bot className="inline w-4 h-4 mr-1 text-primary"/> Smoke detector in Ward B triggered 3 times this week.</p>
-                            </div>
-                        </div>
                     </CardContent>
                 </Card>
 
@@ -179,5 +250,3 @@ export function SafetyAndAlerts({ hospitalData }) {
 
     
 }
-
-    
