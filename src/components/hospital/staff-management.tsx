@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { User, Clock, Coffee, Send, BrainCircuit, BarChart, Bot, Search, Users, Stethoscope, Briefcase, AlertCircle, Eye, Calendar, MessageSquare, ChevronDown, ChevronUp } from "lucide-react";
+import { User, Clock, Coffee, Send, BrainCircuit, BarChart, Bot, Search, Users, Stethoscope, Briefcase, AlertCircle, Eye, Calendar, MessageSquare, ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
