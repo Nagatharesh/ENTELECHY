@@ -77,7 +77,7 @@ const DriverInfoCard = ({ driver }) => {
 export function LiveNavigation({ dispatch, onComplete }) {
     const [eta, setEta] = useState(dispatch.etaToPatient);
     const [progress, setProgress] = useState(0);
-    const mapImage = PlaceHolderImages.find(p => p.id === `map_${dispatch.patientId || 'P3001'}`);
+    const mapImage = PlaceHolderImages.find(p => p.id === 'ambulance-map-view');
 
 
     useEffect(() => {
@@ -105,6 +105,35 @@ export function LiveNavigation({ dispatch, onComplete }) {
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
 
+    const pathPoints = [
+        { x: 10, y: 50 },
+        { x: 30, y: 50 },
+        { x: 40, y: 60 },
+        { x: 40, y: 80 },
+        { x: 60, y: 80 },
+        { x: 75, y: 70 },
+        { x: 90, y: 70 },
+    ];
+    
+    const getAmbulancePosition = (prog: number) => {
+        const progressAlongPath = prog / 100 * (pathPoints.length - 1);
+        const segmentIndex = Math.floor(progressAlongPath);
+        const segmentProgress = progressAlongPath - segmentIndex;
+        
+        if(segmentIndex >= pathPoints.length - 1) return pathPoints[pathPoints.length - 1];
+
+        const start = pathPoints[segmentIndex];
+        const end = pathPoints[segmentIndex + 1];
+
+        return {
+            x: start.x + (end.x - start.x) * segmentProgress,
+            y: start.y + (end.y - start.y) * segmentProgress,
+        }
+    }
+    
+    const ambulancePos = getAmbulancePosition(progress);
+
+
     return (
         <Card className="glassmorphism glowing-shadow">
             <CardHeader>
@@ -113,7 +142,7 @@ export function LiveNavigation({ dispatch, onComplete }) {
             </CardHeader>
             <CardContent>
                  <div className="relative h-96 bg-background/50 rounded-lg overflow-hidden border border-primary/20">
-                    {mapImage && <Image src={mapImage.imageUrl} alt={`Map for ${dispatch.patientName}`} layout="fill" objectFit="cover" className="opacity-40" />}
+                    {mapImage && <Image src={mapImage.imageUrl} alt={`Map for ${dispatch.patientName}`} layout="fill" objectFit="cover" className="opacity-80" data-ai-hint={mapImage.imageHint} />}
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
 
                     <div className="absolute top-4 left-4 glassmorphism p-2 rounded-lg z-10">
@@ -125,6 +154,21 @@ export function LiveNavigation({ dispatch, onComplete }) {
                         <p className="text-sm text-muted-foreground">AI Suggestion</p>
                         <p className="text-md font-bold text-primary">Traffic moderate, stay on route</p>
                     </div>
+                    
+                    <div
+                        className="absolute transition-all duration-1000 linear"
+                        style={{
+                            left: `${ambulancePos.x}%`,
+                            top: `${ambulancePos.y}%`,
+                            transform: 'translate(-50%, -50%)',
+                        }}
+                    >
+                         <div className="relative">
+                            <Ambulance className="w-8 h-8 text-white drop-shadow-lg" style={{filter: 'drop-shadow(0 0 5px hsl(var(--primary)))'}}/>
+                            <div className="absolute inset-0 -m-1 rounded-full bg-primary/50 animate-ping"/>
+                        </div>
+                    </div>
+
 
                     <div className="absolute bottom-4 left-4 right-4 z-10">
                         <Progress value={progress} />
