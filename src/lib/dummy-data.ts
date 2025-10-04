@@ -3,6 +3,7 @@
 
 
 
+
 export interface TriagePatient {
     patientId: string;
     name: string;
