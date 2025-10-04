@@ -66,7 +66,7 @@ const hospitalSchema = z.object({
   nin: z.string().regex(/^[0-9]{10,14}$/, "Invalid NIN. Must be a 10-14 digit number."),
 });
 const ambulanceSchema = z.object({
-  emailOrPhone: z.string().min(1, "This field is required."),
+  driverPhone: z.string().min(1, "This field is required."),
   password: z.string().min(8, "Password must be at least 8 characters."),
   vehicleNumber: z.string().regex(/^[A-Z]{2}-\d{2}-[A-Z]{2}-\d{4}$/, "Invalid vehicle number format. Eg: MH-01-AB-1234"),
 });
@@ -105,7 +105,7 @@ export function LoginForm() {
   });
   const ambulanceForm = useForm<z.infer<typeof ambulanceSchema>>({
     resolver: zodResolver(ambulanceSchema),
-    defaultValues: { emailOrPhone: "", password: "", vehicleNumber: "" },
+    defaultValues: { driverPhone: "", password: "", vehicleNumber: "" },
   });
 
   function onPatientSearch(values: z.infer<typeof patientSearchSchema>) {
@@ -169,8 +169,8 @@ export function LoginForm() {
     }
   }
   function onAmbulanceSubmit(values: z.infer<typeof ambulanceSchema>) {
-    const { emailOrPhone, password, vehicleNumber } = values;
-    const ambulance = dummyAmbulances.find(a => a.vehicle_no.toUpperCase() === vehicleNumber.toUpperCase() && a.driver_phone === emailOrPhone);
+    const { driverPhone, password, vehicleNumber } = values;
+    const ambulance = dummyAmbulances.find(a => a.vehicle_no.toUpperCase() === vehicleNumber.toUpperCase() && a.driver_phone === driverPhone);
 
     // Dummy password check
     if (ambulance && password === "password123") {
@@ -354,7 +354,7 @@ export function LoginForm() {
                         {ambulanceForm.formState.errors.root.message}
                         </p>
                     )}
-                    <FormField name="emailOrPhone" control={ambulanceForm.control} render={({ field }) => (
+                    <FormField name="driverPhone" control={ambulanceForm.control} render={({ field }) => (
                         <FormItem>
                             <FormLabel>Driver Phone</FormLabel>
                             <FormControl><InputWithIcon icon={Phone} type="text" placeholder="9000000001" {...field} /></FormControl>
@@ -388,3 +388,5 @@ export function LoginForm() {
     </div>
   );
 }
+
+    
