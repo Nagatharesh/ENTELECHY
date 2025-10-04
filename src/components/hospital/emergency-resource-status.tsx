@@ -1,365 +1,301 @@
 
 "use client";
 
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import React, { useEffect, useRef, useState, useMemo } from 'react';
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
-import { dummyTriagePatients, TriagePatient } from "@/lib/dummy-data";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import { 
+    Video, 
+    Focus, 
+    AlertTriangle, 
+    ChevronRight, 
+    Droplets, 
+    BedDouble, 
+    Trash2, 
+    ChefHat, 
+    User, 
+    Siren,
+    Cpu,
+    CheckCircle,
+    XCircle,
+    Play,
+    Pause,
+    Bot,
+    Volume2,
+    VolumeX,
+    Image as ImageIcon
+} from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import Image from 'next/image';
 
-const initialBedData = [
-  { name: 'Bed 1', status: 'Critical', position: [-5, 0, -4], patient: 'Sunita Devi', since: '08:30 AM' },
-  { name: 'Bed 2', status: 'Moderate', position: [0, 0, -4], patient: 'Amit Singh', since: '11:00 AM' },
-  { name: 'Bed 3', status: 'Available', position: [5, 0, -4] },
-  { name: 'Bed 4', status: 'Critical', position: [-5, 0, 4], patient: 'Unknown', since: '10:00 AM' },
-  { name: 'Bed 5', status: 'Available', position: [0, 0, 4] },
-  { name: 'Bed 6', status: 'Moderate', position: [5, 0, 4], patient: 'Ravi Kumar', since: '02:00 PM' }
-];
-
-
+// --- Main Component ---
 export function EmergencyResourceStatus({ hospitalData }) {
-    const { facilities } = hospitalData.hospitalInfo;
-    const mountRef = useRef<HTMLDivElement>(null);
-    const [infoBox, setInfoBox] = useState<{ visible: boolean, content: string, x: number, y: number }>({ visible: false, content: '', x: 0, y: 0 });
-    const [isTriageModalOpen, setIsTriageModalOpen] = useState(false);
-    const [bedData, setBedData] = useState(initialBedData);
-    const [triagePatients, setTriagePatients] = useState(dummyTriagePatients);
+    const { toast } = useToast();
+    const [log, setLog] = useState<string[]>(['[System] AI Monitoring Initialized.']);
+    const [alerts, setAlerts] = useState<any[]>([]);
+    const [isAiActive, setIsAiActive] = useState(true);
+    const [resources, setResources] = useState({
+        oxygen: 85,
+        beds: { total: 100, available: 12 },
+        food: { served: 85, total: 100, aiStatus: '✅ Staff wearing masks' },
+        waste: 'Medium'
+    });
+    const [aiConfidence, setAiConfidence] = useState(95);
+    const [isSoundOn, setIsSoundOn] = useState(true);
+    const [isDemoRunning, setIsDemoRunning] = useState(false);
+    
+    const [currentTime, setCurrentTime] = useState(new Date());
 
+    const addLog = useCallback((message: string) => {
+        setLog(prev => [`[${new Date().toLocaleTimeString()}] ${message}`, ...prev].slice(0, 50));
+    }, []);
 
-    const resources = {
-        traumaRooms: [
-            { name: "Trauma Room 1", status: "Occupied" },
-            { name: "Trauma Room 2", status: "Occupied" },
-            { name: "Trauma Room 3", status: "Available" },
-        ],
-        orAvailability: [
-            { name: "Emergency OR 1", status: "In Use" },
-            { name: "Emergency OR 2", status: "Ready" },
-        ],
-        staffStatus: [
-            { name: "Emergency Physicians", active: 6, total: 6 },
-            { name: "Trauma Nurses", active: 11, total: 12 },
-        ]
-    };
+    const addAlert = useCallback((alert) => {
+        if (!isAiActive) return;
+        const newAlert = { id: Date.now(), ...alert };
+        setAlerts(prev => [newAlert, ...prev]);
+        addLog(`[AI Alert] ${alert.message}`);
+        if(isSoundOn) {
+           // In a real app, you'd play a sound here.
+           console.log("Beep!");
+        }
+        setAiConfidence(prev => Math.max(70, prev - 2));
+    }, [addLog, isAiActive, isSoundOn]);
+
+    const resolveAlert = useCallback((id: number) => {
+        const alert = alerts.find(a => a.id === id);
+        if (alert) {
+            setAlerts(prev => prev.filter(a => a.id !== id));
+            addLog(`[TA Action] Resolved Alert: ${alert.message}`);
+        }
+    }, [alerts, addLog]);
+
 
     useEffect(() => {
-        if (!mountRef.current) return;
-
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, mountRef.current.clientWidth / mountRef.current.clientHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
-        mountRef.current.appendChild(renderer.domElement);
-
-        const floorGeometry = new THREE.PlaneGeometry(20, 20);
-        const floorMaterial = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, transparent: true, opacity: 0.1 });
-        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-        floor.rotation.x = -Math.PI / 2;
-        scene.add(floor);
-
-        const bedMaterials = {
-            'Critical': new THREE.MeshStandardMaterial({ color: 0xff0000, emissive: 0x550000 }),
-            'Moderate': new THREE.MeshStandardMaterial({ color: 0xffa500, emissive: 0x552a00 }),
-            'Available': new THREE.MeshStandardMaterial({ color: 0x00ff00, emissive: 0x005500 }),
-            'Occupied': new THREE.MeshStandardMaterial({ color: 0xffa500, emissive: 0x552a00 }),
-            'In Use': new THREE.MeshStandardMaterial({ color: 0xff0000, emissive: 0x550000 }),
-        };
-        const bedGeometry = new THREE.BoxGeometry(1.5, 0.2, 3);
-        const beds3D: THREE.Mesh[] = [];
-
-        bedData.forEach(data => {
-            const material = bedMaterials[data.status] || bedMaterials['Occupied'];
-            const bed = new THREE.Mesh(bedGeometry, material.clone());
-            bed.position.set(data.position[0], 0.1, data.position[2]);
-            bed.userData = { ...data };
-            scene.add(bed);
-            beds3D.push(bed);
-        });
-
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-        scene.add(ambientLight);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(5, 10, 7);
-        scene.add(directionalLight);
-
-        camera.position.set(0, 8, 10);
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.target.set(0, 0, 0);
-
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-
-        const onMouseMove = (event: MouseEvent) => {
-            if (!mountRef.current) return;
-            const rect = mountRef.current.getBoundingClientRect();
-            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(beds3D);
-
-            if (intersects.length > 0) {
-                const bed = intersects[0].object;
-                setInfoBox({
-                    visible: true,
-                    content: `<b>${bed.userData.name}</b><br>Status: ${bed.userData.status}<br>${bed.userData.patient ? `Patient: ${bed.userData.patient}<br>Since: ${bed.userData.since}` : ''}`,
-                    x: event.clientX - rect.left + 10,
-                    y: event.clientY - rect.top + 10,
-                });
-            } else {
-                setInfoBox(ib => ({ ...ib, visible: false }));
-            }
-        };
-
-        const onWindowResize = () => {
-          if (!mountRef.current) return;
-          camera.aspect = mountRef.current.clientWidth / mountRef.current.clientHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
-        }
-
-        window.addEventListener('resize', onWindowResize);
-        mountRef.current.addEventListener('mousemove', onMouseMove);
-
-        let animationFrameId: number;
-        const animate = () => {
-            animationFrameId = requestAnimationFrame(animate);
-            controls.update();
-            renderer.render(scene, camera);
-        };
-        animate();
+        const clockInterval = setInterval(() => setCurrentTime(new Date()), 1000);
+        
+        const resourceInterval = setInterval(() => {
+            if (!isAiActive) return;
+            setResources(prev => {
+                const newOxygen = Math.max(60, prev.oxygen - 0.1);
+                const newBeds = prev.beds.available < 5 ? prev.beds.available + 1 : prev.beds.available;
+                 if (newOxygen < 70 && !alerts.some(a => a.type === 'oxygen')) {
+                    addAlert({ type: 'oxygen', message: `Oxygen level critical at ${newOxygen.toFixed(1)}%`, level: 'critical', icon: Droplets });
+                }
+                return {
+                    ...prev,
+                    oxygen: newOxygen,
+                    beds: {...prev.beds, available: newBeds}
+                };
+            });
+            setAiConfidence(prev => Math.min(100, prev + 0.1));
+        }, 5000);
 
         return () => {
-            cancelAnimationFrame(animationFrameId);
-            window.removeEventListener('resize', onWindowResize);
-            if (mountRef.current) {
-                 mountRef.current.removeEventListener('mousemove', onMouseMove);
-                 if (renderer.domElement.parentElement === mountRef.current) {
-                    // eslint-disable-next-line react-hooks/exhaustive-deps
-                    mountRef.current.removeChild(renderer.domElement);
-                 }
-            }
-            renderer.dispose();
-            beds3D.forEach(bed => {
-                bed.geometry.dispose();
-                if (Array.isArray(bed.material)) {
-                    bed.material.forEach(m => m.dispose());
-                } else {
-                    bed.material.dispose();
-                }
-                scene.remove(bed);
-            });
+            clearInterval(clockInterval);
+            clearInterval(resourceInterval);
         };
-
-    }, [bedData]);
-
-    const getStatusColor = (status: string) => {
-        switch (status.toLowerCase()) {
-            case 'occupied':
-            case 'in use':
-                return 'text-red-500';
-            case 'available':
-            case 'ready':
-                return 'text-green-500';
-            default:
-                return 'text-white';
-        }
+    }, [isAiActive, alerts, addAlert]);
+    
+    const handleTriggerDemo = () => {
+        setIsDemoRunning(true);
+        addLog("[Demo] Starting scripted sequence...");
+        
+        setTimeout(() => addAlert({ type: 'patient', message: "Patient distress in ICU - CAM-01", level: 'critical', icon: User }), 2000);
+        setTimeout(() => setResources(prev => ({...prev, oxygen: 68})), 5000);
+        setTimeout(() => setResources(prev => ({...prev, food: {...prev.food, aiStatus: '⚠️ Glove violation detected'}})), 8000);
+        
+        setTimeout(() => {
+            setAlerts([]);
+            setResources(prev => ({...prev, oxygen: 95}));
+            addLog("[Demo] Sequence complete. Systems returning to normal.");
+            setIsDemoRunning(false);
+        }, 12000);
     };
 
-    const handleAssignBed = (patientId, bedName) => {
-        const patient = triagePatients.find(p => p.patientId === patientId);
-        if (!patient || !bedName) return;
-
-        setBedData(prevBedData => prevBedData.map(bed => {
-            if (bed.name === bedName) {
-                return {
-                    ...bed,
-                    status: patient.triageLevel,
-                    patient: patient.name,
-                    since: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                };
-            }
-            return bed;
-        }));
-
-        setTriagePatients(prevPatients => prevPatients.filter(p => p.patientId !== patientId));
-        setIsTriageModalOpen(false);
-    };
+    const cameraFeeds = [
+        { id: 'CAM-01', title: 'ICU', location: 'Room 304', image: 'https://picsum.photos/seed/cam1/600/400' },
+        { id: 'CAM-02', title: 'Main Ward', location: 'Floor 2', image: 'https://picsum.photos/seed/cam2/600/400' },
+        { id: 'CAM-03', title: 'Canteen', location: 'Ground Floor', image: 'https://picsum,photos/seed/cam3/600/400' },
+    ];
+    
+    const globalStatus = useMemo(() => {
+        if (alerts.some(a => a.level === 'critical')) return { text: 'Critical', color: 'bg-red-500' };
+        if (alerts.length > 0) return { text: 'Attention', color: 'bg-yellow-500' };
+        return { text: 'Normal', color: 'bg-green-500' };
+    }, [alerts]);
 
     return (
-        <div className="space-y-6">
-            <Card className="glassmorphism glowing-shadow">
-                <CardHeader>
-                    <div className="flex justify-between items-center">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-grow">
-                            <div>
-                                <h3 className="font-semibold text-white">Emergency Resource Status</h3>
-                                <ul className="text-sm text-muted-foreground">
-                                    {resources.traumaRooms.map(room => (
-                                        <li key={room.name} className="flex justify-between">
-                                            <span>{room.name}</span>
-                                            <span className={cn("font-bold", getStatusColor(room.status))}>{room.status}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-white">OR Availability</h3>
-                                <ul className="text-sm text-muted-foreground">
-                                    {resources.orAvailability.map(or => (
-                                        <li key={or.name} className="flex justify-between">
-                                            <span>{or.name}</span>
-                                            <span className={cn("font-bold", getStatusColor(or.status))}>{or.status}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                             <div>
-                                <h3 className="font-semibold text-white">Staff Status</h3>
-                                <ul className="text-sm text-muted-foreground">
-                                    {resources.staffStatus.map(staff => (
-                                        <li key={staff.name} className="flex justify-between">
-                                            <span>{staff.name}</span>
-                                            <span className="font-bold text-white">{staff.active}/{staff.total} Active</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                         <div className="ml-8">
-                            <Button className="glowing-shadow-interactive" onClick={() => setIsTriageModalOpen(true)}>Triage Assignment</Button>
-                        </div>
-                    </div>
-                </CardHeader>
-            </Card>
+        <div className="flex flex-col h-[calc(100vh-10rem)] bg-background text-white font-sans">
+            {/* Header */}
+            <header className="flex items-center justify-between p-3 border-b border-border/50 bg-background/50">
+                <div className="flex items-center gap-3">
+                    <h1 className="text-xl font-bold text-gradient-glow">SmartCare AI</h1>
+                    <Badge className={cn("flex items-center gap-1", globalStatus.color)}>
+                        <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                        {globalStatus.text}
+                    </Badge>
+                </div>
+                <h2 className="hidden md:block text-lg font-semibold text-muted-foreground">Hospital Command Center – {hospitalData.hospitalInfo.name}</h2>
+                <div className="flex items-center gap-4">
+                    <span className="font-mono text-lg">{currentTime.toLocaleTimeString()}</span>
+                    <Button variant="ghost" size="icon" onClick={() => setIsSoundOn(!isSoundOn)}>{isSoundOn ? <Volume2 /> : <VolumeX />}</Button>
+                    <Badge variant="outline">Logged in as: TA-007</Badge>
+                </div>
+            </header>
 
-            <div id="threejs-canvas-container" ref={mountRef} className="w-full h-[60vh] bg-background/50 rounded-lg border-2 border-dashed border-primary/30 relative">
-                {infoBox.visible && (
-                    <div
-                        style={{ position: 'absolute', left: infoBox.x, top: infoBox.y, pointerEvents: 'none' }}
-                        className="p-2 rounded-md bg-black/70 text-white text-xs border border-white/20"
-                        dangerouslySetInnerHTML={{ __html: infoBox.content }}
-                    />
-                )}
-            </div>
-            <TriageAssignmentModal
-                isOpen={isTriageModalOpen}
-                onClose={() => setIsTriageModalOpen(false)}
-                patients={triagePatients}
-                beds={bedData.filter(b => b.status === 'Available')}
-                onAssign={handleAssignBed}
-            />
+            {/* Main Content */}
+            <main className="flex-grow grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 overflow-y-auto">
+                <CameraFeedsPanel feeds={cameraFeeds} alerts={alerts} isAiActive={isAiActive} />
+                <ResourceManagementPanel resources={resources} setResources={setResources} addLog={addLog} />
+                <AlertsAndLogsPanel alerts={alerts} log={log} addAlert={addAlert} resolveAlert={resolveAlert} />
+            </main>
+
+            {/* Footer */}
+            <footer className="flex items-center justify-between p-2 text-xs text-muted-foreground border-t border-border/50">
+                <div className="flex items-center gap-4">
+                    <span>AI Status: <span className={cn(isAiActive ? 'text-green-400' : 'text-red-400')}>{isAiActive ? 'Operational' : 'Paused'}</span></span>
+                     <span>AI Confidence: <span className="text-white font-bold">{aiConfidence.toFixed(1)}%</span></span>
+                </div>
+                 <div className="flex items-center gap-2">
+                    <Button variant="secondary" size="sm" onClick={handleTriggerDemo} disabled={isDemoRunning}>{isDemoRunning ? "Demo Running..." : "Run Demo"}</Button>
+                    <Button variant={isAiActive ? "destructive" : "default"} size="sm" onClick={() => setIsAiActive(!isAiActive)}>
+                        {isAiActive ? <Pause className="mr-2"/> : <Play className="mr-2"/>} {isAiActive ? 'Pause AI' : 'Resume AI'}
+                    </Button>
+                </div>
+            </footer>
         </div>
     );
 }
 
 
-function TriageAssignmentModal({ isOpen, onClose, patients, beds, onAssign }) {
-    const { toast } = useToast();
-    const [selectedPatient, setSelectedPatient] = useState<string>('');
-    const [selectedBed, setSelectedBed] = useState<string>('');
+// --- Sub-components ---
 
-    const handleAssignClick = () => {
-        if (!selectedPatient || !selectedBed) {
-            toast({
-                variant: 'destructive',
-                title: 'Selection Missing',
-                description: 'Please select both a patient and a bed to assign.',
-            });
-            return;
+const CameraFeedsPanel = ({ feeds, alerts, isAiActive }) => (
+    <div className="space-y-4">
+        {feeds.map(feed => (
+            <Card key={feed.id} className="glassmorphism overflow-hidden">
+                <CardHeader className="p-3">
+                    <div className="flex justify-between items-center">
+                        <CardTitle className="text-base text-white">{feed.title} - {feed.id}</CardTitle>
+                        <Badge variant={isAiActive ? "default" : "destructive"}>{isAiActive ? 'AI Active' : 'AI Paused'}</Badge>
+                    </div>
+                    <CardDescription>{feed.location}</CardDescription>
+                </CardHeader>
+                <CardContent className="p-0 relative">
+                    <Image src={feed.image} width={600} height={400} alt={feed.title} className="w-full h-auto" />
+                    {alerts.some(a => a.message.includes(feed.id)) && <div className="absolute top-2 right-2 w-3 h-3 bg-red-500 rounded-full animate-ping" />}
+                </CardContent>
+            </Card>
+        ))}
+    </div>
+);
+
+const ResourceManagementPanel = ({ resources, setResources, addLog }) => {
+    const bedStatusColor = resources.beds.available > 20 ? 'text-green-400' : resources.beds.available > 5 ? 'text-yellow-400' : 'text-red-400';
+    
+    return (
+        <div className="space-y-4">
+            <ResourceCard icon={Droplets} title="Oxygen Supply (ICU)" value={`${resources.oxygen.toFixed(1)}%`} progress={resources.oxygen} />
+            <ResourceCard icon={BedDouble} title="Bed Availability" value={`${resources.beds.available} / ${resources.beds.total}`} progress={(resources.beds.available / resources.beds.total) * 100} valueColor={bedStatusColor} />
+            <ResourceCard icon={ChefHat} title="Food Service (Canteen)" value={`${resources.food.served} / ${resources.food.total} Served`} subtext={resources.food.aiStatus} />
+            <ResourceCard icon={Trash2} title="Waste Management" value={resources.waste} />
+        </div>
+    );
+};
+
+const ResourceCard = ({ icon: Icon, title, value, subtext, progress, valueColor }) => (
+    <Card className="glassmorphism">
+        <CardContent className="p-4">
+            <div className="flex items-center gap-4">
+                <Icon className="w-8 h-8 text-primary" />
+                <div className="flex-grow">
+                    <p className="text-muted-foreground">{title}</p>
+                    <p className={cn("text-2xl font-bold text-white", valueColor)}>{value}</p>
+                    {subtext && <p className="text-xs text-muted-foreground">{subtext}</p>}
+                </div>
+                <Button variant="ghost" size="icon"><ChevronRight /></Button>
+            </div>
+            {progress !== undefined && <Progress value={progress} className="mt-2 h-2" />}
+        </CardContent>
+    </Card>
+);
+
+
+const AlertsAndLogsPanel = ({ alerts, log, addAlert, resolveAlert }) => {
+    
+    const handleTriggerAlert = (type: string) => {
+        switch(type) {
+            case 'icu':
+                addAlert({type: 'patient', message: 'Patient distress in ICU - CAM-01', level: 'critical', icon: User });
+                break;
+            case 'canteen':
+                addAlert({type: 'hygiene', message: 'Hygiene protocol breach in Canteen - CAM-03', level: 'warning', icon: ChefHat });
+                break;
+            case 'oxygen':
+                 addAlert({ type: 'oxygen', message: `Oxygen level low`, level: 'critical', icon: Droplets });
+                break;
         }
-        onAssign(selectedPatient, selectedBed);
-        toast({
-            title: 'Bed Assigned Successfully!',
-            description: `Patient has been assigned to ${selectedBed}.`,
-        });
-        setSelectedPatient('');
-        setSelectedBed('');
-    };
+    }
+    
+    return (
+        <div className="flex flex-col gap-4 h-full">
+            <Card className="glassmorphism">
+                <CardHeader className="p-3">
+                    <CardTitle className="text-base text-white flex items-center gap-2"><Siren className="text-red-500"/>Active Alerts ({alerts.length})</CardTitle>
+                     <div className="flex gap-2 pt-2">
+                        <Button size="sm" variant="outline" onClick={() => handleTriggerAlert('icu')}>Trigger ICU Alert</Button>
+                        <Button size="sm" variant="outline" onClick={() => handleTriggerAlert('canteen')}>Simulate Violation</Button>
+                        <Button size="sm" variant="outline" onClick={() => handleTriggerAlert('oxygen')}>Low O2 Event</Button>
+                    </div>
+                </CardHeader>
+                <CardContent className="p-3 pt-0 max-h-48 overflow-y-auto space-y-2">
+                    {alerts.length === 0 ? <p className="text-sm text-center text-muted-foreground py-4">No active alerts.</p> :
+                        alerts.map(alert => <AlertCard key={alert.id} alert={alert} onResolve={resolveAlert} />)
+                    }
+                </CardContent>
+            </Card>
+            <Card className="glassmorphism flex-grow flex flex-col">
+                <CardHeader className="p-3">
+                    <CardTitle className="text-base text-white">System Activity Log</CardTitle>
+                </CardHeader>
+                <CardContent className="p-3 pt-0 flex-grow overflow-hidden">
+                    <ScrollArea className="h-full">
+                        <div className="space-y-1 text-xs font-mono">
+                            {log.map((entry, i) => (
+                                <p key={i} className="animate-fade-in-up text-muted-foreground">
+                                    <span className="text-primary/70">{entry.split(']')[0]}]</span>{entry.split(']')[1]}
+                                </p>
+                            ))}
+                        </div>
+                    </ScrollArea>
+                </CardContent>
+            </Card>
+        </div>
+    );
+};
 
-    const triageColorMapping = {
-        Critical: "bg-red-500/20 text-red-400",
-        Moderate: "bg-orange-500/20 text-orange-400",
-        Minor: "bg-yellow-500/20 text-yellow-400",
+const AlertCard = ({ alert, onResolve }) => {
+    const alertConfig = {
+        critical: { bg: 'bg-red-500/10', border: 'border-red-500/50', iconColor: 'text-red-500' },
+        warning: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/50', iconColor: 'text-yellow-500' },
+        info: { bg: 'bg-blue-500/10', border: 'border-blue-500/50', iconColor: 'text-blue-500' }
     };
+    const config = alertConfig[alert.level] || alertConfig.info;
+    const Icon = alert.icon;
 
     return (
-        <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="glassmorphism max-w-4xl h-[80vh] flex flex-col">
-                <DialogHeader>
-                    <DialogTitle className="text-gradient-glow text-2xl">Triage & Bed Assignment</DialogTitle>
-                    <DialogDescription>Assign waiting patients to available beds.</DialogDescription>
-                </DialogHeader>
-                <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto">
-                    <div className="space-y-4">
-                        <h3 className="font-semibold text-lg text-white">Waiting Patients ({patients.length})</h3>
-                        <div className="max-h-[60vh] overflow-y-auto">
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Patient</TableHead>
-                                        <TableHead>Triage</TableHead>
-                                        <TableHead>Action</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {patients.map(p => (
-                                        <TableRow key={p.patientId} className={selectedPatient === p.patientId ? 'bg-primary/20' : ''}>
-                                            <TableCell>
-                                                <div className="font-bold">{p.name}</div>
-                                                <div className="text-xs text-muted-foreground">{p.age}, {p.gender}</div>
-                                            </TableCell>
-                                            <TableCell>
-                                                <Badge className={triageColorMapping[p.triageLevel]}>{p.triageLevel}</Badge>
-                                            </TableCell>
-                                            <TableCell>
-                                                <Button size="sm" variant={selectedPatient === p.patientId ? "default" : "outline"} onClick={() => setSelectedPatient(p.patientId)}>Select</Button>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </div>
-                    </div>
-                    <div className="space-y-4">
-                        <h3 className="font-semibold text-lg text-white">Available Beds ({beds.length})</h3>
-                        <Select onValueChange={setSelectedBed} value={selectedBed}>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select an available bed..." />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {beds.map(b => (
-                                    <SelectItem key={b.name} value={b.name}>{b.name}</SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                        {selectedPatient && selectedBed && (
-                            <Card className="glassmorphism p-4 mt-4 animate-fade-in-up">
-                                <CardHeader>
-                                    <CardTitle className="text-lg">Assignment Summary</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p>Assigning <span className="text-primary font-bold">{patients.find(p=>p.patientId === selectedPatient)?.name}</span> to <span className="text-primary font-bold">{selectedBed}</span>.</p>
-                                </CardContent>
-                            </Card>
-                        )}
-                    </div>
-                </div>
-                <DialogFooter>
-                    <Button variant="outline" onClick={onClose}>Cancel</Button>
-                    <Button onClick={handleAssignClick} disabled={!selectedPatient || !selectedBed}>Assign Bed</Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    )
-}
+        <div className={cn('p-2.5 rounded-lg border flex justify-between items-center', config.bg, config.border)}>
+            <div className="flex items-center gap-2">
+                {Icon && <Icon className={cn('w-5 h-5', config.iconColor)} />}
+                <p className="text-sm text-white">{alert.message}</p>
+            </div>
+            <Button size="sm" variant="ghost" onClick={() => onResolve(alert.id)}>Resolve</Button>
+        </div>
+    );
+};
