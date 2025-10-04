@@ -46,6 +46,8 @@ import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
 import { generatePatientId } from "@/lib/utils";
 import { dummyPatients, dummyDoctors, dummyAmbulances } from "@/lib/dummy-data";
+import { sendLabReportEmail } from "@/ai/flows/send-lab-report-email";
+import { useToast } from "@/hooks/use-toast";
 
 const patientSearchSchema = z.object({
   searchTerm: z.string().min(1, "Please enter a search term."),
@@ -83,6 +85,7 @@ const InputWithIcon = ({ icon: Icon, ...props }: { icon: React.ElementType } & R
 export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { toast } = useToast();
   const defaultTab = (searchParams.get("role") as Role) || "patient";
 
   const patientSearchForm = useForm<z.infer<typeof patientSearchSchema>>({
@@ -129,10 +132,36 @@ export function LoginForm() {
     }
   }
 
-  function onPatientLogin(values: z.infer<typeof patientLoginSchema>) {
-    const patientExists = dummyPatients.some(p => p.patientId === values.patientId);
-    if(patientExists) {
+  async function onPatientLogin(values: z.infer<typeof patientLoginSchema>) {
+    const patient = dummyPatients.find(p => p.patientId === values.patientId);
+    if(patient) {
+        // Simulate sending email
+        try {
+            const labReports = patient.investigations.filter(inv => inv.type === 'Blood Test' || inv.type === 'Spirometry' || inv.type === 'ECG');
+            const emailResult = await sendLabReportEmail({
+                patientName: patient.name,
+                recipientEmail: 'nareshkottees@gmail.com',
+                labReports: JSON.stringify(labReports, null, 2),
+            });
+
+            console.log("Simulated Email Sent:", emailResult);
+
+            toast({
+                title: "Simulated Email Sent",
+                description: "Lab reports have been sent to nareshkottees@gmail.com.",
+            });
+
+        } catch (error) {
+            console.error("Failed to send simulated email:", error);
+            toast({
+                variant: "destructive",
+                title: "Email Simulation Failed",
+                description: "Could not send lab report email.",
+            });
+        }
+        
         router.push(`/patient/dashboard?id=${values.patientId}`);
+
     } else {
         patientLoginForm.setError("patientId", {
             type: "manual",
