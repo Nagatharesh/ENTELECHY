@@ -24,9 +24,9 @@ export function AmbulanceDashboard() {
     const { toast } = useToast();
     const ambulanceId = searchParams.get('id');
 
-    const [ambulance, setAmbulance] = useState(null);
-    const [currentDispatch, setCurrentDispatch] = useState(null);
-    const [tripLogs, setTripLogs] = useState([]);
+    const [ambulance, setAmbulance] = useState<any>(null);
+    const [currentDispatch, setCurrentDispatch] = useState<any>(null);
+    const [tripLogs, setTripLogs] = useState<any[]>([]);
     const [checklistComplete, setChecklistComplete] = useState(false);
     const [eta, setEta] = useState(0);
 
@@ -96,7 +96,7 @@ export function AmbulanceDashboard() {
     }
 
     const handleCompleteTrip = () => {
-        if (currentDispatch) {
+        if (currentDispatch && ambulance) {
             const newLog = {
                 id: `log-${Date.now()}`,
                 ambulanceId: ambulance.id,
@@ -131,6 +131,8 @@ export function AmbulanceDashboard() {
     
     const readinessScore = ((ambulance.fuelLevel / 100) * 0.4 + (ambulance.oxygenLevel / 100) * 0.4 + (ambulance.facilities.emergencyKit ? 1 : 0) * 0.2) * 100;
     const isReady = readinessScore > 70 && checklistComplete;
+    
+    const pendingDispatch = useMemo(() => dummyDispatchRequests.find(d => d.ambulanceId === ambulanceId && d.status === 'pending'), [ambulanceId]);
 
     return (
         <div className="min-h-screen bg-background text-white p-4 space-y-6">
@@ -155,7 +157,7 @@ export function AmbulanceDashboard() {
                         <LiveNavigation dispatch={currentDispatch} onComplete={handleCompleteTrip} />
                     ) : (
                         <DispatchAlert 
-                            dispatch={dummyDispatchRequests.find(d => d.ambulanceId === ambulance.id && d.status === 'pending')} 
+                            dispatch={pendingDispatch} 
                             onAccept={handleAcceptDispatch} 
                             onDecline={handleDeclineDispatch}
                             isReady={isReady}
