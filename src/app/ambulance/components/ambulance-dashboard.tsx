@@ -30,14 +30,19 @@ export function AmbulanceDashboard() {
     const [checklistComplete, setChecklistComplete] = useState(false);
     const [eta, setEta] = useState(0);
 
-    const pendingDispatch = useMemo(() => dummyDispatchRequests.find(d => d.ambulanceId === ambulanceId && d.status === 'pending'), [ambulanceId]);
+    const pendingDispatch = useMemo(() => {
+        if (!ambulanceId) return null;
+        return dummyDispatchRequests.find(d => d.ambulanceId === ambulanceId && d.status === 'pending');
+    }, [ambulanceId]);
 
     useEffect(() => {
         const foundAmbulance = dummyAmbulances.find(a => a.id === ambulanceId);
         setAmbulance(foundAmbulance);
         
-        const initialLogs = dummyTripLogs.filter(t => t.ambulanceId === ambulanceId);
-        setTripLogs(initialLogs);
+        if(ambulanceId){
+            const initialLogs = dummyTripLogs.filter(t => t.ambulanceId === ambulanceId);
+            setTripLogs(initialLogs);
+        }
 
     }, [ambulanceId]);
 
@@ -47,7 +52,7 @@ export function AmbulanceDashboard() {
         setEta(totalDuration);
         const interval = setInterval(() => {
             setEta(prev => {
-                if (prev <= 0) {
+                if (prev <= 1/60) { // Stop when less than a second left
                     clearInterval(interval);
                     return 0;
                 }
@@ -78,14 +83,16 @@ export function AmbulanceDashboard() {
     };
     
     const handleDeclineDispatch = (dispatchId: string) => {
+        // In a real app, you'd also update the dispatch request status on the backend.
+        // For this demo, we'll just clear the current alert.
+        const nextRequest = dummyDispatchRequests.find(d => d.ambulanceId === ambulanceId && d.status === 'pending' && d.id !== dispatchId) || null;
         toast({
             variant: "destructive",
             title: "Dispatch Declined",
             description: "The dispatch request has been declined and will be reassigned.",
         });
-        // In a real app, you'd also update the dispatch request status on the backend.
-        // For this demo, we'll just clear the current alert.
-        const nextRequest = dummyDispatchRequests.find(d => d.ambulanceId === ambulanceId && d.status === 'pending' && d.id !== dispatchId) || null;
+        // This is a simulation, so we just effectively remove the alert from view for this session
+        // In a real app, the server would send a new dispatch or none. Here we do nothing to show it's gone.
     }
 
     const handlePanic = () => {
