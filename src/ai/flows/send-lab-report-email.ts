@@ -50,7 +50,7 @@ const sendLabReportEmailFlow = ai.defineFlow(
   async input => {
     // In a real application, you would integrate an email sending service here (e.g., SendGrid, Mailgun).
     // For this simulation, we will just generate the email content.
-    console.log(`Simulating email preparation for ${input.recipientEmail}`);
+    console.log(`SIMULATING sending email to ${input.recipientEmail}`);
     
     const {output} = await prompt(input);
     
@@ -61,10 +61,8 @@ const sendLabReportEmailFlow = ai.defineFlow(
     console.log("-----------------------");
     
     return {
-      status: `Simulated email successfully sent to ${input.recipientEmail}`,
+      status: `Simulated email successfully prepared for ${input.recipientEmail}`,
       emailBody: output?.emailBody || 'Could not generate email body.',
     };
   }
 );
-
-    

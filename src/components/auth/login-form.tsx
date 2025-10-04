@@ -144,11 +144,11 @@ export function LoginForm() {
                 labReports: JSON.stringify(labReports, null, 2),
             });
 
-            console.log("Simulated Email Sent:", emailResult);
+            console.log("Email Simulation Result:", emailResult);
 
             toast({
-                title: "Simulated Email Sent",
-                description: "Lab reports have been sent to nareshkottees@gmail.com.",
+                title: "Email Simulation Triggered",
+                description: `A simulated email with lab reports has been sent to nareshkottees@gmail.com. Check the console for details.`,
             });
 
         } catch (error) {
@@ -156,7 +156,7 @@ export function LoginForm() {
             toast({
                 variant: "destructive",
                 title: "Email Simulation Failed",
-                description: "Could not send lab report email.",
+                description: "Could not prepare the simulated lab report email.",
             });
         }
         
@@ -420,5 +420,3 @@ export function LoginForm() {
     </div>
   );
 }
-
-    
