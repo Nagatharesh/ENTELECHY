@@ -2,59 +2,89 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Fuel, Droplets, ShieldCheck, Wrench } from "lucide-react";
+import { Fuel, Droplets, ShieldCheck, Wrench, Bot } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const getStatusConfig = (value: number) => {
+    if (value > 75) return { color: "text-green-400", label: "Optimal" };
+    if (value > 40) return { color: "text-yellow-400", label: "Good" };
+    if (value > 20) return { color: "text-orange-400", label: "Low" };
+    return { color: "text-destructive", label: "Critical" };
+};
+
+const getEngineStatusConfig = (status: string) => {
+    if (status === "Healthy") return { color: "text-green-400", label: "Healthy" };
+    return { color: "text-yellow-400", label: "Check Soon" };
+};
+
+const getKitStatusConfig = (isStocked: boolean) => {
+    if (isStocked) return { color: "text-green-400", label: "Stocked" };
+    return { color: "text-destructive", label: "Needs Refill" };
+};
 
 export function VehicleStatus({ ambulance }) {
+    const fuelStatus = getStatusConfig(ambulance.fuelLevel);
+    const oxygenStatus = getStatusConfig(ambulance.oxygenLevel);
+    const engineStatus = getEngineStatusConfig("Healthy"); // Assuming healthy for demo
+    const kitStatus = getKitStatusConfig(ambulance.facilities.emergencyKit);
+
+    const isReadyForDispatch = ambulance.fuelLevel > 20 && ambulance.oxygenLevel > 40 && ambulance.facilities.emergencyKit;
+
     return (
         <Card className="glassmorphism glowing-shadow">
             <CardHeader>
-                <CardTitle className="text-white">Vehicle Readiness</CardTitle>
-                <CardDescription>Live status of vehicle systems.</CardDescription>
+                <CardTitle className="text-white">Vehicle Diagnostics</CardTitle>
+                <CardDescription>Live status of all critical systems.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-5">
                 <StatusItem 
                     icon={Fuel} 
                     label="Fuel Level" 
-                    value={ambulance.fuelLevel}
-                    unit="%"
+                    value={`${ambulance.fuelLevel}%`}
+                    statusConfig={fuelStatus}
                 />
                 <StatusItem 
                     icon={Droplets} 
-                    label="Oxygen Level" 
-                    value={ambulance.oxygenLevel}
-                    unit="%"
-                />
-                <StatusItem 
-                    icon={ShieldCheck} 
-                    label="Medical Kit" 
-                    value={ambulance.facilities.emergencyKit ? 'Stocked' : 'Needs Refill'}
-                    isBadge
-                    isOk={ambulance.facilities.emergencyKit}
+                    label="Oxygen Supply" 
+                    value={`${ambulance.oxygenLevel}%`}
+                    statusConfig={oxygenStatus}
                 />
                 <StatusItem 
                     icon={Wrench} 
                     label="Engine Status" 
-                    value="Healthy"
+                    value={engineStatus.label}
+                    statusConfig={engineStatus}
                     isBadge
-                    isOk
                 />
+                 <StatusItem 
+                    icon={ShieldCheck} 
+                    label="Medical Kit" 
+                    value={kitStatus.label}
+                    statusConfig={kitStatus}
+                    isBadge
+                />
+
+                <div className={cn(
+                    "p-3 rounded-lg text-center font-bold text-lg border",
+                    isReadyForDispatch ? "bg-green-500/10 text-green-400 border-green-500/30" : "bg-destructive/10 text-destructive border-destructive/30"
+                )}>
+                    <Bot className="inline-block w-5 h-5 mr-2"/>
+                    AI Status: {isReadyForDispatch ? "Ready for Dispatch" : "Not Ready"}
+                </div>
             </CardContent>
         </Card>
     );
 }
 
-const StatusItem = ({ icon: Icon, label, value, unit = '', isBadge = false, isOk = true }) => (
-    <div>
-        <div className="flex justify-between items-center mb-1">
-            <p className="text-sm font-medium text-muted-foreground flex items-center gap-2"><Icon className="w-5 h-5"/>{label}</p>
-            {isBadge ? (
-                <Badge variant={isOk ? 'default' : 'destructive'}>{value}</Badge>
-            ) : (
-                <p className="font-semibold text-white">{value}{unit}</p>
-            )}
+const StatusItem = ({ icon: Icon, label, value, statusConfig, isBadge = false }) => (
+    <div className="flex items-center gap-4">
+        <div className={cn("p-2 rounded-full", isBadge ? 'bg-background/30' : statusConfig.color.replace('text-', 'bg-') + '/10')}>
+            <Icon className={cn("w-6 h-6", statusConfig.color)} />
         </div>
-        {!isBadge && <Progress value={typeof value === 'number' ? value : 0} />}
+        <div className="flex-grow">
+            <p className="font-medium text-white">{label}</p>
+        </div>
+        <div className={cn("font-semibold text-lg", statusConfig.color)}>{value}</div>
     </div>
 );

@@ -8,13 +8,15 @@ import { User, MapPin, Clock, Siren, Check, X } from "lucide-react";
 export function DispatchAlert({ dispatch, onAccept }) {
     if (!dispatch) {
         return (
-            <Card className="glassmorphism h-full flex flex-col items-center justify-center text-center glowing-shadow">
+            <Card className="glassmorphism h-full flex flex-col items-center justify-center text-center glowing-shadow perspective-1000">
                 <CardHeader>
                     <CardTitle className="text-gradient-glow text-2xl">Awaiting Dispatch</CardTitle>
-                    <CardDescription>No active dispatches. Your status is "Available".</CardDescription>
+                    <CardDescription>Scanning for emergency requests...</CardDescription>
                 </CardHeader>
-                <CardContent>
-                    <Siren className="w-24 h-24 text-primary animate-pulse" />
+                <CardContent className="relative w-80 h-80 flex items-center justify-center transform-style-3d" style={{ transform: 'rotateX(60deg) scale(1.1)' }}>
+                     <div className="absolute inset-0 radar-container"/>
+                     <div className="absolute inset-0 radar-sweep"/>
+                     <div className="radar-marker-center"/>
                 </CardContent>
             </Card>
         );
@@ -23,7 +25,7 @@ export function DispatchAlert({ dispatch, onAccept }) {
     return (
         <Card className="glassmorphism glowing-shadow border-primary shadow-primary/30">
             <CardHeader>
-                <CardTitle className="text-primary text-3xl flex items-center gap-3"><Siren/> New Emergency Dispatch!</CardTitle>
+                <CardTitle className="text-primary text-3xl flex items-center gap-3"><Siren className="animate-pulse"/> New Emergency Dispatch!</CardTitle>
                 <CardDescription>A new dispatch request requires your attention.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
