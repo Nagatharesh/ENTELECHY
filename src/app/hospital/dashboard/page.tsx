@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
-import { User, Bell, PanelLeft, Building, Users, FlaskConical, AlertTriangle, BarChart3, BedDouble, DollarSign, Calendar } from 'lucide-react';
+import { User, Bell, PanelLeft, Building, Users, FlaskConical, AlertTriangle, BarChart3, BedDouble, DollarSign, Calendar, BrainCircuit } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -31,7 +31,7 @@ import { FacilitiesManagement } from '@/components/hospital/facilities-managemen
 import { StaffManagement } from '@/components/hospital/staff-management';
 import { LabReportCenter } from '@/components/hospital/lab-report-center';
 import { SafetyAndAlerts } from '@/components/hospital/safety-and-alerts';
-import { EmergencyResourceStatus } from '@/components/hospital/emergency-resource-status';
+import { NeuraView } from '@/components/hospital/neuraview';
 import { ReportsAndAnalytics } from '@/components/hospital/reports-and-analytics';
 import { StaffScheduling } from '@/components/hospital/staff-scheduling';
 import { HospitalChatbot } from '@/components/hospital/hospital-chatbot';
@@ -61,8 +61,8 @@ function DashboardContent() {
         return <HospitalOverview hospitalData={hospitalData} />;
       case 'facilities':
         return <FacilitiesManagement hospitalData={hospitalData} />;
-      case 'emergency-resources':
-        return <EmergencyResourceStatus hospitalData={hospitalData} />;
+      case 'neuraview':
+        return <NeuraView hospitalData={hospitalData} />;
       case 'staff':
         return <StaffManagement hospitalData={hospitalData} />;
        case 'scheduling':
@@ -81,7 +81,7 @@ function DashboardContent() {
   const navItems = [
     { id: 'overview', icon: BarChart3, label: 'Overview' },
     { id: 'facilities', icon: Building, label: 'Facilities' },
-    { id: 'emergency-resources', icon: BedDouble, label: 'Emergency Resources' },
+    { id: 'neuraview', icon: BrainCircuit, label: 'NeuraView' },
     { id: 'staff', icon: Users, label: 'Staff Management' },
     { id: 'scheduling', icon: Calendar, label: 'Staff Scheduling' },
     { id: 'labs', icon: FlaskConical, label: 'Lab Center' },

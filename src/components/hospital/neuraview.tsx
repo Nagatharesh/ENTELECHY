@@ -31,7 +31,7 @@ import { useToast } from '@/hooks/use-toast';
 import { dummyTriagePatients, TriagePatient } from '@/lib/dummy-data';
 
 // --- Main Component ---
-export function EmergencyResourceStatus({ hospitalData }) {
+export function NeuraView({ hospitalData }) {
     const { facilities, beds: bedData } = hospitalData.hospitalInfo;
     const mountRef = useRef<HTMLDivElement>(null);
     const [infoBox, setInfoBox] = useState<{ visible: boolean, content: string, x: number, y: number }>({ visible: false, content: '', x: 0, y: 0 });
