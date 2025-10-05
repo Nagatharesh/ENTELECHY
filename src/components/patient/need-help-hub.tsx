@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, LifeBuoy, Ambulance, Stethoscope, Calendar, ExternalLink } from "lucide-react";
+import { Phone, MessageSquare, LifeBuoy, Ambulance, Stethoscope, Calendar, ExternalLink, HelpCircle } from "lucide-react";
 import Link from "next/link";
 
 const supportContacts = [
@@ -80,7 +80,8 @@ export function NeedHelpHub() {
                 <CardHeader>
                     <CardTitle className="text-white">External Health Resources</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
+                    <p className="text-sm text-muted-foreground">The National Institute of Allergy and Infectious Diseases (NIAID) is a leading research organization. Visit their site for trusted information on infectious diseases, allergies, and immunology.</p>
                     <Button asChild variant="outline" className="w-full justify-start">
                         <Link href="https://www.niaid.nih.gov" target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="mr-2 h-4 w-4" />
