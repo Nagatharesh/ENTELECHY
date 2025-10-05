@@ -907,5 +907,3 @@ export function FacilitiesManagement({ hospitalData }) {
         </div>
     );
 }
-
-    

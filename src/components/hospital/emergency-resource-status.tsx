@@ -24,7 +24,8 @@ import {
     VolumeX,
     UserPlus,
     X,
-    Check
+    Check,
+    Expand
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { dummyTriagePatients, TriagePatient } from '@/lib/dummy-data';
@@ -281,7 +282,10 @@ const Facility3DView = ({ resources, infoBox, setInfoBox }) => {
 
     return (
          <Card className="glassmorphism h-full p-4 perspective-1000" onMouseMove={handleMouseMove} onMouseLeave={() => setInfoBox(prev => ({ ...prev, visible: false }))}>
-            <CardTitle className="text-gradient-glow">Live Facility View</CardTitle>
+            <div className="flex justify-between items-center">
+                 <CardTitle className="text-gradient-glow">Live Facility View</CardTitle>
+                 <Button variant="outline" size="sm" onClick={() => alert("Navigating to full 3D facility view...")}><Expand className="mr-2 h-4 w-4"/>View</Button>
+            </div>
              {infoBox.visible && (
                 <div className="absolute z-20 p-2 text-xs rounded-md pointer-events-none bg-background/80 border border-border" style={{ left: infoBox.x + 15, top: infoBox.y }}>
                     {infoBox.content}
