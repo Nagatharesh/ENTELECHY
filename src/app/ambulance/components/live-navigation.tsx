@@ -140,7 +140,7 @@ export function LiveNavigation({ dispatch, onComplete }) {
                 <div className="flex justify-between items-center">
                     <CardTitle className="text-gradient-glow text-2xl">Live Navigation & Patient Monitoring</CardTitle>
                     <Button variant="outline" asChild>
-                        <a href="https://class-honey-37794972.figma.site/" target="_blank" rel="noopener noreferrer">
+                        <a href="https://read-metal-09717837.figma.site" target="_blank" rel="noopener noreferrer">
                             <Map className="mr-2"/> View Full Map
                         </a>
                     </Button>
@@ -149,8 +149,12 @@ export function LiveNavigation({ dispatch, onComplete }) {
             </CardHeader>
             <CardContent>
                  <div className="relative h-96 bg-background/50 rounded-lg overflow-hidden border border-primary/20">
-                    {mapImage && <Image src={mapImage.imageUrl} alt={`Map for ${dispatch.patientName}`} layout="fill" objectFit="cover" className="opacity-80" data-ai-hint={mapImage.imageHint} />}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+                   <iframe
+                        src="https://read-metal-09717837.figma.site"
+                        className="w-full h-full border-0"
+                        allowFullScreen
+                    ></iframe>
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
 
                     <div className="absolute top-4 left-4 glassmorphism p-2 rounded-lg z-10">
                         <p className="text-sm text-muted-foreground">ETA</p>
@@ -163,7 +167,7 @@ export function LiveNavigation({ dispatch, onComplete }) {
                     </div>
                     
                     <div
-                        className="absolute transition-all duration-1000 linear"
+                        className="absolute transition-all duration-1000 linear pointer-events-none"
                         style={{
                             left: `${ambulancePos.x}%`,
                             top: `${ambulancePos.y}%`,
@@ -177,7 +181,7 @@ export function LiveNavigation({ dispatch, onComplete }) {
                     </div>
 
 
-                    <div className="absolute bottom-4 left-4 right-4 z-10">
+                    <div className="absolute bottom-4 left-4 right-4 z-10 pointer-events-none">
                         <Progress value={progress} />
                     </div>
                 </div>
