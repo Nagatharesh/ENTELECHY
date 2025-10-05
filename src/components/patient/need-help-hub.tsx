@@ -3,7 +3,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, MessageSquare, LifeBuoy, Ambulance, Stethoscope, Calendar } from "lucide-react";
+import { Phone, MessageSquare, LifeBuoy, Ambulance, Stethoscope, Calendar, ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 const supportContacts = [
     {
@@ -74,6 +75,20 @@ export function NeedHelpHub() {
                     </Button>
                 </CardContent>
             </Card>
+
+            <Card className="glassmorphism">
+                <CardHeader>
+                    <CardTitle className="text-white">External Health Resources</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <Button asChild variant="outline" className="w-full justify-start">
+                        <Link href="https://www.niaid.nih.gov" target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="mr-2 h-4 w-4" />
+                            Learn about NIAID (National Institute of Allergy and Infectious Diseases)
+                        </Link>
+                    </Button>
+                </CardContent>
+            </Card>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {supportContacts.map(contact => (
@@ -101,4 +116,3 @@ export function NeedHelpHub() {
         </div>
     );
 }
-
