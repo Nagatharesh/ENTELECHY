@@ -9,7 +9,7 @@ import { dummyCardiacPatients, CardiacPatient } from '@/lib/dummy-data';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { Zap, Activity, Heart, Brain, Shield, Info, X, Search, Bot, FileText, User, BarChart, GitBranch, Pill, Hospital, HeartPulse, Map, Battery, AlertTriangle, Phone, ChevronRight, CheckCircle, Ambulance, Bell, Send } from 'lucide-react';
+import { Zap, Activity, Heart, Brain, Shield, Info, X, Search, Bot, FileText, User, BarChart, GitBranch, Pill, Hospital, HeartPulse, Map, Battery, AlertTriangle, Phone, ChevronRight, CheckCircle, Ambulance, Bell, Send, ExternalLink } from 'lucide-react';
 import { LineChart, ResponsiveContainer, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import Link from 'next/link';
 
 
 const getRiskConfig = (risk: number) => {
@@ -64,8 +65,18 @@ export function CardiacDeviceHub() {
         <div className="space-y-6">
             <Card className="glassmorphism glowing-shadow">
                 <CardHeader>
-                    <CardTitle className="text-gradient-glow text-2xl flex items-center gap-2"><HeartPulse />Cardiac Device Watch — Predict & Protect</CardTitle>
-                    <CardDescription>Continuously monitoring implanted cardiac devices to predict failure and orchestrate emergency responses.</CardDescription>
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <CardTitle className="text-gradient-glow text-2xl flex items-center gap-2"><HeartPulse />Cardiac Device Watch — Predict & Protect</CardTitle>
+                            <CardDescription>Continuously monitoring implanted cardiac devices to predict failure and orchestrate emergency responses.</CardDescription>
+                        </div>
+                        <Button asChild>
+                           <Link href="https://booth-creme-05256729.figma.site" target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="mr-2 h-4 w-4" />
+                                Monitor
+                            </Link>
+                        </Button>
+                    </div>
                 </CardHeader>
                 <CardContent>
                     <div className="flex gap-4 mb-6">
@@ -264,3 +275,5 @@ const EmergencyDispatchDialog = ({ open, setOpen, patient }: { open: boolean, se
         </Dialog>
     )
 }
+
+    
