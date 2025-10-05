@@ -208,12 +208,18 @@ const DoctorCard = ({ doctor, onBookClick }) => {
                 </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-2">
-                <Button size="sm" variant="outline"><MessageSquare className="w-4 h-4 sm:mr-2"/> <span className="hidden sm:inline">Chat</span></Button>
+                <Button size="sm" variant="outline" asChild>
+                  <Link href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer">
+                    <MessageSquare className="w-4 h-4 sm:mr-2"/> <span className="hidden sm:inline">Chat</span>
+                  </Link>
+                </Button>
                 <Button size="sm" variant="outline"><Video className="w-4 h-4 sm:mr-2"/> <span className="hidden sm:inline">Video Call</span></Button>
                 <Button size="sm" className="glowing-shadow-interactive" onClick={() => onBookClick(doctor)}>Book</Button>
             </div>
         </Card>
     );
 }
+
+    
 
     
