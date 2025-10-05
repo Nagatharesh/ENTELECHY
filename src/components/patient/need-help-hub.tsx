@@ -81,11 +81,11 @@ export function NeedHelpHub() {
                     <CardTitle className="text-white">External Health Resources</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <p className="text-sm text-muted-foreground">The National Institute of Allergy and Infectious Diseases (NIAID) is a leading research organization. Visit their site for trusted information on infectious diseases, allergies, and immunology.</p>
+                    <p className="text-sm text-muted-foreground">Milaap is India's largest crowdfunding platform, designed to help individuals raise funds for medical emergencies and social initiatives. It provides a simple and secure way to create fundraising campaigns and connect with a community of donors.</p>
                     <Button asChild variant="outline" className="w-full justify-start">
                         <Link href="https://crowdfunding.milaap.org/inf-sba/?gad_source=1&gad_campaignid=22977966476&gbraid=0AAAAADgqGzlTu5GKa9u2vXSkcJr_f_3_A&gclid=Cj0KCQjwrojHBhDdARIsAJdEJ_f7DcQNvmD2TeTPFfORR_gplhl3B0i4wvhMNiTh8CN_DYdBAi6qWBcaAja6EALw_wcB" target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="mr-2 h-4 w-4" />
-                            Learn about NIAID (National Institute of Allergy and Infectious Diseases)
+                            Learn about Milaap Crowdfunding
                         </Link>
                     </Button>
                 </CardContent>
