@@ -17,7 +17,7 @@ export function BioNanitesHub() {
                 <CardContent className="flex flex-col items-center justify-center text-center p-8">
                     <p className="mb-6 text-muted-foreground">Access the real-time monitoring and control interface for deployed biological nanites.</p>
                     <Button size="lg" className="glowing-shadow-interactive" asChild>
-                        <Link href="https://www.figma.com/make/dop2zJdnX8CZxVu3fzpFqU/3D-Nanobot-Visualization?node-id=0-4&t=mxxBsEDLCyH56XeG-1" target="_blank" rel="noopener noreferrer">
+                        <Link href="https://puppet-goofy-49747634.figma.site" target="_blank" rel="noopener noreferrer">
                             <Dna className="mr-2 h-5 w-5"/>
                             View Bio-nanites
                         </Link>
