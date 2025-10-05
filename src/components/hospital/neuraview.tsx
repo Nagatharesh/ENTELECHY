@@ -15,7 +15,7 @@ export function NeuraView({ hospitalData, onNavigate }) {
                     <CardDescription>Launch the interactive 3D model of the hospital campus to monitor live status, alerts, and resource allocation.</CardDescription>
                 </CardHeader>
                 <CardContent className="flex flex-col items-center justify-center text-center p-8">
-                    <p className="mb-6 text-muted-foreground">Click the button below to open the full-screen interactive 3D view of the hospital facilities.</p>
+                    <p className="mb-6 text-muted-foreground">Launch the interactive 3D model of the hospital campus to monitor live status, alerts, and resource allocation.</p>
                     <Button size="lg" className="glowing-shadow-interactive" onClick={() => onNavigate('facilities')}>
                         <Expand className="mr-2 h-5 w-5"/>
                         Launch NeuraView
