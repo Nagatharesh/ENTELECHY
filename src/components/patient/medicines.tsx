@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Search, Pin, FlaskConical, Stethoscope, ChevronRight, Hash, Package, Clock, Building, User } from 'lucide-react';
+import { Search, Pin, FlaskConical, Stethoscope, ChevronRight, Hash, Package, Clock, Building, User, Link as LinkIcon } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { cn } from '@/lib/utils';
 import {
@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import Link from 'next/link';
 
 const getDoctorById = (doctorId: string) => dummyDoctors.find(d => d.doctorId === doctorId);
 
@@ -29,6 +30,8 @@ export function Medicines({ patient }: { patient: Patient }) {
     const [bookingDetails, setBookingDetails] = useState<{medicine: Medicine, quantity: number, pharmacy: string} | null>(null);
     const [receipt, setReceipt] = useState<any | null>(null);
     const { toast } = useToast();
+    const [showExternalLinksDialog, setShowExternalLinksDialog] = useState(false);
+    const [showPrivateLinksDialog, setShowPrivateLinksDialog] = useState(false);
     
     const patientMedNames = [
         ...(patient.medications.current || []).map(m => m.name),
@@ -73,13 +76,26 @@ export function Medicines({ patient }: { patient: Patient }) {
             description: `${selectedMedicine.name} (${quantity}) will be delivered in ~${eta} minutes.`,
         });
     };
+
+    const openPrivateLinks = () => {
+        setShowExternalLinksDialog(false);
+        setShowPrivateLinksDialog(true);
+    };
     
     return (
         <div className="space-y-6">
             <Card className="glassmorphism glowing-shadow">
                 <CardHeader>
-                    <CardTitle className="text-gradient-glow text-2xl">Medicine Hub</CardTitle>
-                    <CardDescription>Search for medicines, compare prices, and book for delivery.</CardDescription>
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <CardTitle className="text-gradient-glow text-2xl">Medicine Hub</CardTitle>
+                            <CardDescription>Search for medicines, compare prices, and book for delivery.</CardDescription>
+                        </div>
+                        <Button variant="outline" onClick={() => setShowExternalLinksDialog(true)}>
+                            <LinkIcon className="mr-2 h-4 w-4" />
+                            Show External Links
+                        </Button>
+                    </div>
                 </CardHeader>
                 <CardContent>
                     <div className="relative mb-6">
@@ -149,6 +165,45 @@ export function Medicines({ patient }: { patient: Patient }) {
                 receipt={receipt}
                 onClose={() => setReceipt(null)}
             />
+
+             <Dialog open={showExternalLinksDialog} onOpenChange={setShowExternalLinksDialog}>
+                <DialogContent className="glassmorphism">
+                    <DialogHeader>
+                        <DialogTitle className="text-gradient-glow">Select View Mode</DialogTitle>
+                        <DialogDescription>Choose how you want to view external pharmacy links.</DialogDescription>
+                    </DialogHeader>
+                    <div className="flex gap-4 py-4">
+                        <Button className="flex-1" onClick={openPrivateLinks}>Private View</Button>
+                        <Button className="flex-1" variant="outline" disabled>Public View (Coming Soon)</Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={showPrivateLinksDialog} onOpenChange={setShowPrivateLinksDialog}>
+                <DialogContent className="glassmorphism">
+                    <DialogHeader>
+                        <DialogTitle className="text-gradient-glow">External Pharmacy Links (Private)</DialogTitle>
+                        <DialogDescription>These links will open in a new tab.</DialogDescription>
+                    </DialogHeader>
+                    <div className="grid grid-cols-1 gap-4 py-4">
+                        <Button asChild variant="outline" className="justify-start">
+                            <Link href="https://pharmeasy.in/" target="_blank" rel="noopener noreferrer">
+                                Pharmeasy
+                            </Link>
+                        </Button>
+                         <Button asChild variant="outline" className="justify-start">
+                             <Link href="https://www.amazon.in/Health-Care/b/?ie=UTF8&node=1374494031&ref_=sv_hp_4" target="_blank" rel="noopener noreferrer">
+                                Amazon HealthCare
+                            </Link>
+                        </Button>
+                         <Button asChild variant="outline" className="justify-start">
+                             <Link href="https://www.apollopharmacy.in/" target="_blank" rel="noopener noreferrer">
+                                Apollo Pharmacy
+                            </Link>
+                        </Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }
@@ -232,3 +287,5 @@ const InfoRow = ({ icon: Icon, label, value, isPrimary=false }) => (
         <p className={cn("font-semibold font-mono", isPrimary ? "text-primary text-base" : "text-white")}>{value}</p>
     </div>
 )
+
+    
