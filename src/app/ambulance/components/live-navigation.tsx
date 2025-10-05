@@ -137,7 +137,14 @@ export function LiveNavigation({ dispatch, onComplete }) {
     return (
         <Card className="glassmorphism glowing-shadow">
             <CardHeader>
-                <CardTitle className="text-gradient-glow text-2xl">Live Navigation & Patient Monitoring</CardTitle>
+                <div className="flex justify-between items-center">
+                    <CardTitle className="text-gradient-glow text-2xl">Live Navigation & Patient Monitoring</CardTitle>
+                    <Button variant="outline" asChild>
+                        <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">
+                            <Map className="mr-2"/> View Full Map
+                        </a>
+                    </Button>
+                </div>
                 <CardDescription>Navigating to: <span className="text-white font-bold">{dispatch.destination}</span> for patient <span className="text-white font-bold">{dispatch.patientName}</span></CardDescription>
             </CardHeader>
             <CardContent>
@@ -188,3 +195,5 @@ export function LiveNavigation({ dispatch, onComplete }) {
         </Card>
     );
 }
+
+    
