@@ -101,7 +101,13 @@ export function ChatMessages({ chat, patientId, messages: initialMessages }: { c
 }
 
 const MessageItem = ({ message, isOwn }: { message: Message, isOwn: boolean }) => {
+    const [formattedTime, setFormattedTime] = useState('');
     const isSystem = message.senderRole === 'system';
+
+    useEffect(() => {
+        // Format the date only on the client side to prevent hydration errors.
+        setFormattedTime(format(new Date(message.createdAt), 'p'));
+    }, [message.createdAt]);
 
     const renderReceipt = () => {
         if (!isOwn) return null;
@@ -123,7 +129,7 @@ const MessageItem = ({ message, isOwn }: { message: Message, isOwn: boolean }) =
             <div className={cn("max-w-[70%] rounded-2xl p-3 text-sm", isOwn ? 'bg-primary text-primary-foreground rounded-br-none' : 'glassmorphism rounded-bl-none')}>
                 <p className="whitespace-pre-wrap">{message.text}</p>
                 <div className={cn("text-xs mt-1 flex items-center gap-1", isOwn ? "justify-end" : "justify-start", isOwn ? "text-primary-foreground/70" : "text-muted-foreground")}>
-                    {format(new Date(message.createdAt), 'p')}
+                    {formattedTime || '...'}
                     {renderReceipt()}
                 </div>
             </div>
