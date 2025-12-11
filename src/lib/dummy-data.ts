@@ -1,11 +1,101 @@
 
 
+export type Chat = {
+    id: string;
+    patientId: string;
+    doctorId: string;
+    createdAt: string;
+    lastMessage: string;
+    lastMessageAt: string;
+    unreadCount: number;
+    status: 'active' | 'archived';
+};
+
+export type Message = {
+    id: string;
+    chatId: string;
+    senderId: string;
+    senderRole: 'patient' | 'doctor' | 'system';
+    text: string;
+    type: 'text' | 'image' | 'system' | 'call_request';
+    createdAt: string;
+    deliveredAt: string | null;
+    seenAt: string | null;
+};
 
 
+export const dummyChatData: Chat[] = [
+    {
+      id: "chat_patient001_doc007",
+      patientId: "patient_001",
+      doctorId: "doctor_007",
+      createdAt: "2025-12-01T08:00:00.000Z",
+      lastMessage: "Start deep breathing exercises. I'll initiate a video consult in 2 mins.",
+      lastMessageAt: "2025-12-10T09:07:00.000Z",
+      unreadCount: 0,
+      status: "active"
+    }
+];
 
-
-
-
+export const dummyMessages: { [chatId: string]: Message[] } = {
+    "chat_patient001_doc007": [
+        {
+            id: "msg_0001",
+            chatId: "chat_patient001_doc007",
+            senderId: "patient_001",
+            senderRole: "patient",
+            text: "hi",
+            type: "text",
+            createdAt: "2025-12-10T09:00:00.000Z",
+            deliveredAt: "2025-12-10T09:00:01.000Z",
+            seenAt: "2025-12-10T09:00:10.000Z"
+        },
+        {
+            id: "msg_0002",
+            chatId: "chat_patient001_doc007",
+            senderId: "system_autoreply_001",
+            senderRole: "system",
+            text: "Hello, I am Dr. Ravi's assistant. Dr. Ravi will be with you shortly. If this is an emergency call 102 or tap Emergency.",
+            type: "system",
+            createdAt: "2025-12-10T09:00:02.000Z",
+            deliveredAt: "2025-12-10T09:00:02.000Z",
+            seenAt: null
+        },
+        {
+            id: "msg_0003",
+            chatId: "chat_patient001_doc007",
+            senderId: "doctor_007",
+            senderRole: "doctor",
+            text: "Hi — I can see your recent ECG. Can you describe your symptoms?",
+            type: "text",
+            createdAt: "2025-12-10T09:05:00.000Z",
+            deliveredAt: "2025-12-10T09:05:01.000Z",
+            seenAt: null
+        },
+        {
+            id: "msg_0004",
+            chatId: "chat_patient001_doc007",
+            senderId: "patient_001",
+            senderRole: "patient",
+            text: "Chest tightness and shortness of breath for 30 mins.",
+            type: "text",
+            createdAt: "2025-12-10T09:06:00.000Z",
+            deliveredAt: null,
+            seenAt: null
+        },
+        {
+            id: "msg_0005",
+            chatId: "chat_patient001_doc007",
+            senderId: "doctor_007",
+            senderRole: "doctor",
+            text: "Start deep breathing exercises. I'll initiate a video consult in 2 mins.",
+            type: "text",
+            createdAt: "2025-12-10T09:07:00.000Z",
+            deliveredAt: null,
+            seenAt: null
+        }
+    ]
+};
 
 
 
@@ -81,7 +171,8 @@ export const dummyAadhaarPatients = [
 ];
 
 export const dummyDoctors = [
-    { doctorId: "DOC-001", name: "Dr. A Kumar", email: "akumar@dummy.com", password: "pass123", specialty: "Cardiology", hospitalId: "HOS-001", contact: "+919876543210", waitTime: "15 mins", rating: 4.8, qualifications: ["MD", "PhD"], experience: 10, license: "DEL-98765", slots: ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00"], queue: 3, stats: { surgeriesPerformed: 320, successRate: 98, consultations: 500, patientVolume: 1200, feedback: { star5: 280, star4: 30, star3: 5, star2: 3, star1: 2 } }, certificates: [{ name: "Fellowship in Interventional Cardiology", institution: "American College of Cardiology", year: 2015 }, { name: "Advanced Cardiac Life Support", institution: "AHA", year: 2022 }] },
+    { id: "doctor_007", doctorId: "DOC-007", name: "Dr. Ravi Menon", email: "ravi.menon@example.com", password: "pass123", specialty: "Cardiology", hospitalId: "HOS-001", contact: "+919876543210", waitTime: "15 mins", rating: 4.8, qualifications: ["MD", "PhD"], experience: 10, license: "DEL-98765", slots: ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00"], queue: 3, stats: { surgeriesPerformed: 320, successRate: 98, consultations: 500, patientVolume: 1200, feedback: { star5: 280, star4: 30, star3: 5, star2: 3, star1: 2 } }, certificates: [{ name: "Fellowship in Interventional Cardiology", institution: "American College of Cardiology", year: 2015 }, { name: "Advanced Cardiac Life Support", institution: "AHA", year: 2022 }] },
+    { id: "patient_001", doctorId: "DOC-001", name: "Dr. A Kumar", email: "akumar@dummy.com", password: "pass123", specialty: "Cardiology", hospitalId: "HOS-001", contact: "+919876543210", waitTime: "15 mins", rating: 4.8, qualifications: ["MD", "PhD"], experience: 10, license: "DEL-98765", slots: ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00"], queue: 3, stats: { surgeriesPerformed: 320, successRate: 98, consultations: 500, patientVolume: 1200, feedback: { star5: 280, star4: 30, star3: 5, star2: 3, star1: 2 } }, certificates: [{ name: "Fellowship in Interventional Cardiology", institution: "American College of Cardiology", year: 2015 }, { name: "Advanced Cardiac Life Support", institution: "AHA", year: 2022 }] },
     { doctorId: "DOC-002", name: "Dr. S Mehra", email: "smehra@dummy.com", password: "pass123", specialty: "Dermatology", hospitalId: "HOS-001", contact: "+919876543211", waitTime: "20 mins", rating: 4.6, qualifications: ["MBBS", "DNB"], experience: 6, license: "MUM-54321", slots: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00"], queue: 2, stats: { surgeriesPerformed: 180, successRate: 97, consultations: 800, patientVolume: 1500, feedback: { star5: 150, star4: 20, star3: 8, star2: 1, star1: 1 } }, certificates: [{ name: "Advanced Cosmetic Dermatology", institution: "IADVL", year: 2018 }] },
     { doctorId: "DOC-003", name: "Dr. R Verma", email: "rverma@dummy.com", password: "pass123", specialty: "Neurology", hospitalId: "HOS-002", contact: "+919876543212", waitTime: "10 mins", rating: 4.9, qualifications: ["MBBS", "DM"], experience: 8, license: "DEL-11223", slots: ["11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00"], queue: 1, stats: { surgeriesPerformed: 210, successRate: 95, consultations: 650, patientVolume: 1000, feedback: { star5: 200, star4: 5, star3: 2, star2: 2, star1: 1 } }, certificates: [{ name: "Stroke Management Certification", institution: "World Stroke Organization", year: 2019 }] },
     { doctorId: "DOC-004", name: "Dr. P Singh", email: "psingh@dummy.com", password: "pass123", specialty: "Pediatrics", hospitalId: "HOS-001", contact: "+919876543214", waitTime: "25 mins", rating: 4.7, qualifications: ["MBBS", "MD"], experience: 12, license: "DEL-67891", slots: ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00"], queue: 4, stats: { surgeriesPerformed: 50, successRate: 99, consultations: 1200, patientVolume: 2000, feedback: { star5: 45, star4: 3, star3: 1, star2: 1, star1: 0 } }, certificates: [{ name: "Neonatal Resuscitation Program", institution: "IAP", year: 2020 }] },
@@ -1600,7 +1691,7 @@ export const dummyHospitalData = {
             { bedId: 'ICU-01', wing: 'ICU', room: 'A', status: 'occupied', triage: 'Critical', patient: 'Sunita Devi', occupiedSince: '2024-10-03T08:30Z', assignedStaff: 'NRS-001' },
             { bedId: 'TR-02', wing: 'Trauma', room: 'B', status: 'occupied', triage: 'Moderate', patient: 'Amit Singh', occupiedSince: '2024-10-03T11:00Z', assignedStaff: 'NRS-003' },
             { bedId: 'GW-102', wing: 'General', room: '101', status: 'available', triage: 'none' },
-            { bedId: 'OR-01', wing: 'Surgery', room: 'OR-1', status: 'in-use', triage: 'Critical', patient: 'Unknown', occupiedSince: '2024-10-03T10:00Z', assignedStaff: 'SURG-01' },
+            { id: 'OR-01', wing: 'Surgery', room: 'OR-1', status: 'in-use', triage: 'Critical', patient: 'Unknown', occupiedSince: '2024-10-03T10:00Z', assignedStaff: 'SURG-01' },
         ]
     },
     analytics: {
@@ -1747,3 +1838,4 @@ export const dummyHospitalData = {
     ]
 };
     
+
