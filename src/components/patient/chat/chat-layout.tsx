@@ -26,7 +26,9 @@ export function ChatLayout({ patientId, chats }) {
       >
         <ChatList chats={chats} selectedChatId={selectedChatId} onSelectChat={setSelectedChatId} />
       </ResizablePanel>
-      <ResizableHandle withHandle />
+      <ResizableHandle>
+        <div className="mx-1 h-full w-2 rounded-full bg-border transition-colors hover:bg-primary" />
+      </ResizableHandle>
       {selectedChat ? (
         <>
           <ResizablePanel defaultSize={50} minSize={30}>
@@ -36,7 +38,9 @@ export function ChatLayout({ patientId, chats }) {
               messages={dummyMessages[selectedChat.id] || []}
             />
           </ResizablePanel>
-          <ResizableHandle withHandle />
+          <ResizableHandle>
+            <div className="mx-1 h-full w-2 rounded-full bg-border transition-colors hover:bg-primary" />
+          </ResizableHandle>
           <ResizablePanel defaultSize={25} minSize={20} maxSize={30}>
             <ChatDetails chat={selectedChat} />
           </ResizablePanel>
