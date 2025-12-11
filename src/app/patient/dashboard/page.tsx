@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
-import { User, Bell, PanelLeft, Ambulance, HeartPulse, FileText, Calendar, Stethoscope, Microscope, Pill, Shield, ClipboardList, BrainCircuit, HelpCircle, MessageCircle } from 'lucide-react';
+import { User, Bell, PanelLeft, Ambulance, HeartPulse, FileText, Calendar, Stethoscope, Microscope, Pill, Shield, ClipboardList, BrainCircuit, HelpCircle, MessageCircle, Activity } from 'lucide-react';
 import { dummyPatients, Patient } from '@/lib/dummy-data';
 import { PatientProfile } from '@/components/patient/patient-profile';
 import { MedicalRecords } from '@/components/patient/medical-records';
@@ -40,6 +40,7 @@ import { Prescriptions } from '@/components/patient/prescriptions';
 import { PatientChatbot } from '@/components/patient/chatbot';
 import { HologramTrainer } from '@/components/patient/hologram-trainer';
 import { NeedHelpHub } from '@/components/patient/need-help-hub';
+import { Symptosphere } from '@/components/patient/symptosphere';
 
 
 function DashboardContent() {
@@ -104,6 +105,8 @@ function DashboardContent() {
         return <HologramTrainer />;
        case 'need-help':
         return <NeedHelpHub />;
+      case 'symptosphere':
+        return <Symptosphere />;
       default:
         return <PatientProfile patient={patient} />;
     }
@@ -114,6 +117,7 @@ function DashboardContent() {
     { id: 'records', icon: FileText, label: 'Records' },
     { id: 'appointments', icon: Calendar, label: 'Appointments' },
     { id: 'vitals', icon: HeartPulse, label: 'Vitals' },
+    { id: 'symptosphere', icon: Activity, label: 'SymptoSphere' },
     { id: 'chat', icon: MessageCircle, label: 'Chat' },
     { id: 'ambulance', icon: Ambulance, label: 'Ambulance' },
     { id: 'doctors', icon: Stethoscope, label: 'Doctors' },
