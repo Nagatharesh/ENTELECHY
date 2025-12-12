@@ -242,6 +242,27 @@
         }
       },
       "required": ["id", "name", "url", "primary_use"]
+    },
+    "PatientTrackerClick": {
+      "title": "Patient Tracker Click",
+      "description": "Logs when a patient clicks the 'Scan and Get Help' button in the Tracker sub-hub.",
+      "type": "object",
+      "properties": {
+        "clickId": {
+          "type": "string",
+          "description": "Unique identifier for the click event."
+        },
+        "userId": {
+          "type": "string",
+          "description": "The ID of the patient who clicked the button."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of when the button was clicked."
+        }
+      },
+      "required": ["clickId", "userId", "timestamp"]
     }
   },
   "auth": {
@@ -291,6 +312,10 @@
     "/connect360/{buttonId}": {
       "schema": { "$ref": "#/entities/Connect360Button" },
       "description": "Stores the configuration for each Connect 360 button."
+    },
+    "/patient_tracker_clicks/{clickId}": {
+      "schema": { "$ref": "#/entities/PatientTrackerClick" },
+      "description": "Logs clicks on the 'Scan and Get Help' button."
     }
   }
 }
