@@ -42,6 +42,7 @@ import { HologramTrainer } from '@/components/patient/hologram-trainer';
 import { NeedHelpHub } from '@/components/patient/need-help-hub';
 import { Symptosphere } from '@/components/patient/symptosphere';
 import { Connect360 } from '@/components/patient/connect-360';
+import { UmangHub } from '@/components/patient/umang-hub';
 
 
 function DashboardContent() {
@@ -110,6 +111,8 @@ function DashboardContent() {
         return <Symptosphere />;
       case 'connect360':
         return <Connect360 />;
+      case 'umang':
+        return <UmangHub />;
       default:
         return <PatientProfile patient={patient} />;
     }
@@ -131,6 +134,7 @@ function DashboardContent() {
     { id: 'smart-devices', icon: Smartphone, label: 'Smart Devices' },
     { id: 'hologram-trainer', icon: BrainCircuit, label: 'Hologram Trainer' },
     { id: 'connect360', icon: ExternalLink, label: 'Connect 360' },
+    { id: 'umang', icon: ExternalLink, label: 'UMANG' },
     { id: 'need-help', icon: HelpCircle, label: 'Need Help' },
   ];
 

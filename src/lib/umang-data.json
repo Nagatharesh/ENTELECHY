@@ -1,0 +1,63 @@
+
+{
+  "umang": {
+    "buttons": [
+      {
+        "id": "state_gov_services",
+        "name": "STATE GOV. SERVICES",
+        "url": "https://web.umang.gov.in/landing/scheme/dashboard",
+        "primary_use": "Access all State Government Services via the UMANG portal, including health, education, travel, and more."
+      },
+      {
+        "id": "how_to_use",
+        "name": "HOW TO USE IT",
+        "content": [
+          {
+            "step": 1,
+            "title": "Click the \"Services\" Tab",
+            "description": "Look for the main navigation bar, usually located at the top of the page. You will see options like Home, Services, Schemes, etc.",
+            "action": "Click on: → Services"
+          },
+          {
+            "step": 2,
+            "title": "Select the \"Health & Wellness\" Category",
+            "description": "After clicking \"Services,\" you will see a long list of all Government services. On the left side of the screen, there is a list of Categories (like Travel, Education, Police, etc.).",
+            "action": "Click on: → Health & Wellness (It often has a small icon like a heart or a medical cross)."
+          },
+          {
+            "step": 3,
+            "title": "Choose Your Specific Health Service",
+            "description": "The screen will now only show the services related to healthcare. Here are the most popular ones and what to do next:",
+            "services": [
+              {
+                "service": "ABHA",
+                "what_it_does": "Create your digital Health ID (Ayushman Bharat Health Account).",
+                "action": "Click ABHA → Follow the instructions to create or download your unique 14-digit ABHA number using your Aadhaar."
+              },
+              {
+                "service": "eSanjeevani",
+                "what_it_does": "Get a free online doctor consultation (Telemedicine).",
+                "action": "Click eSanjeevani → Select your state → Click Registration → Book an appointment time slot with the doctor."
+              },
+              {
+                "service": "e-RaktKosh",
+                "what_it_does": "Find the availability of blood in blood banks near you.",
+                "action": "Click e-RaktKosh → Select your State and District → Choose the required Blood Group to see which blood banks have it."
+              },
+              {
+                "service": "Pradhan Mantri Jan Arogya Yojana",
+                "what_it_does": "Find the hospitals empanelled under the ₹5 lakh free health insurance scheme.",
+                "action": "Click PM-JAY → Click Search Hospital → Filter by State, District, and specialty to find the nearest hospital."
+              },
+              {
+                "service": "Jan Aushadhi Sugam",
+                "what_it_does": "Find the nearest generic medicine store (Kendra) and check medicine prices.",
+                "action": "Click Jan Aushadhi Sugam → Use the search bar to locate the nearest store by address or check the price of a generic medicine."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
