@@ -217,6 +217,31 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["id", "chatId", "patientId", "doctorId", "category", "text", "status", "createdAt"]
+    },
+    "Connect360Button": {
+      "title": "Connect 360 Button",
+      "description": "Represents a button linking to an external government health portal.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the button."
+        },
+        "name": {
+          "type": "string",
+          "description": "The display name of the portal."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL of the portal."
+        },
+        "primary_use": {
+          "type": "string",
+          "description": "A brief description of the portal's main purpose."
+        }
+      },
+      "required": ["id", "name", "url", "primary_use"]
     }
   },
   "auth": {
@@ -262,6 +287,10 @@
     "/notifications/{notifId}": {
       "schema": { "$ref": "#/entities/Notification" },
       "description": "Stores system-generated notifications for admins or doctors."
+    },
+    "/connect360/{buttonId}": {
+      "schema": { "$ref": "#/entities/Connect360Button" },
+      "description": "Stores the configuration for each Connect 360 button."
     }
   }
 }

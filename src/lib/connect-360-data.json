@@ -1,0 +1,94 @@
+{
+  "buttons": [
+    {
+      "id": "mohfw",
+      "name": "Ministry of Health & Family Welfare (MoHFW)",
+      "url": "https://www.mohfw.gov.in/",
+      "primary_use": "The main portal for all health-related policies, official announcements, press releases, major programmes (like Communicable and Non-Communicable Diseases control), and key documents (Acts, Rules, Standards)."
+    },
+    {
+      "id": "nhm",
+      "name": "National Health Mission (NHM)",
+      "url": "https://nhm.gov.in/",
+      "primary_use": "Focuses on programmes for maternal, newborn, child, and adolescent health (RMNCAH+N), urban and rural health missions, and public health infrastructure. Contains details on schemes like JSSK, RBSK, etc."
+    },
+    {
+      "id": "pmjay",
+      "name": "Ayushman Bharat - PM-JAY",
+      "url": "https://pmjay.gov.in/",
+      "primary_use": "The official source for the world's largest government-funded health assurance scheme. Provides information on benefits (₹5 Lakh cover per family/year), eligibility criteria, hospital empanelment, and scheme guidelines."
+    },
+    {
+      "id": "pmjay_beneficiary",
+      "name": "PM-JAY Beneficiary Portal",
+      "url": "https://beneficiary.nha.gov.in/",
+      "primary_use": "Allows eligible citizens to check their status, create/download their Ayushman Card, link Aadhaar, add family members, and access self-service features for cashless hospitalization."
+    },
+    {
+      "id": "abdm",
+      "name": "Ayushman Bharat Digital Mission (ABDM)",
+      "url": "https://abdm.gov.in/",
+      "primary_use": "The mission to create India's digital health ecosystem. The primary public-facing component is the creation of the Ayushman Bharat Health Account (ABHA) number (your unique health ID) for seamless digital sharing of health records."
+    },
+    {
+      "id": "abha_portal",
+      "name": "ABHA Portal",
+      "url": "https://abha.abdm.gov.in/",
+      "primary_use": "Specifically for citizens to create their ABHA ID (14-digit unique health identifier) and manage the consent for linking and sharing their digital health records (prescriptions, lab reports)."
+    },
+    {
+      "id": "cghs",
+      "name": "Central Government Health Scheme (CGHS)",
+      "url": "https://cghs.gov.in/",
+      "primary_use": "Provides comprehensive healthcare facilities to Central Government employees, pensioners, and their dependents. Includes details on medical benefits, wellness centres, and empanelled hospitals."
+    },
+    {
+      "id": "nhp",
+      "name": "National Health Portal (NHP)",
+      "url": "https://www.nhp.gov.in/",
+      "primary_use": "A one-stop access point for authenticated health information and services for citizens, healthcare professionals, and researchers. It often hosts directories for hospitals, blood banks, disease information (Health A-Z), and lifestyle guides."
+    },
+    {
+      "id": "cowin",
+      "name": "Co-WIN Portal",
+      "url": "https://www.cowin.gov.in/",
+      "primary_use": "Used for registration and scheduling of COVID-19 and other public health vaccinations, and for downloading vaccination certificates."
+    },
+    {
+      "id": "ntep",
+      "name": "National TB Elimination Programme (NTEP) / TB Mukt Bharat Abhiyan",
+      "url": "https://tbcindia.gov.in/",
+      "primary_use": "Provides information on Tuberculosis (TB) symptoms, free diagnosis and treatment, and the process to adopt a TB patient under the Ni-Kshay Mitra initiative."
+    },
+    {
+      "id": "rch",
+      "name": "Reproductive and Child Health (RCH) Portal",
+      "url": "https://rch.nhm.gov.in/",
+      "primary_use": "Used for monitoring and implementation of various maternal and child health interventions under the NHM, including services like antenatal care, safe delivery, and immunization."
+    },
+    {
+      "id": "esanjeevani",
+      "name": "e-Sanjeevani (Telemedicine)",
+      "url": "https://esanjeevani.in/",
+      "primary_use": "A National Telemedicine Service that provides doctor-to-patient (OPD) and doctor-to-doctor consultations from the comfort of home, especially beneficial for rural areas."
+    },
+    {
+      "id": "edantseva",
+      "name": "e-DantSeva (National Oral Health Programme)",
+      "url": "https://dantseva.gov.in/",
+      "primary_use": "Provides comprehensive information on oral health, dental diseases, preventive measures, and a directory of dental facilities and professionals across India."
+    },
+    {
+      "id": "hmis",
+      "name": "Health Management Information System (HMIS)",
+      "url": "https://nrhm-mis.nic.in/",
+      "primary_use": "Primarily for government use (data collection, monitoring, and evaluation of health programmes), but provides public access to data, reports, and dashboards on healthcare performance."
+    },
+    {
+      "id": "meraaspataal",
+      "name": "Mera Aspataal (My Hospital) Initiative",
+      "url": "https://meraaspataal.nhp.gov.in/",
+      "primary_use": "A platform for collecting patient feedback on the quality of services received at public healthcare facilities. Citizens can provide feedback via SMS, web, or mobile app."
+    }
+  ]
+}
