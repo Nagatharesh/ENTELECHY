@@ -1,136 +1,88 @@
 
 "use client";
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { dummyAmbulances, dummyDispatchRequests, dummyTripLogs } from '@/lib/dummy-data';
-import { DispatchAlert } from './dispatch-alert';
-import { LiveNavigation } from './live-navigation';
-import { VehicleStatus } from './vehicle-status';
-import { TripLogger } from './trip-logger';
-import { CommunicationHub } from './communication-hub';
-import { PreTripChecklist } from './pre-trip-checklist';
+import { dummyAmbulances } from '@/lib/dummy-data';
 import { Button } from '@/components/ui/button';
-import { LogOut, Siren, Map } from 'lucide-react';
+import { LogOut, Siren } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
-import { Badge } from '@/components/ui/badge';
-import { useToast } from '@/hooks/use-toast';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { ChartContainer, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart';
+import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+
+const chartConfig = {
+  value: { label: "Value" },
+} satisfies ChartConfig;
+
+// Minimalist chart for readiness
+const ReadinessChart = ({ readinessScore }) => (
+    <Card className="glassmorphism w-full max-w-sm">
+        <CardHeader>
+            <CardTitle className="text-gradient-glow">Vehicle Readiness</CardTitle>
+        </CardHeader>
+        <CardContent className="h-[150px] w-full flex items-center justify-center">
+            <ChartContainer config={chartConfig} className="w-full h-full">
+                <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={[{ name: 'Readiness', value: readinessScore }]}>
+                        <XAxis dataKey="name" tickLine={false} axisLine={false} stroke="hsl(var(--foreground))" fontSize={12} />
+                        <YAxis domain={[0, 100]} tickLine={false} axisLine={false} stroke="hsl(var(--foreground))" fontSize={12} />
+                        <Tooltip content={<ChartTooltipContent />} cursor={{ fill: 'hsl(var(--primary)/0.1)' }} />
+                        <Bar dataKey="value" fill="hsl(var(--primary))" radius={4} barSize={60} />
+                    </BarChart>
+                </ResponsiveContainer>
+            </ChartContainer>
+        </CardContent>
+    </Card>
+);
+
+// Minimalist chart for oxygen level
+const OxygenChart = ({ oxygenLevel }) => (
+    <Card className="glassmorphism w-full max-w-sm">
+        <CardHeader>
+            <CardTitle className="text-gradient-glow">Live Oxygen Level</CardTitle>
+        </CardHeader>
+        <CardContent className="h-[150px] w-full flex items-center justify-center">
+             <ChartContainer config={chartConfig} className="w-full h-full">
+                <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={[{ name: 'Oxygen', value: oxygenLevel }]}>
+                        <XAxis dataKey="name" tickLine={false} axisLine={false} stroke="hsl(var(--foreground))" fontSize={12} />
+                        <YAxis domain={[0, 100]} tickLine={false} axisLine={false} stroke="hsl(var(--foreground))" fontSize={12} />
+                        <Tooltip content={<ChartTooltipContent />} cursor={{ fill: 'hsl(var(--secondary)/0.1)' }} />
+                        <Bar dataKey="value" fill="hsl(var(--secondary))" radius={4} barSize={60} />
+                    </BarChart>
+                </ResponsiveContainer>
+            </ChartContainer>
+        </CardContent>
+    </Card>
+);
+
 
 export function AmbulanceDashboard() {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const { toast } = useToast();
     const ambulanceId = searchParams.get('id');
 
     const [ambulance, setAmbulance] = useState<any>(null);
-    const [currentDispatch, setCurrentDispatch] = useState<any>(null);
-    const [tripLogs, setTripLogs] = useState<any[]>([]);
-    const [checklistComplete, setChecklistComplete] = useState(false);
-    const [eta, setEta] = useState(0);
-
-    const pendingDispatch = useMemo(() => {
-        if (!ambulanceId) return null;
-        return dummyDispatchRequests.find(d => d.ambulanceId === ambulanceId && d.status === 'pending');
-    }, [ambulanceId]);
-
-    useEffect(() => {
-        toast({
-            title: "Ambulance booked!",
-        });
-    }, [toast]);
+    const [oxygenLevel, setOxygenLevel] = useState(0);
 
     useEffect(() => {
         const foundAmbulance = dummyAmbulances.find(a => a.id === ambulanceId);
         setAmbulance(foundAmbulance);
-        
-        if(ambulanceId){
-            const initialLogs = dummyTripLogs.filter(t => t.ambulanceId === ambulanceId);
-            setTripLogs(initialLogs);
+        if (foundAmbulance) {
+            setOxygenLevel(foundAmbulance.oxygenLevel);
         }
-
     }, [ambulanceId]);
 
-     useEffect(() => {
-        if (!currentDispatch || currentDispatch.status !== 'enroute') return;
-        const totalDuration = currentDispatch.etaToPatient;
-        setEta(totalDuration);
+    // Simulate real-time oxygen level changes
+    useEffect(() => {
         const interval = setInterval(() => {
-            setEta(prev => {
-                if (prev <= 1/60) { // Stop when less than a second left
-                    clearInterval(interval);
-                    return 0;
-                }
-                return prev - (1/60);
-            });
-        }, 1000);
+            setOxygenLevel(prev => Math.max(85, Math.min(100, prev + (Math.random() - 0.5) * 2)));
+        }, 3000);
         return () => clearInterval(interval);
-    }, [currentDispatch]);
-
-
-    const handleAcceptDispatch = (dispatchId: string) => {
-        if(!checklistComplete){
-            toast({
-                variant: "destructive",
-                title: "Pre-Trip Checklist Incomplete",
-                description: "You must complete the vehicle checklist before accepting a dispatch.",
-            });
-            return;
-        }
-        const dispatch = dummyDispatchRequests.find(d => d.id === dispatchId);
-        if (dispatch) {
-            setCurrentDispatch({ ...dispatch, status: 'enroute' });
-            toast({
-                title: "Dispatch Accepted!",
-                description: `Navigating to ${dispatch.pickupLocation}.`,
-            });
-        }
-    };
-    
-    const handleDeclineDispatch = (dispatchId: string) => {
-        // In a real app, you'd also update the dispatch request status on the backend.
-        // For this demo, we'll just clear the current alert.
-        const nextRequest = dummyDispatchRequests.find(d => d.ambulanceId === ambulanceId && d.status === 'pending' && d.id !== dispatchId) || null;
-        toast({
-            variant: "destructive",
-            title: "Dispatch Declined",
-            description: "The dispatch request has been declined and will be reassigned.",
-        });
-        // This is a simulation, so we just effectively remove the alert from view for this session
-        // In a real app, the server would send a new dispatch or none. Here we do nothing to show it's gone.
-    }
-
-    const handlePanic = () => {
-        toast({
-            variant: "destructive",
-            title: "PANIC BUTTON ACTIVATED",
-            description: "Emergency signal sent to command center. Your location is being tracked.",
-            duration: 10000,
-        });
-    }
-
-    const handleCompleteTrip = () => {
-        if (currentDispatch && ambulance) {
-            const newLog = {
-                id: `log-${Date.now()}`,
-                ambulanceId: ambulance.id,
-                patientName: currentDispatch.patientName,
-                from: currentDispatch.pickupLocation,
-                to: currentDispatch.destination,
-                startTime: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
-                endTime: new Date().toISOString(),
-                distance: 7.2, 
-                notes: 'Patient stable on arrival. Transferred to ER.'
-            };
-            setTripLogs(prev => [newLog, ...prev]);
-            setCurrentDispatch(null);
-             toast({
-                title: "Trip Completed",
-                description: `Trip log for ${newLog.patientName} has been saved.`,
-            });
-        }
-    };
+    }, []);
 
     if (!ambulance) {
         return (
@@ -144,11 +96,11 @@ export function AmbulanceDashboard() {
         );
     }
     
-    const readinessScore = ((ambulance.fuelLevel / 100) * 0.4 + (ambulance.oxygenLevel / 100) * 0.4 + (ambulance.facilities.emergencyKit ? 1 : 0) * 0.2) * 100;
-    const isReady = readinessScore > 70 && checklistComplete;
+    // Simplified readiness score
+    const readinessScore = ((ambulance.fuelLevel / 100) * 0.5 + (oxygenLevel / 100) * 0.5) * 100;
 
     return (
-        <div className="min-h-screen bg-background text-white p-4 space-y-6">
+        <div className="min-h-screen bg-background text-white p-4 space-y-6 flex flex-col">
             <header className="flex justify-between items-center">
                  <Link href="/home">
                     <Logo />
@@ -158,39 +110,22 @@ export function AmbulanceDashboard() {
                     <p className="text-muted-foreground">AI Ambulance Command Center</p>
                 </div>
                  <div className="flex items-center gap-4">
-                    {currentDispatch && <Badge variant="secondary" className="text-lg">ETA: {Math.ceil(eta)} min</Badge>}
-                    <Button asChild variant="outline">
-                        <Link href="https://read-metal-09717837.figma.site" target="_blank" rel="noopener noreferrer">
-                            <Map className="mr-2"/> Map View
-                        </Link>
-                    </Button>
-                    <Button variant="destructive" className="glowing-shadow-interactive" onClick={handlePanic}><Siren className="mr-2"/>PANIC</Button>
+                    <Button variant="destructive" className="glowing-shadow-interactive"><Siren className="mr-2"/>PANIC</Button>
                     <Button variant="outline" onClick={() => router.push('/login?role=ambulance')}><LogOut className="mr-2"/>Logout</Button>
                 </div>
             </header>
 
-            <main className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <div className="lg:col-span-3 space-y-6">
-                    {currentDispatch ? (
-                        <LiveNavigation dispatch={currentDispatch} onComplete={handleCompleteTrip} />
-                    ) : (
-                        <DispatchAlert 
-                            dispatch={pendingDispatch} 
-                            onAccept={handleAcceptDispatch} 
-                            onDecline={handleDeclineDispatch}
-                            isReady={isReady}
-                        />
-                    )}
+            <main className="flex-grow flex flex-col items-center justify-center gap-8">
+                <div className="flex flex-col md:flex-row gap-8">
+                    <OxygenChart oxygenLevel={oxygenLevel} />
+                    <ReadinessChart readinessScore={readinessScore} />
                 </div>
-                <div className="space-y-6">
-                    <VehicleStatus ambulance={ambulance} readinessScore={readinessScore} />
-                    {!currentDispatch ? (
-                        <PreTripChecklist onComplete={() => {setChecklistComplete(true); toast({title: "Checklist Complete", description: "Vehicle is now ready for dispatch."})}} />
-                    ) : (
-                        <CommunicationHub />
-                    )}
-                    <TripLogger logs={tripLogs} />
-                </div>
+                
+                <Button asChild size="lg" className="h-16 text-xl glowing-shadow-interactive">
+                    <Link href="https://aistudio.google.com/apps/drive/113XiIrtijHWDzNtIbu7-1molDMWEoYhA?fullscreenApplet=true&showPreview=true&showAssistant=true" target="_blank" rel="noopener noreferrer">
+                        RapidAid
+                    </Link>
+                </Button>
             </main>
         </div>
     );
