@@ -73,11 +73,11 @@ const BookingTypeSelector = () => (
 
 const HospitalTracker = () => {
     const hospitals = [
-        { name: 'Savetha Medical Hospital' },
-        { name: 'Hospital 2' },
-        { name: 'Hospital 3' },
-        { name: 'Hospital 4' },
-        { name: 'Hospital 5' }
+        { name: 'Savetha Medical Hospital', tag: 'PRIMARY' },
+        { name: 'SRM Global Hospitals', tag: 'Nearby' },
+        { name: 'MIOT International Hospital', tag: 'Nearby' },
+        { name: 'Apollo Hospitals', tag: 'Nearby' },
+        { name: 'Fortis Malar Hospital', tag: 'Nearby' }
     ];
     
     return (
@@ -100,13 +100,13 @@ const HospitalTracker = () => {
                     <div className="absolute top-1/2 -translate-y-1/2 left-[75%] w-2 h-2 rounded-full bg-secondary" />
                 </div>
                  <div className="mt-4 space-y-2">
-                    {hospitals.map((hospital, index) => (
+                    {hospitals.map((hospital) => (
                         <div key={hospital.name} className="flex items-center justify-between p-2 glassmorphism rounded-md">
                             <span className="font-semibold text-white flex items-center gap-2">
                                 <Hospital className="w-4 h-4 text-primary" />
                                 {hospital.name}
                             </span>
-                             <span className="text-xs font-mono text-muted-foreground">{index === 0 ? 'PRIMARY' : 'Nearby'}</span>
+                             <span className="text-xs font-mono text-muted-foreground">{hospital.tag}</span>
                         </div>
                     ))}
                 </div>
@@ -250,3 +250,5 @@ export function AmbulanceDashboard() {
         </div>
     );
 }
+
+    
