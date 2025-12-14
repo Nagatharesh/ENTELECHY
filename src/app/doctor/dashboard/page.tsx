@@ -41,6 +41,7 @@ import { BioNanitesHub } from '@/components/doctor/bio-nanites-hub';
 import { GeneticsHub } from '@/components/doctor/genetics-hub';
 import { FundingHub } from '@/components/doctor/funding-hub';
 import { DrugTestsHub } from '@/components/doctor/drug-tests-hub';
+import { BrainAidHub } from '@/components/doctor/brain-aid-hub';
 
 
 function DashboardContent() {
@@ -92,6 +93,8 @@ function DashboardContent() {
         return <FundingHub />;
       case 'drug-tests':
         return <DrugTestsHub />;
+      case 'brain-aid':
+        return <BrainAidHub />;
       default:
         return <DoctorProfile />;
     }
@@ -112,6 +115,7 @@ function DashboardContent() {
     { id: 'genetics', icon: Dna, label: 'Genetics' },
     { id: 'funding', icon: DollarSign, label: 'Funding' },
     { id: 'drug-tests', icon: FlaskConical, label: 'Drug Tests' },
+    { id: 'brain-aid', icon: BrainCircuit, label: 'BrainAid' },
   ];
 
   const NavMenu = () => (
