@@ -5,14 +5,15 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { dummyAmbulances } from '@/lib/dummy-data';
 import { Button } from '@/components/ui/button';
-import { LogOut, Siren, Activity, Droplets, Thermometer, Wind, HeartPulse, Gauge, Shield, Battery, Wifi, Phone, UserCheck, MapPin, Clock } from 'lucide-react';
+import { LogOut, Siren, Activity, Droplets, Wind, HeartPulse, Gauge, Shield, Battery, Wifi, Phone, UserCheck, MapPin, Clock, Hospital, Ambulance as AmbulanceIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Logo } from '@/components/icons/logo';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { ChartContainer, ChartTooltipContent, type ChartConfig } from '@/components/ui/chart';
+import { ChartContainer, type ChartConfig } from '@/components/ui/chart';
 import { BarChart, Bar, ResponsiveContainer } from 'recharts';
 import { Progress } from '@/components/ui/progress';
+import { motion } from 'framer-motion';
 
 const chartConfig = {
   value: { label: "Value" },
@@ -52,7 +53,68 @@ const ConnectivityIndicator = ({ title, value, Icon }) => (
         <p className="text-sm font-semibold text-white">{value}</p>
         <p className="text-xs text-muted-foreground">{title}</p>
     </div>
-)
+);
+
+const BookingTypeSelector = () => (
+    <Card className="glassmorphism glowing-shadow">
+        <CardHeader>
+            <CardTitle className="text-white">Booking Type</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+            {['Emergency', 'ICU', 'Neonatal', 'Cardiac', 'Basic Life Support'].map(type => (
+                 <div key={type} className="p-2 rounded-md bg-background/50 flex justify-between items-center">
+                    <span className="font-medium text-white">{type} Ambulance</span>
+                    <div className="w-4 h-4 rounded-full bg-primary/50" />
+                </div>
+            ))}
+        </CardContent>
+    </Card>
+);
+
+const HospitalTracker = () => {
+    const hospitals = [
+        { name: 'Savetha Medical Hospital' },
+        { name: 'Hospital 2' },
+        { name: 'Hospital 3' },
+        { name: 'Hospital 4' },
+        { name: 'Hospital 5' }
+    ];
+    
+    return (
+        <Card className="glassmorphism flex-grow flex flex-col">
+            <CardHeader>
+                <CardTitle className="text-white">Nearby Hospitals</CardTitle>
+            </CardHeader>
+            <CardContent className="flex-grow flex flex-col justify-between">
+                <div className="relative h-12 bg-background/30 rounded-full border border-primary/20 overflow-hidden">
+                    <motion.div
+                        className="absolute top-1/2 -translate-y-1/2"
+                        animate={{ left: ['5%', '95%', '5%'] }}
+                        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+                    >
+                         <AmbulanceIcon className="w-6 h-6 text-primary" />
+                    </motion.div>
+                     <div className="absolute top-1/2 -translate-y-1/2 left-[15%] w-2 h-2 rounded-full bg-secondary" />
+                    <div className="absolute top-1/2 -translate-y-1/2 left-[35%] w-2 h-2 rounded-full bg-secondary" />
+                    <div className="absolute top-1/2 -translate-y-1/2 left-[55%] w-2 h-2 rounded-full bg-secondary" />
+                    <div className="absolute top-1/2 -translate-y-1/2 left-[75%] w-2 h-2 rounded-full bg-secondary" />
+                </div>
+                 <div className="mt-4 space-y-2">
+                    {hospitals.map((hospital, index) => (
+                        <div key={hospital.name} className="flex items-center justify-between p-2 glassmorphism rounded-md">
+                            <span className="font-semibold text-white flex items-center gap-2">
+                                <Hospital className="w-4 h-4 text-primary" />
+                                {hospital.name}
+                            </span>
+                             <span className="text-xs font-mono text-muted-foreground">{index === 0 ? 'PRIMARY' : 'Nearby'}</span>
+                        </div>
+                    ))}
+                </div>
+            </CardContent>
+        </Card>
+    )
+};
+
 
 export function AmbulanceDashboard() {
     const searchParams = useSearchParams();
@@ -70,8 +132,6 @@ export function AmbulanceDashboard() {
         defibrillatorReady: 99,
         oxygenCylinder: 85,
         powerBackup: 92,
-        distanceToHospital: 4.2,
-        eta: 12,
         patient: {
             heartRate: 88,
             spO2: 97,
@@ -92,7 +152,6 @@ export function AmbulanceDashboard() {
                 oxygenLevel: Math.max(85, Math.min(100, prev.oxygenLevel + (Math.random() - 0.5) * 0.5)),
                 cabinTemp: Math.max(18, Math.min(25, prev.cabinTemp + (Math.random() - 0.5) * 0.2)),
                 humidity: Math.max(40, Math.min(50, prev.humidity + (Math.random() - 0.5) * 1)),
-                eta: Math.max(5, prev.eta - 0.1),
                 patient: {
                     ...prev.patient,
                     heartRate: Math.max(70, Math.min(110, prev.patient.heartRate + (Math.random() - 0.5) * 2)),
@@ -177,35 +236,17 @@ export function AmbulanceDashboard() {
 
                     <div className="grid grid-cols-4 gap-6 w-full">
                         <StatChart title="Oxygen Level" value={ambulanceData.oxygenLevel.toFixed(0)} unit="%" chartData={generateChartData()} Icon={Wind} color="hsl(var(--chart-4))" />
-                        <StatChart title="Cabin Temp" value={ambulanceData.cabinTemp.toFixed(1)} unit="°C" chartData={generateChartData()} Icon={Thermometer} color="hsl(var(--chart-5))" />
+                        <StatChart title="Cabin Temp" value={ambulanceData.cabinTemp.toFixed(1)} unit="°C" chartData={generateChartData()} Icon={Wind} color="hsl(var(--chart-5))" />
                         <StatChart title="Humidity" value={ambulanceData.humidity.toFixed(0)} unit="%" chartData={generateChartData()} Icon={Droplets} color="hsl(var(--chart-1))" />
                         <StatChart title="Air Quality" value={ambulanceData.aqi.toFixed(0)} unit="AQI" chartData={generateChartData()} Icon={Wind} color="hsl(var(--chart-2))" />
                     </div>
                 </div>
 
-                <div className="lg:col-span-3 space-y-6">
-                    <Card className="glassmorphism glowing-shadow">
-                        <CardHeader>
-                            <CardTitle className="text-white">Operational Metrics</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <ConnectivityIndicator title="Distance to Hospital" value={`${ambulanceData.distanceToHospital.toFixed(1)} km`} Icon={MapPin} />
-                            <ConnectivityIndicator title="Estimated Arrival" value={`${ambulanceData.eta.toFixed(0)} min`} Icon={Clock} />
-                        </CardContent>
-                    </Card>
-                     <Card className="glassmorphism">
-                        <CardHeader>
-                            <CardTitle className="text-white">Connectivity</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <ConnectivityIndicator title="GPS Signal" value="Strong" Icon={MapPin} />
-                            <ConnectivityIndicator title="Network" value="5G" Icon={Wifi} />
-                            <ConnectivityIndicator title="Dispatch Link" value="Connected" Icon={Phone} />
-                        </CardContent>
-                    </Card>
+                <div className="lg:col-span-3 space-y-6 flex flex-col">
+                    <BookingTypeSelector />
+                    <HospitalTracker />
                 </div>
             </main>
         </div>
     );
-
-    
+}
