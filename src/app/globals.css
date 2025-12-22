@@ -5,82 +5,82 @@
 
 @layer base {
   :root {
-    /* Aura Color Spectrum - Gradients are handled via Tailwind classes */
-    --background: 228 29% 4%; /* Dark Cosmic Void #050510 */
-    --foreground: 220 20% 90%;
+    /* New Vibrant & Futuristic Health-Tech Palette */
+    --background: 222 47% 11%; /* Deep Slate Blue */
+    --foreground: 210 40% 98%;
 
-    --card: 259 69% 60% / 0.1; /* Fallback based on Radiant Purple */
-    --card-foreground: 220 20% 90%;
+    --card: 260 50% 50% / 0.1; /* Glassmorphism with purple tint */
+    --card-foreground: 210 40% 98%;
 
-    --popover: 228 29% 4%;
-    --popover-foreground: 220 20% 90%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
 
-    /* --- Core Aura & Power Aura --- */
-    --primary: 38 100% 63%; /* Magma Orange-Red (for buttons/alerts) */
-    --primary-foreground: 220 20% 98%;
+    /* --- Primary Action & Highlight --- */
+    --primary: 180 100% 50%; /* Electric Cyan */
+    --primary-foreground: 222 47% 11%;
 
-    /* --- Energy Aura --- */
-    --secondary: 184 100% 50%; /* Plasma Cyan */
-    --secondary-foreground: 228 29% 4%;
+    /* --- Secondary Accent & Data Viz --- */
+    --secondary: 80 100% 50%; /* Bio-Lime */
+    --secondary-foreground: 222 47% 11%;
     
-    /* --- Healing Aura --- */
-    --tertiary: 141 100% 47%; /* Bio-Lime */
+    /* --- Tertiary Accent for depth --- */
+    --tertiary: 260 100% 65%; /* Radiant Purple */
 
-    --muted: 220 20% 10%;
-    --muted-foreground: 220 20% 60%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
     
-    /* --- Love Aura --- */
+    /* --- Accent for notifications & secondary actions --- */
     --accent: 328 100% 59%; /* Hyper Pink */
-    --accent-foreground: 220 20% 98%;
+    --accent-foreground: 210 40% 98%;
 
-    /* --- Power Aura for Destructive states --- */
-    --destructive: 11 100% 58%; /* Magma Orange-Red */
-    --destructive-foreground: 220 20% 98%;
+    /* --- Destructive states --- */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 268 77% 53% / 0.2; /* Radiant Purple border */
-    --input: 220 20% 10% / 0.7;
-    --ring: 38 100% 63%;
+    --border: 260 50% 50% / 0.2; /* Purple-tinted border */
+    --input: 217 33% 17% / 0.7;
+    --ring: 180 100% 50%; /* Electric Cyan for focus rings */
 
     --radius: 0.75rem;
 
-    /* --- Aura Chart Palette --- */
-    --chart-1: 184 100% 50%; /* Plasma Cyan */
-    --chart-2: 141 100% 47%; /* Bio-Lime */
-    --chart-3: 328 100% 59%; /* Hyper Pink */
-    --chart-4: 45 99% 70%;  /* Celestial Gold */
-    --chart-5: 268 77% 53%; /* Radiant Purple */
+    /* --- New Chart Palette --- */
+    --chart-1: 180 100% 50%; /* Electric Cyan */
+    --chart-2: 80 100% 50%; /* Bio-Lime */
+    --chart-3: 260 100% 65%; /* Radiant Purple */
+    --chart-4: 328 100% 59%; /* Hyper Pink */
+    --chart-5: 45 99% 70%;  /* Celestial Gold */
   }
 
   .dark {
-    --background: 228 29% 4%;
-    --foreground: 220 20% 90%;
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
 
-    --card: 259 69% 60% / 0.1;
-    --card-foreground: 220 20% 90%;
+    --card: 260 50% 50% / 0.1;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 228 29% 4%;
-    --popover-foreground: 220 20% 90%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 38 100% 63%;
-    --primary-foreground: 220 20% 98%;
+    --primary: 180 100% 50%;
+    --primary-foreground: 222 47% 11%;
 
-    --secondary: 184 100% 50%;
-    --secondary-foreground: 228 29% 4%;
+    --secondary: 80 100% 50%;
+    --secondary-foreground: 222 47% 11%;
     
-    --tertiary: 141 100% 47%;
+    --tertiary: 260 100% 65%;
 
-    --muted: 220 20% 10%;
-    --muted-foreground: 220 20% 60%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
 
     --accent: 328 100% 59%;
-    --accent-foreground: 220 20% 98%;
+    --accent-foreground: 210 40% 98%;
 
-    --destructive: 11 100% 58%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 268 77% 53% / 0.2;
-    --input: 220 20% 10% / 0.7;
-    --ring: 38 100% 63%;
+    --border: 260 50% 50% / 0.2;
+    --input: 217 33% 17% / 0.7;
+    --ring: 180 100% 50%;
   }
 }
 
@@ -93,8 +93,8 @@
     @apply bg-background text-foreground;
     background-image: 
       radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--accent) / 0.1), transparent),
-      radial-gradient(ellipse 80% 50% at 50% 120%, hsl(var(--secondary) / 0.1), transparent),
-      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="hsl(268 77% 53% / 0.03)"><path d="M0 .5H31.5V32"/></svg>');
+      radial-gradient(ellipse 80% 50% at 50% 120%, hsl(var(--primary) / 0.1), transparent),
+      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="hsl(260 50% 50% / 0.03)"><path d="M0 .5H31.5V32"/></svg>');
     animation: background-aurora 20s ease-in-out infinite;
   }
 
@@ -128,7 +128,7 @@
 
   .text-gradient-glow {
     @apply text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-300;
-    text-shadow: 0 0 10px hsl(var(--chart-4)/0.8), 0 0 20px hsl(var(--secondary)/0.6), 0 0 30px hsl(var(--accent)/0.4);
+    text-shadow: 0 0 10px hsl(var(--chart-1)/0.8), 0 0 20px hsl(var(--secondary)/0.6), 0 0 30px hsl(var(--accent)/0.4);
   }
 }
 
@@ -144,7 +144,7 @@
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='white' stroke-opacity='0.05'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
   }
   .bg-grid-primary\/\[0\.1\] {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='hsl(25 100% 50% / 0.1)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='hsl(180 100% 50% / 0.1)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
   }
 
   .animate-glow-pulse {
@@ -296,5 +296,3 @@
       }
     }
 }
-
-    
