@@ -17,6 +17,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { format, formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 const BLOOD_TYPES = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 const COLORS = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3))", "hsl(var(--chart-4))", "hsl(var(--chart-5))", "hsl(var(--primary))", "hsl(var(--secondary))", "hsl(var(--accent))"];
@@ -265,9 +266,9 @@ const DonorProfile = ({ donor }: { donor: Donor }) => (
     <>
         <DialogHeader>
             <DialogTitle className="text-2xl text-gradient-glow">{donor.name}</DialogTitle>
-            <DialogDescription>
+             <div className={cn("text-sm text-muted-foreground")}>
                 <Badge>{donor.bloodGroup}</Badge> | {donor.location} | {donor.phone}
-            </DialogDescription>
+            </div>
         </DialogHeader>
         <div className="space-y-4">
              <h3 className="font-semibold text-white flex items-center gap-2"><History/>Donation History</h3>
